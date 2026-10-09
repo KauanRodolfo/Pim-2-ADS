@@ -68,10 +68,10 @@ A pasta [`Docs/`](Docs/) reúne a documentação da empresa e do andamento do pr
 
 O projeto segue o **Scrum**, com sprints de duas semanas.
 
-| Sprint | Status |
-|---|---|
-| Sprint 1 | Concluída |
-| Sprint 2 | Em andamento |
+| Sprint | Status | Data Conclusão |
+|---|---|---|
+| Sprint 1 | Concluída | 02/09/2026
+| Sprint 2 | Em andamento | ---
 
 ## Time de desenvolvimento
 
