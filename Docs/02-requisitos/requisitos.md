@@ -89,7 +89,7 @@ A DMcom adotará um **percentual único e fixo de comissão para todos os vended
 
 **Vinculada aos requisitos:** RF04, RF05 e RF06.
 
-> Outras regras de negócio só serão incluídas após discussão e aprovação pela equipe.
+> Talvez sejam adicionadas outras regras de negócio só serão incluídas após discussão e aprovação pela equipe.
 
 <br>
 
