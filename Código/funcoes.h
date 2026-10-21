@@ -5,20 +5,11 @@
 #ifndef FUNCOES_H
 #define FUNCOES_H
 
-#include "sqlite3.h"
 #include "funcoes_db.h"
-
-
+#include "sqlite3.h"
 
 /* Mostra a mensagem e le o texto digitado em dest. */
 void tratar_texto(char *variavel);
-
-/* Roda um SELECT e retorna 1 se encontrou pelo menos uma linha, senao 0. */
-// int existe_registro(sqlite3 *db, const char *sql);
-
-/* Confere se o usuario admin existe no banco. Se nao existir, cria. */
-//void garantir_admin(sqlite3 *db);
-
 
 int consultar(char banco);
 

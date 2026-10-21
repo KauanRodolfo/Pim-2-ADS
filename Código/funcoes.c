@@ -31,70 +31,6 @@ void tratar_texto(char *variavel) {
 
 
 }
-/*
-void ler_texto(const char *msg, char *dest, int tam) {
-    int i, j = 0, c;
-
-    printf("%s", msg);
-    if (fgets(dest, tam, stdin) == NULL) {
-        dest[0] = '\0';
-        return;
-    }
-
-    /* Tira o Enter do final. Se nao tinha Enter, o texto era grande
-       demais: descarta o que sobrou no teclado.
-    i = strlen(dest);
-    if (i > 0 && dest[i - 1] == '\n') {
-        dest[i - 1] = '\0';
-    } else {
-        while ((c = getchar()) != '\n' && c != EOF);
-    }
-
-    /* Tira as aspas simples ('), porque elas quebrariam o comando SQL
-    for (i = 0; dest[i] != '\0'; i++) {
-        if (dest[i] != '\'') {
-            dest[j] = dest[i];
-            j++;
-        }
-    }
-    dest[j] = '\0';
-}*/
-
-/* ---------- BANCO DE DADOS ---------- */
-
-// int existe_registro(sqlite3 *db, const char *sql) {
-//     char **resultado = NULL;   /* tabela com o resultado do SELECT */
-//     int linhas = 0, colunas = 0;
-
-//     sqlite3_get_table(db, sql, &resultado, &linhas, &colunas, NULL);
-//     sqlite3_free_table(resultado);
-
-//     return linhas > 0;
-// }
-//          UNIFICADO COM criar_db()
-// void garantir_admin(sqlite3 *db) {
-//     char *erro = NULL;
-
-//     /* Ja existe um admin? Entao nao faz nada. */
-//     if (existe_registro(db, "SELECT id FROM Usuario WHERE username = 'admin';")) {
-//         return;
-//     }
-
-//     /* Nao existe: cria com a senha padrao admin123 */
-//     int resultado = sqlite3_exec(db,
-//         "INSERT INTO Usuario (nome, username, email, senha, nivel) "
-//         "VALUES ('Administrador', 'admin', 'admin@pim.com', 'admin123', 'admin');",
-//         NULL, NULL, &erro);
-
-//     if (resultado == SQLITE_OK) {
-//         printf("Usuario admin criado (senha: admin123).\n");
-//     } else {
-//         printf("Erro ao criar o admin: %s\n", erro);
-//         sqlite3_free(erro);
-//     }
-// }
-
-
 
 int consultar(char banco) {
     sqlite3 *db;
@@ -323,7 +259,7 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
             if(rc == SQLITE_OK){
                 rc = sqlite3_bind_text(stmt, 1, equipe->nome, -1, SQLITE_TRANSIENT);
                 rc |= sqlite3_bind_int(stmt, 2, equipe->gestor_id);
-                rc |= sqlite3_bind_text(stmt, 3, equipe->status == STATUS_ATIVO ? "ativa" : "arquivada", -1, SQLITE_STATIC);
+                rc |= sqlite3_bind_text(stmt, 3, equipe->status, -1, SQLITE_STATIC);
                 rc |= sqlite3_bind_text(stmt, 4, equipe->criado_em, -1, SQLITE_TRANSIENT);
             }
             break;
@@ -340,9 +276,9 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
                 rc |= sqlite3_bind_text(stmt, 2, usuario->username, -1, SQLITE_TRANSIENT);
                 rc |= sqlite3_bind_text(stmt, 3, usuario->email, -1, SQLITE_TRANSIENT);
                 rc |= sqlite3_bind_text(stmt, 4, usuario->senha, -1, SQLITE_TRANSIENT);
-                //rc |= sqlite3_bind_text(stmt, 5, usuario->nivel);
+                rc |= sqlite3_bind_text(stmt, 5, usuario->nivel, -1, SQLITE_TRANSIENT);
                 rc |= sqlite3_bind_int(stmt, 6, usuario->equipe_id);
-                rc |= sqlite3_bind_text(stmt, 7, usuario->status == STATUS_ATIVO ? "ativa" : "arquivada", -1, SQLITE_STATIC);
+                rc |= sqlite3_bind_text(stmt, 7, usuario->status, -1, SQLITE_STATIC);
                 rc |= sqlite3_bind_text(stmt, 8, usuario->criado_em, -1, SQLITE_TRANSIENT);
             }
             break;
@@ -362,7 +298,7 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
                 rc |= sqlite3_bind_double(stmt, 5, cliente->renda);
                 rc |= sqlite3_bind_int(stmt, 6, cliente->consentimento_lgpd);
                 rc |= sqlite3_bind_text(stmt, 7, cliente->data_consentimento, -1, SQLITE_TRANSIENT);
-                rc |= sqlite3_bind_text(stmt, 8, cliente->status == STATUS_ATIVO ? "ativa" : "arquivada", -1, SQLITE_STATIC);
+                rc |= sqlite3_bind_text(stmt, 8, cliente->status, -1, SQLITE_STATIC);
                 rc |= sqlite3_bind_int(stmt, 9, cliente->cadastrado_por);
                 rc |= sqlite3_bind_text(stmt, 10, cliente->criado_em, -1, SQLITE_TRANSIENT);
             }
@@ -381,11 +317,7 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
                 rc |= sqlite3_bind_int(stmt, 3, contrato->tipo_consorcio_id);
                 rc |= sqlite3_bind_double(stmt, 4, contrato->valor_credito);
                 rc |= sqlite3_bind_text(stmt, 5, contrato->data_contrato, -1, SQLITE_TRANSIENT);
-                rc |= sqlite3_bind_text(stmt, 6,
-                    contrato->status == CONTRATO_EM_ANALISE ? "em_analise" :
-                    contrato->status == CONTRATO_APROVADO ? "aprovado" :
-                    contrato->status == CONTRATO_REPROVADO ? "reprovado" : "arquivado",
-                    -1, SQLITE_STATIC);
+                rc |= sqlite3_bind_text(stmt, 6, contrato->status, -1, SQLITE_STATIC);
                 rc |= sqlite3_bind_int(stmt, 7, contrato->avaliado_por);
                 rc |= sqlite3_bind_text(stmt, 8, contrato->data_avaliacao, -1, SQLITE_TRANSIENT);
                 rc |= sqlite3_bind_text(stmt, 9, contrato->motivo_reprovacao, -1, SQLITE_TRANSIENT);

@@ -1,15 +1,13 @@
-#include <stdio.h>
 #include "funcoes_db.h"
+#include <stdio.h>
 
 //     /* Liga as chaves estrangeiras (o SQLite vem com elas desligadas) */
 //     //sqlite3_exec(*db, "PRAGMA foreign_keys = ON;", NULL, NULL, NULL);
 
-
-
 /* ---------- CRIACAO DO BANCO E TABELAS ---------- */
 
 int criar_db(sqlite3 **db) {
-    char *erro = NULL;   /* guarda a mensagem de erro, se der problema */
+    char *erro = NULL; /* guarda a mensagem de erro, se der problema */
 
     int rc = sqlite3_open("pim2.db", db);
 
@@ -17,7 +15,6 @@ int criar_db(sqlite3 **db) {
         printf("Erro ao abrir o banco: %s\n", sqlite3_errmsg(*db));
         return rc;
     }
-
 
     const char *sql =
         /* Usuario: equipe_id aponta para a tabela Equipe */
@@ -120,7 +117,6 @@ int criar_db(sqlite3 **db) {
         "INSERT INTO Usuarios (id, nome, username, email, senha, nivel) "
         "VALUES ('1','Administrador', 'admin', 'admin@pim.com', 'admin123', 'admin') "
         "ON CONFLICT (id) DO NOTHING;";
-
 
     int resultado = sqlite3_exec(*db, sql, NULL, NULL, &erro);
 
