@@ -10,40 +10,34 @@
 
 void menu_admin() {
     int op;
-    char opcao[TAM];
 
     do {
         printf("\n=== MENU ADMIN ===\n");
         printf("1 - Gerenciar Equipes\n");
         printf("2 - Gerenciar Gestores\n");
-        printf("3 - Gerenciar Usuarios\n");
-        printf("4 - Ranking Geral\n");
-        printf("5 - Consultar Log\n");
+        printf("3 - Ranking Geral\n");
+        printf("4 - Consultar Log\n");
         printf("0 - Sair da conta\n");
-        // ler_texto("Escolha: ", opcao, TAM);
+        
         scanf("%d", &op);
 
         switch (op) {
         case 1:
-            // AQUI: chamar a funcao de Gerenciar Equipes
+            // AQUI: chamar a funcao 
             break;
-
         case 2:
-            // AQUI: chamar a funcao de Gerenciar Gestores
+            // AQUI: chamar a funcao 
             break;
         case 3:
-            // AQUI: chamar a funcao de Gerenciar Usuarios
+            // AQUI: chamar a funcao 
             break;
         case 4:
-            // AQUI: chamar a funcao de Ranking Geral
-            break;
-        case 5:
-            // AQUI: chamar a funcao de Consultar Log
+            // AQUI: chamar a funcao 
             break;
         case 0:
             break;
         default:
             printf("Opcao invalida.\n");
         }
-    } while (opcao[0] != '0');
+    } while (op != 0);
 }
