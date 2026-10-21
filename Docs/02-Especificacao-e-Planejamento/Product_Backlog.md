@@ -162,8 +162,6 @@ Os RNFs são relacionados às tarefas T22–T26 na tabela anterior e podem afeta
 - **HU07* / RF06* / T18*:** critério de desempate e visibilidade das classificações para os perfis.
 - **RNF03* / T24*:** método de armazenamento seguro de credenciais implementável em C.
 
-**Fora do MVP:** gerenciamento de premiações, estornos por cancelamento posterior à aprovação e implantação corporativa multiusuário. A infraestrutura de rede é descrita como proposta, não como ambiente instalado.
-
 ---
 
 ## 6. Planejamento e Kanban — próxima revisão
