@@ -1,6 +1,6 @@
 <div align="center">
 
-# ADMcom
+# Rankcom
 
 ### Gestão Comercial, Comissões e Gamificação
 
@@ -12,13 +12,12 @@
 
 </div>
 
-> **Nota:** ADMcom é o nome utilizado atualmente para identificar o sistema e ainda está sujeito à validação da equipe. A política de cálculo das comissões também está em definição.
 
 ## Visão geral
 
-O **ADMcom** é um projeto de sistema de gestão comercial voltado à **DMcom Administradora de Consórcios**, empresa fictícia com **64 colaboradores**. Seu propósito é apoiar a digitalização de processos da área comercial, reunindo o registro e a análise de contratos, a apuração de comissões e o acompanhamento do desempenho das equipes.
+O **Rankcom** é um projeto de sistema de gestão comercial voltado à **DMcom Administradora de Consórcios**, empresa fictícia com **64 colaboradores**. Seu propósito é apoiar a digitalização de processos da área comercial, reunindo o registro e a análise de contratos, a apuração de comissões e o acompanhamento do desempenho das equipes.
 
-A proposta utiliza **gamificação**, por meio de rankings e premiações, para tornar os resultados mais visíveis e incentivar o reconhecimento dos vendedores. O projeto encontra-se **em desenvolvimento**: as funcionalidades descritas a seguir representam o escopo proposto, e não necessariamente recursos já finalizados.
+A proposta utiliza **gamificação**, por meio de rankings, para tornar os resultados mais visíveis e incentivar o reconhecimento dos vendedores. A gestão de premiações poderá ser incorporada em uma versão futura. O projeto está **em desenvolvimento**: as funcionalidades a seguir representam o escopo previsto, e não necessariamente recursos já finalizados.
 
 ## Contexto da organização
 
@@ -30,26 +29,26 @@ A estrutura organizacional, os processos de negócio e o contexto da empresa est
 
 ## Problemas e solução proposta
 
-| Desafio identificado | Como o ADMcom pretende contribuir |
+| Desafio identificado | Como o Rankcom pretende contribuir |
 |---|---|
-| Apuração manual e demorada das comissões | Automatizar o cálculo e a consolidação das comissões de contratos aprovados, conforme as regras de negócio a serem definidas |
+| Apuração manual e demorada das comissões | Automatizar o cálculo das comissões de contratos **aprovados**, usando um percentual único e fixo para todos os vendedores |
 | Dificuldade de acompanhar contratos | Centralizar o registro, a análise e a situação de cada contrato |
-| Visibilidade limitada do desempenho comercial | Disponibilizar rankings por equipe e um ranking geral, atualizados com base nas vendas aprovadas |
-| Baixo engajamento e reconhecimento pouco visível | Apoiar ciclos de competição e premiação para os três primeiros colocados de cada ranking |
+| Visibilidade limitada do desempenho comercial | Disponibilizar rankings por equipe e um ranking geral, atualizados com base nas comissões válidas |
+| Baixo engajamento e reconhecimento pouco visível | Destacar os três primeiros colocados de cada ranking e apoiar o acompanhamento dos ciclos comerciais |
 
 ## Funcionalidades previstas
 
 - **Acesso por perfil:** administrador, gestor e funcionário (vendedor).
 - **Cadastro de clientes:** registro e consulta das informações necessárias à operação comercial.
+- **Gerenciamento de funcionários e equipes:** cadastro e associação dos vendedores às equipes comerciais.
 - **Registro de contratos:** vinculação de contratos aos clientes e encaminhamento para análise.
-- **Análise de contratos:** aprovação ou reprovação pelo gestor, com indicação do motivo da reprovação e possibilidade de correção e reenvio.
-- **Comissões:** apuração de valores associados aos contratos aprovados, conforme critérios a serem definidos pelo grupo.
-- **Ranking geral:** classificação dos vendedores das três equipes.
+- **Análise de contratos:** aprovação ou reprovação pelo gestor, com motivo registrado e possibilidade de correção e reenvio.
+- **Comissões:** cálculo sobre contratos aprovados, com percentual **único e fixo** para os vendedores.
+- **Ranking geral:** classificação dos 21 vendedores das três equipes.
 - **Rankings por equipe:** classificação dos sete vendedores de cada equipe comercial.
-- **Ciclos e premiações:** período de apuração compartilhado entre os rankings, com premiação dos três primeiros colocados de cada classificação.
-- **Histórico e rastreabilidade:** preservação das informações relevantes dos processos comerciais.
+- **Ciclos de apuração:** abertura e encerramento de um ciclo compartilhado entre os quatro rankings pelo administrador.
 
-> **Importante:** a definição dos percentuais e critérios de comissão ainda será discutida pela equipe. A lista representa o planejamento do produto e será refinada junto aos requisitos e ao Product Backlog.
+> **Limites do escopo inicial:** o gerenciamento de premiações e o tratamento de cancelamentos posteriores à aprovação dos contratos estão previstos apenas como possíveis evoluções. O percentual de 5% é provisório e a base financeira de cálculo ainda será definida.
 
 ## Como funciona o fluxo comercial
 
@@ -62,17 +61,17 @@ flowchart TD
     E --> F["Vendedor corrige o contrato"]
     F --> C
     D -- "Sim" --> G["Contrato aprovado"]
-    G --> H["Comissão considerada na apuração"]
+    G --> H["Cálculo e contabilização da comissão fixa"]
     H --> I["Atualização dos rankings geral e por equipe"]
 ```
 
 **Regras operacionais já definidas para a proposta:**
 
-- Apenas contratos **aprovados** contribuem para a apuração de comissões e a classificação nos rankings.
+- Apenas contratos **aprovados** contribuem para as comissões contabilizadas e para a classificação nos rankings.
+- O mesmo percentual fixo de comissão se aplica a **todos os vendedores**; seu valor definitivo e a base de cálculo ainda dependem de validação.
 - O **administrador** controla a abertura e o encerramento do **ciclo compartilhado** dos rankings.
-- O **administrador** define a premiação do ranking geral.
-- Cada **gestor** define a premiação do ranking da própria equipe.
-- O ranking geral e os três rankings das equipes possuem **classificações e premiações próprias**, mesmo compartilhando o período de apuração.
+- O ranking geral e os três rankings das equipes possuem **classificações próprias** e exibem os três primeiros colocados.
+- A definição de recompensas cabe à administração da empresa: ao administrador, no ranking geral, e aos gestores, nos rankings das equipes; **o sistema não gerencia premiações nesta versão**.
 
 ## Tecnologias e ferramentas
 
@@ -87,40 +86,38 @@ flowchart TD
 
 ## Estrutura do repositório
 
-O repositório está organizado por tipo de material, separando a implementação, os diagramas e a documentação do produto. A tabela abaixo funciona como um ponto de acesso às áreas principais.
+O repositório separa código-fonte, diagramas e documentação. Utilize a tabela abaixo para acessar cada área principal.
 
 | Diretório ou arquivo | Conteúdo | Acesso |
 |---|---|---|
 | `Código_em_C/` | Código-fonte do protótipo, rotinas em C e integração com o banco de dados. | [Ver código-fonte](Código_em_C/) |
 | `Diagramas/` | Fluxogramas, modelos de dados e diagramas de análise do sistema. | [Ver diagramas](Diagramas/) |
-| `Docs/` | Documentação técnica da empresa, do produto e do processo de desenvolvimento. | [Ver documentos](Docs/) |
+| `Docs/` | Documentação técnica da empresa, do produto e do desenvolvimento. | [Ver documentos](Docs/) |
 | `README.md` | Apresentação geral e ponto de entrada do repositório. | Você está aqui |
 
 ## Documentação técnica
 
-A pasta [`Docs/`](Docs/) concentra os arquivos Markdown que registram **o contexto da organização, as decisões do produto e a evolução do desenvolvimento**. O conteúdo acadêmico separado por disciplina é mantido fora deste repositório.
+A pasta [`Docs/`](Docs/) concentra os arquivos Markdown que registram **o contexto da organização, as decisões do produto e a evolução do desenvolvimento**. O relatório acadêmico do PIM II é mantido separadamente.
 
 ### Organização dos documentos
 
 | Área | Arquivo ou pasta de referência | O que documenta | Situação |
 |---|---|---|---|
-| **01 · Empresa** | [Caracterização da DMcom](Docs/01-Empresa/caracteriza%C3%A7%C3%A3o.md) | Identificação, missão, estrutura, processos comerciais e cenário anterior à digitalização. | Em revisão pelo grupo |
-| **02 · Requisitos** | `Docs/02-Requisitos/requisitos.md` | Requisitos funcionais, não funcionais e regras de negócio em **um único Markdown**. | Organização planejada |
-| **03 · Produto** | `Docs/03-Produto/` | Histórias de usuário e Product Backlog, com necessidades e prioridades do sistema. | Organização planejada |
-| **04 · Sprints** | `Docs/04-Sprints/` | Histórico de cada Sprint: objetivo, planejamento, tarefas, entregas, impedimentos e retrospectiva. | Organização planejada |
-| **05 · Atas** | `Docs/05-Atas/` | Registro de reuniões, decisões do grupo, responsáveis e pendências. | Organização planejada |
+| **01 · Empresa** | [Caracterização da DMcom](Docs/01-Empresa/caracteriza%C3%A7%C3%A3o.md) | Identificação, missão, estrutura, processos comerciais e cenário anterior à digitalização. | Documento disponível; sujeito à revisão da equipe |
+| **02 · Especificação e Planejamento** | [Requisitos](Docs/02-Especificacao-e-Planejamento/requisitos.md) | Regras de negócio, requisitos funcionais, não funcionais e rastreabilidade. | Em validação pela equipe |
+| **02 · Especificação e Planejamento** | [Product Backlog](Docs/02-Especificacao-e-Planejamento/product_backlog.md) | Histórias de usuário, critérios de aceitação, tarefas e prioridades. | Em validação pela equipe |
+| **Sprints** | [Consultar documentação](Docs/) | Planejamento, tarefas e entregas das Sprints; acompanhamento da execução pelo Kanban. | Organização e histórico em revisão |
+| **Atas** | [Consultar documentação](Docs/) | Reuniões, decisões, responsáveis e pendências. | Conforme registros disponíveis |
 
-> **Nota sobre os links:** as áreas marcadas como *organização planejada* indicam a estrutura proposta para os próximos documentos. Seus caminhos ainda não são links de navegação, para evitar apontar para arquivos ou pastas que o grupo não criou ou confirmou. À medida que a equipe organizar as pastas, esta tabela poderá receber os links correspondentes.
+> **Navegação:** os links de Sprints e Atas levam à pasta geral `Docs/` até que os respectivos caminhos sejam confirmados.
 
 ### Como consultar a documentação
 
-A **caracterização** explica a empresa e o problema que motivou o sistema; os **requisitos** definem o comportamento esperado e as restrições; a área de **produto** reúne as necessidades priorizadas; os arquivos de **Sprints** registram a execução; e as **atas** preservam as principais decisões coletivas.
-
-Isso permite acompanhar o projeto sem misturar documentação do produto com o conteúdo acadêmico preparado para a avaliação do curso.
+A **caracterização** apresenta a organização e o problema; os **requisitos** definem o comportamento esperado e as restrições do sistema; o **Product Backlog** registra as necessidades priorizadas e sua decomposição em tarefas; os documentos de **Sprints** acompanham o planejamento e as entregas; e as **atas** preservam as decisões coletivas.
 
 ## Execução do protótipo
 
-**O código principal ainda está em desenvolvimento e integração.** As instruções completas de compilação, configuração do SQLite e execução do sistema serão acrescentadas quando houver um fluxo de execução único e validado.
+**O código principal ainda está em desenvolvimento e integração.** As instruções completas de compilação, configuração do SQLite e execução do sistema serão acrescentadas quando houver um fluxo único de execução validado.
 
 Para obter o repositório localmente:
 
@@ -133,9 +130,9 @@ Os arquivos de implementação disponíveis podem ser consultados na pasta [`Có
 
 ## Organização do desenvolvimento
 
-A equipe utiliza práticas do **Scrum** para planejar entregas incrementais, com apoio de um **quadro Kanban no GitHub Projects** para visualizar e acompanhar as atividades.
+A equipe utiliza práticas do **Scrum**, com planejamento semanal e apoio de um **quadro Kanban no GitHub Projects**. As reuniões aos sábados permitem revisar o que foi feito, identificar pendências e decidir as atividades da semana seguinte.
 
-Os **registros de execução de cada Sprint** serão documentados em `Docs/04-Sprints/`, enquanto as **decisões tomadas em reuniões** serão registradas em `Docs/05-Atas/`, conforme essas áreas forem organizadas. As histórias de usuário e o Product Backlog ficarão em `Docs/03-Produto/`. O quadro Kanban continuará servindo para acompanhar o estado das atividades; os Markdown preservarão o contexto e o histórico das entregas.
+Os registros detalhados das **Sprints** ficam na documentação do projeto, enquanto o **Kanban** apresenta o andamento das atividades. O histórico das Sprints anteriores será relacionado às tarefas atuais sem modificar retrospectivamente os resultados alcançados.
 
 ## Equipe
 
@@ -156,10 +153,8 @@ O desenvolvimento é realizado em equipe, com uso de branches individuais e inte
 
 <div align="center">
 
-**DMcom Administradora de Consórcios · Projeto ADMcom**
+**DMcom Administradora de Consórcios · Projeto Rankcom**
 
 *Desenvolvido por estudantes de Análise e Desenvolvimento de Sistemas da Universidade Paulista (UNIP).*
 
 </div>
-
-
