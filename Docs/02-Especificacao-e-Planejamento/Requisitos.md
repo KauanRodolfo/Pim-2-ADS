@@ -2,7 +2,7 @@
 
 **Organização:** DMcom Administradora de Consórcios  
 **Produto:** Rankcom  
-**Versão:** 0.3 — proposta para validação  
+**Versão:** 0.4 — decisões de 22/10/2026
 **Situação:** Em validação pela equipe  
 **Documentos relacionados:** [`product_backlog.md`](./product_backlog.md)
 
@@ -12,11 +12,11 @@
 
 Regras de negócio são políticas da **DMcom**: orientam o processo mesmo que ele não seja informatizado.
 
-### RN01* — Comissão com percentual único e fixo
+### RN01 — Comissão fixa de 5%
 
-A DMcom adota **o mesmo percentual de comissão para todos os vendedores**, independentemente da equipe. Somente contratos **aprovados pelo gestor responsável** podem gerar comissões válidas para contabilização nos rankings comerciais.
+A DMcom adota uma **comissão fixa de 5% para todos os vendedores**, independentemente da equipe. O Rankcom calcula a comissão somente após a **aprovação do contrato pelo gestor**. Contratos pendentes ou reprovados não geram comissão válida nem pontuação nos rankings.
 
-**Pendente:** definir a base financeira de incidência e o percentual definitivo. **5% é apenas um parâmetro provisório para simulações**, não uma decisão final do negócio.
+**Pendente técnico/financeiro:** definir com a equipe qual **valor do contrato constitui a base de cálculo**; não se presume que seja o valor total do contrato.
 
 **Relação:** RF04, RF05 e RF06; HU05, HU06 e HU07.
 
@@ -46,25 +46,27 @@ O Rankcom deve permitir que o **Administrador** cadastre e consulte funcionário
 
 ### RF04 — Registro e análise de contratos
 
-O Rankcom deve permitir que o **Funcionário** registre contratos vinculados a clientes e os encaminhe à análise do **Gestor da equipe**. O Gestor deve poder aprovar ou reprovar cada registro; a reprovação exige justificativa e permite correção e reenvio pelo Funcionário.
+O Rankcom deve permitir que o **Funcionário** cadastre contratos vinculados a clientes, cabendo ao **Gestor** aprová-los ou reprová-los. Contratos reprovados não poderão ser reenviados nem gerar comissões.
 
 **Histórias vinculadas:** HU04 e HU05.  
 **Regra relacionada:** RN01.
 
 ### RF05* — Cálculo automático de comissões
 
-O Rankcom deve calcular a comissão dos **contratos aprovados**, utilizando o **percentual único e fixo** adotado pela DMcom.
+O Rankcom deve calcular automaticamente a comissão de **5%** sobre a base financeira adotada para o contrato, **exclusivamente depois da aprovação pelo Gestor**. O valor validado compõe a apuração do vendedor no ciclo correspondente.
 
-**Pendente:** percentual definitivo e base financeira do cálculo. Para exemplos e testes preliminares, pode ser utilizado o percentual **provisório de 5%**, sujeito à revisão. Sem a base definida, o cálculo não pode ser considerado especificado integralmente.
+**Pendente:** identificar precisamente a base de cálculo da comissão; o percentual **já está definido em 5%**.
 
 **História vinculada:** HU06.  
 **Regra relacionada:** RN01.
 
 ### RF06* — Rankings comerciais
 
-O Rankcom deve disponibilizar **um ranking geral** dos 21 vendedores e **três rankings por equipe**, classificando participantes pela soma das comissões válidas no ciclo em curso, em ordem decrescente, e destacando os três primeiros colocados. Os resultados devem refletir novas aprovações de contratos.
+O Rankcom deve apresentar **um ranking geral** dos 21 vendedores e **um ranking para cada uma das três equipes**, considerando a soma das comissões válidas de contratos aprovados no ciclo. O sistema destaca **apenas o vendedor em primeiro lugar de cada ranking**, sem pódio de segundo e terceiro lugares.
 
-**Pendente:** critério de desempate e permissões exatas de consulta por perfil.
+Em empate na soma das comissões, vence quem tiver realizado **primeiro uma venda válida no ciclo**, considerando a data e hora de registro da venda vinculada a contrato posteriormente aprovado (não a data da aprovação). As classificações devem refletir novas aprovações durante o ciclo.
+
+**Pendente:** definir as permissões exatas de visualização dos rankings por perfil. Se nenhum participante possuir venda válida, não há vencedor a destacar.
 
 **História vinculada:** HU07.  
 **Regra relacionada:** RN01.
@@ -89,11 +91,11 @@ O protótipo funcional deve ser implementado em **linguagem C**, conforme a disc
 
 O protótipo deve utilizar **SQLite** para persistir os dados necessários ao funcionamento e recuperá-los em execuções posteriores.
 
-### RNF03* — Segurança de autenticação
+### RNF03 — Controle de acesso e rastreabilidade por logs
 
-O protótipo deve restringir operações conforme o perfil autenticado e **não armazenar senhas em texto puro**, adotando mecanismo de armazenamento seguro de credenciais.
+O protótipo deve **verificar as credenciais de acesso**, restringir operações conforme o perfil autenticado e **registrar em log eventos relevantes**, como tentativas de acesso e decisões de aprovação ou reprovação de contratos, com identificação do evento e momento do registro.
 
-**Pendente técnico:** selecionar e implementar um mecanismo apropriado para senhas em C; hash SHA-256 simples, sem proteção adicional, não é suficiente como estratégia de armazenamento de senhas.
+**Delimitação do protótipo:** não foi assumida a implementação de hash de senhas nesta etapa. Os testes devem utilizar **credenciais fictícias**, sem senhas reais; logs não substituem a proteção das credenciais. Um sistema colocado em produção exigiria armazenamento seguro de senhas e controles adicionais.
 
 ### RNF04 — Proteção de dados pessoais
 
@@ -113,24 +115,22 @@ O protótipo deve utilizar **interface textual (CLI)** com menus identificados, 
 | RF02 | HU02 | — | T03–T05 |
 | RF03 | HU03 | — | T06–T08 |
 | RF04 | HU04, HU05 | RN01 | T09–T13 |
-| RF05* | HU06* | RN01* | T14–T15 |
-| RF06* | HU07* | RN01* | T16–T18 |
+| RF05* | HU06 | RN01 | T14–T15 |
+| RF06* | HU07* | RN01 | T16–T18 |
 | RF07 | HU08 | — | T19–T21 |
 | RNF01 | HU01–HU08 | — | T22 |
 | RNF02 | HU02–HU08 | — | T23 |
-| RNF03* | HU01 | — | T24 |
+| RNF03 | HU01, HU05 | — | T24 |
 | RNF04 | HU01–HU05 | — | T25 |
 | RNF05 | HU01–HU08 | — | T26 |
-
-> Os RNFs podem incidir sobre diversas histórias e tarefas. Os vínculos indicados são uma referência de planejamento, não uma relação obrigatória de um para um.
 
 ---
 
 ## 5. Limites do MVP e pendências
 
 - **Fora do MVP:** módulo de cadastro e controle de premiações; estornos e recálculos de contratos cancelados depois da aprovação; implantação multiusuário em rede. A arquitetura de rede é uma **proposta conceitual**, diferente do protótipo local.
-- **A definir:** percentual e base de cálculo da comissão (RN01/RF05); desempates e visibilidade dos rankings (RF06); método concreto de proteção de senhas (RNF03).
-- **Fluxo confirmado:** vendedor registra contrato; gestor aprova ou reprova com justificativa; o vendedor pode corrigir e reenviar; **somente contratos aprovados** contam para a comissão e os rankings.
-- **Premiações:** podem existir como prática administrativa da DMcom, mas seu gerenciamento **não será implementado** nesta versão do Rankcom.
+- **A definir:** base financeira da comissão (RF05); permissões de visualização dos rankings (RF06); escopo exato dos eventos registrados em log (RNF03). O percentual de **5%**, o desempate e o vencedor único por ranking **já foram definidos**.
+- **Fluxo confirmado:** vendedor registra contrato; gestor aprova ou reprova; a reprovação encerra o fluxo do registro, **sem correção ou reenvio**; **somente contratos aprovados** contam para a comissão e os rankings.
+- **Premiações:** cada ranking poderá fundamentar uma premiação distinta no futuro, mas seu cadastro, concessão e acompanhamento **não serão implementados** nesta versão do Rankcom.
 
 **Planejamento:** as tarefas T01–T26 são **propostas**, ainda não atribuídas a Sprints, responsáveis ou status de execução. A equipe fará esse planejamento sem alterar retroativamente os registros reais das reuniões semanais.
