@@ -2,7 +2,7 @@
 
 **Organização:** DMcom Administradora de Consórcios  
 **Produto:** Rankcom  
-**Versão:** 0.3 — proposta para validação  
+**Versão:** 0.4 — decisões de 22/10/2026  
 **Situação:** Em validação pela equipe  
 **Documento relacionado:** [`requisitos.md`](./requisitos.md)
 
@@ -16,9 +16,9 @@
 | HU02 | Cadastrar e consultar clientes | RF02 | Alta | Dados vinculados aos contratos |
 | HU03 | Cadastrar funcionários e associar equipes | RF03 | Alta | Equipes e perfis de acesso |
 | HU04 | Registrar contratos para análise | RF04 | Alta | Início como pendente |
-| HU05 | Aprovar ou reprovar contratos | RF04 | Alta | Reprovação justificada e reenvio |
-| HU06* | Calcular comissões padronizadas | RF05* | Alta | Percentual e base ainda pendentes |
-| HU07* | Consultar rankings comerciais | RF06* | Alta | Desempate e visibilidade pendentes |
+| HU05 | Aprovar ou reprovar contratos | RF04 | Alta | Reprovação definitiva, sem reenvio |
+| HU06 | Calcular comissões padronizadas | RF05* | Alta | 5% fixos; base de cálculo pendente |
+| HU07* | Consultar rankings comerciais | RF06* | Alta | Vencedor único; visibilidade pendente |
 | HU08 | Abrir e encerrar ciclos de apuração | RF07 | Média | Um ciclo para os quatro rankings |
 
 ## 2. Histórias de usuário e critérios de aceitação
@@ -65,19 +65,20 @@
 
 **Critérios de aceitação:**
 - O gestor consulta os contratos pendentes da sua equipe.
-- O gestor pode aprovar ou reprovar um contrato; reprovação exige justificativa.
-- O vendedor pode corrigir e reenviar o contrato reprovado.
+- O gestor pode aprovar ou reprovar um contrato, sem necessidade de justificativa.
+- A reprovação encerra definitivamente o processo daquele registro; não há opção de correção ou reenvio.
+- Contratos reprovados permanecem identificados no histórico para consulta, sem gerar comissão.
 - Somente contratos aprovados ficam aptos à contabilização de comissão.
 
-### HU06* — Cálculo de comissões
+### HU06 — Cálculo de comissões
 
 **Como** Funcionário, **quero** que contratos aprovados tenham sua comissão calculada automaticamente, **para** acompanhar meu resultado de forma padronizada.
 
 **Critérios de aceitação:**
-- O sistema aplica o mesmo percentual a todos os vendedores.
+- O sistema aplica **5% fixos** para todos os vendedores.
 - O cálculo só é contabilizado após a aprovação do contrato.
 - A comissão calculada pode ser utilizada pelo ranking.
-- **Pendente:** base financeira do cálculo e percentual definitivo; **5% apenas para simulações preliminares**.
+- **Pendente:** determinar a base financeira exata do cálculo; o percentual de **5% está definido**.
 
 ### HU07* — Rankings comerciais
 
@@ -86,9 +87,11 @@
 **Critérios de aceitação:**
 - São apresentados um ranking geral dos 21 vendedores e três rankings de equipe.
 - A ordem considera o total de comissões válidas no ciclo, do maior para o menor.
-- São destacados os três primeiros de cada ranking.
+- Apenas o **primeiro colocado** é destacado como vencedor em cada ranking (geral e por equipe).
 - A classificação é atualizada quando novas aprovações alteram os resultados.
-- **Pendente:** desempate e níveis de consulta dos rankings por perfil.
+- Em empate no total de comissões válidas, vence quem registrou **mais cedo uma venda válida no ciclo**, conforme a data/hora do registro de contrato posteriormente aprovado.
+- Se não houver vendas válidas, não é destacado um vencedor.
+- **Pendente:** níveis de consulta dos rankings por perfil.
 
 ### HU08 — Ciclos de apuração
 
@@ -118,19 +121,19 @@ A numeração **T01–T26 é proposta** para rastreabilidade. Cada linha represe
 | T09 | RF04 / HU04 | Registrar contrato | Vincular contrato a cliente e vendedor. | Alta |
 | T10 | RF04 / HU04 | Definir status inicial | Registrar contrato como pendente de análise. | Alta |
 | T11 | RF04 / HU05 | Consultar contratos pendentes | Exibir ao gestor solicitações da sua equipe. | Alta |
-| T12 | RF04 / HU05 | Aprovar ou reprovar contrato | Registrar decisão e exigir motivo na reprovação. | Alta |
-| T13 | RF04 / HU05 | Corrigir e reenviar contrato | Permitir ajuste e nova submissão de contrato reprovado. | Alta |
-| T14* | RF05 / HU06 | Aplicar comissão fixa | Implementar cálculo sobre base aprovada, usando alíquota única. | Alta |
+| T12 | RF04 / HU05 | Aprovar ou reprovar contrato | Registrar a decisão de aprovação ou reprovação e atualizar o status do contrato. | Alta |
+| T13 | RF04 / HU05 | Encerrar contrato reprovado | Registrar a reprovação definitiva, preservar o histórico e impedir reenvio do mesmo registro. | Alta |
+| T14* | RF05 / HU06 | Aplicar comissão de 5% | Calcular 5% sobre a base financeira definida para contrato aprovado. | Alta |
 | T15 | RF05 / HU06 | Contabilizar comissão válida | Incorporar somente comissões de contratos aprovados. | Alta |
 | T16 | RF06 / HU07 | Gerar ranking geral | Ordenar vendedores pela comissão válida do ciclo. | Alta |
 | T17 | RF06 / HU07 | Gerar rankings por equipe | Ordenar vendedores em cada equipe. | Alta |
-| T18* | RF06 / HU07 | Exibir pódio e atualizar classificação | Destacar os três primeiros e refletir aprovações; desempate pendente. | Alta |
+| T18 | RF06 / HU07 | Identificar vencedor e desempatar | Destacar só o primeiro de cada ranking; desempatar pela primeira venda válida e atualizar após aprovações. | Alta |
 | T19 | RF07 / HU08 | Abrir ciclo de apuração | Permitir ao Administrador iniciar ciclo compartilhado. | Média |
 | T20 | RF07 / HU08 | Encerrar ciclo de apuração | Encerrar período e consolidar resultados. | Média |
 | T21 | RF07 / HU08 | Controlar ciclo vigente | Vincular resultados e consultas ao ciclo correto. | Média |
 | T22 | RNF01 | Adequar núcleo do protótipo à linguagem C | Implementar as rotinas prioritárias em C. | Alta |
 | T23 | RNF02 | Integrar persistência SQLite | Gravar e recuperar registros necessários entre execuções. | Alta |
-| T24* | RNF03 | Proteger credenciais | Escolher e implementar armazenamento seguro de senhas, sem texto puro. | Alta |
+| T24 | RNF03 | Registrar logs de acesso e decisões | Verificar acesso por perfil e registrar eventos relevantes com data/hora, usando credenciais fictícias no protótipo. | Alta |
 | T25 | RNF04 | Restringir dados pessoais | Impedir consulta ou uso de dados pessoais por perfis não autorizados. | Alta |
 | T26 | RNF05 | Validar menus e entradas | Implementar menus CLI, mensagens claras e tratamento de entradas inválidas. | Alta |
 
@@ -147,23 +150,32 @@ A numeração **T01–T26 é proposta** para rastreabilidade. Cada linha represe
 | HU03 | RF03 | T06–T08 | — |
 | HU04 | RF04 | T09–T10 | — |
 | HU05 | RF04 | T11–T13 | RN01 |
-| HU06* | RF05* | T14*–T15 | RN01* |
-| HU07* | RF06* | T16–T18* | RN01* |
+| HU06 | RF05* | T14*–T15 | RN01 |
+| HU07* | RF06* | T16–T18 | RN01 |
 | HU08 | RF07 | T19–T21 | — |
 
 Os RNFs são relacionados às tarefas T22–T26 na tabela anterior e podem afetar várias histórias simultaneamente.
 
 ---
 
-## 5. Decisões pendentes e limites do MVP
+## 5. Decisões confirmadas, pendências e limites do MVP
 
-**Pontos a decidir:**
-- **HU06* / RN01* / RF05* / T14*:** percentual definitivo e base financeira da comissão. O uso de **5%** é provisório e apenas ilustrativo.
-- **HU07* / RF06* / T18*:** critério de desempate e visibilidade das classificações para os perfis.
-- **RNF03* / T24*:** método de armazenamento seguro de credenciais implementável em C.
+**Decisões confirmadas pelo grupo (22/10/2026):**
+- **RN01 / RF05 / HU06:** comissão única e fixa de **5%**, calculada somente após aprovação do contrato.
+- **RF04 / HU05 / T13:** reprovação **definitiva**, sem correção ou reenvio do mesmo contrato; histórico mantido.
+- **RF06 / HU07 / T18:** um vencedor no geral e um por equipe; em empate, prevalece a venda válida registrada primeiro no ciclo.
+- **Premiações:** podem existir futuramente como consequência dos resultados, mas **não há módulo de premiação no MVP**.
+- **RNF03 / T24:** autenticação por credenciais fictícias, restrição por perfil e registros de log; segurança de credenciais em produção fora do escopo do protótipo.
+
+**Ainda pendente de validação:**
+- **RF05* / T14*:** base monetária sobre a qual serão aplicados os 5%.
+- **RF06* / HU07*:** quais perfis podem consultar cada ranking.
+- **RNF03:** selecionar os eventos mínimos do log; **não registrar senhas nos logs**.
+
+**Fora do MVP:** cadastro e gestão de premiações, estornos por cancelamento posterior à aprovação, correção/reenvio de contratos rejeitados e implantação corporativa multiusuário. A infraestrutura de rede é uma proposta conceitual, não um ambiente instalado.
 
 ---
 
 ## 6. Planejamento e Kanban — próxima revisão
 
-O grupo realiza reuniões aos sábados, nas quais revisa entregas, pendências e define o trabalho da semana seguinte. As tarefas acima **ainda não estão atribuídas a responsáveis, Sprints ou colunas do Kanban**.
+O grupo realiza reuniões aos sábados, nas quais revisa entregas, pendências e define o trabalho da semana seguinte.
