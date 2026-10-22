@@ -12,7 +12,6 @@
 
 </div>
 
-
 ## Visão geral
 
 O **Rankcom** é um projeto de sistema de gestão comercial voltado à **DMcom Administradora de Consórcios**, empresa fictícia com **64 colaboradores**. Seu propósito é apoiar a digitalização de processos da área comercial, reunindo o registro e a análise de contratos, a apuração de comissões e o acompanhamento do desempenho das equipes.
@@ -31,24 +30,25 @@ A estrutura organizacional, os processos de negócio e o contexto da empresa est
 
 | Desafio identificado | Como o Rankcom pretende contribuir |
 |---|---|
-| Apuração manual e demorada das comissões | Automatizar o cálculo das comissões de contratos **aprovados**, usando um percentual único e fixo para todos os vendedores |
+| Apuração manual e demorada das comissões | Automatizar o cálculo de **5%** de comissão sobre contratos aprovados, com percentual fixo para todos os vendedores |
 | Dificuldade de acompanhar contratos | Centralizar o registro, a análise e a situação de cada contrato |
 | Visibilidade limitada do desempenho comercial | Disponibilizar rankings por equipe e um ranking geral, atualizados com base nas comissões válidas |
-| Baixo engajamento e reconhecimento pouco visível | Destacar os três primeiros colocados de cada ranking e apoiar o acompanhamento dos ciclos comerciais |
+| Baixo engajamento e reconhecimento pouco visível | Destacar **um vencedor** no ranking geral e **um vencedor por equipe**, com critério de desempate definido |
 
 ## Funcionalidades previstas
 
 - **Acesso por perfil:** administrador, gestor e funcionário (vendedor).
+- **Registro de eventos:** logs de tentativas de acesso e de decisões sobre contratos, conforme escopo do protótipo.
 - **Cadastro de clientes:** registro e consulta das informações necessárias à operação comercial.
 - **Gerenciamento de funcionários e equipes:** cadastro e associação dos vendedores às equipes comerciais.
 - **Registro de contratos:** vinculação de contratos aos clientes e encaminhamento para análise.
-- **Análise de contratos:** aprovação ou reprovação pelo gestor, com motivo registrado e possibilidade de correção e reenvio.
-- **Comissões:** cálculo sobre contratos aprovados, com percentual **único e fixo** para os vendedores.
-- **Ranking geral:** classificação dos 21 vendedores das três equipes.
-- **Rankings por equipe:** classificação dos sete vendedores de cada equipe comercial.
+- **Análise de contratos:** aprovação ou reprovação definitiva pelo gestor, sem justificativa obrigatória, correção ou reenvio do mesmo registro.
+- **Comissões:** cálculo de **5%**, aplicado somente aos contratos aprovados, sobre a base financeira que será definida.
+- **Ranking geral:** classificação dos 21 vendedores das três equipes, destacando **apenas o primeiro colocado**.
+- **Rankings por equipe:** classificação dos sete vendedores de cada equipe, destacando **apenas o primeiro colocado**.
 - **Ciclos de apuração:** abertura e encerramento de um ciclo compartilhado entre os quatro rankings pelo administrador.
 
-> **Limites do escopo inicial:** o gerenciamento de premiações e o tratamento de cancelamentos posteriores à aprovação dos contratos estão previstos apenas como possíveis evoluções. O percentual de 5% é provisório e a base financeira de cálculo ainda será definida.
+> **Limites do escopo inicial:** o gerenciamento de premiações e o tratamento de cancelamentos posteriores à aprovação dos contratos são possibilidades para versões futuras. O percentual de **5% está definido**, mas a base financeira do cálculo ainda será especificada. A autenticação do protótipo será testada com credenciais fictícias; a utilização de logs não equivale à proteção de senhas exigida em produção.
 
 ## Como funciona o fluxo comercial
 
@@ -57,21 +57,19 @@ flowchart TD
     A["Vendedor cadastra o cliente"] --> B["Vendedor registra o contrato"]
     B --> C["Contrato em análise"]
     C --> D{"Gestor aprova?"}
-    D -- "Não" --> E["Reprovação com motivo registrado"]
-    E --> F["Vendedor corrige o contrato"]
-    F --> C
+    D -- "Não" --> E["Contrato reprovado: processo encerrado, sem reenvio e sem comissão"]
     D -- "Sim" --> G["Contrato aprovado"]
-    G --> H["Cálculo e contabilização da comissão fixa"]
+    G --> H["Cálculo e contabilização da comissão fixa de 5%"]
     H --> I["Atualização dos rankings geral e por equipe"]
 ```
 
-**Regras operacionais já definidas para a proposta:**
+**Funcionamento definido para a proposta:**
 
 - Apenas contratos **aprovados** contribuem para as comissões contabilizadas e para a classificação nos rankings.
-- O mesmo percentual fixo de comissão se aplica a **todos os vendedores**; seu valor definitivo e a base de cálculo ainda dependem de validação.
+- O percentual de comissão é **5% para todos os vendedores**; a base financeira sobre a qual se aplica será especificada.
 - O **administrador** controla a abertura e o encerramento do **ciclo compartilhado** dos rankings.
-- O ranking geral e os três rankings das equipes possuem **classificações próprias** e exibem os três primeiros colocados.
-- A definição de recompensas cabe à administração da empresa: ao administrador, no ranking geral, e aos gestores, nos rankings das equipes; **o sistema não gerencia premiações nesta versão**.
+- O ranking geral e os três rankings por equipe possuem **classificações próprias** e destacam **somente um vencedor por ranking**. Em caso de empate no total de comissões válidas, prevalece quem registrou primeiro uma venda válida no ciclo, vinculada a contrato posteriormente aprovado.
+- **O sistema não gerencia premiações nesta versão**; esse recurso fica reservado a uma possível evolução futura.
 
 ## Tecnologias e ferramentas
 
@@ -109,7 +107,7 @@ A pasta [`Docs/`](Docs/) concentra os arquivos Markdown que registram **o contex
 | **Sprints** | [Consultar documentação](Docs/) | Planejamento, tarefas e entregas das Sprints; acompanhamento da execução pelo Kanban. | Organização e histórico em revisão |
 | **Atas** | [Consultar documentação](Docs/) | Reuniões, decisões, responsáveis e pendências. | Conforme registros disponíveis |
 
-> **Navegação:** os links de Sprints e Atas levam à pasta geral `Docs/` até que os respectivos caminhos sejam confirmados.
+> **Navegação:** os links de Sprints e Atas levam à pasta geral `Docs/` até que os respectivos caminhos sejam confirmados. Isso evita apresentar como verificados diretórios que ainda não consegui conferir.
 
 ### Como consultar a documentação
 
