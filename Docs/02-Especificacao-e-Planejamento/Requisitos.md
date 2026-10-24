@@ -2,7 +2,7 @@
 
 **Organização:** DMcom Administradora de Consórcios  
 **Produto:** Rankcom   
-**Documentos relacionados:** [`product_backlog.md`](./product_backlog.md)
+**Documentos relacionados:** [`product_backlog.md`](./Product_Backlog.md)
 
 > **Legenda:** `*` indica detalhe ainda não definido pelo grupo. Não significa que a funcionalidade esteja excluída.
 
