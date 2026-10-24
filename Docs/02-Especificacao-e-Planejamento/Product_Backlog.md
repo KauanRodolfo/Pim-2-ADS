@@ -2,7 +2,7 @@
 
 **Organização:** DMcom Administradora de Consórcios  
 **Produto:** Rankcom  
-**Documento relacionado:** [`requisitos.md`](./requisitos.md)
+**Documento relacionado:** [`requisitos.md`](./Requisitos.md)
 
 > **Legenda:** `*` indica detalhe pendente de decisão. **Prioridade** indica importância do item para o produto; não determina sua Sprint.
 
