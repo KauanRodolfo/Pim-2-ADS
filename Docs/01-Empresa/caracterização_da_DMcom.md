@@ -23,7 +23,7 @@ A DMcom atua no **segmento de consórcios**, oferecendo a comercialização e a 
 
 ## 4. Principais produtos ou serviços
 
-A DMcom administra e comercializa **cotas de consórcio**. A comercialização dessas cotas constitui o principal fluxo de negócio considerado neste projeto. Cada venda é formalizada por meio de um contrato, que passa por análise antes de ser reconhecido como aprovado. **Somente contratos aprovados** geram comissões válidas para os rankings comerciais do Rankcom. A empresa adota um **percentual de comissão único e fixo** para todos os vendedores; sua base de cálculo e o valor definitivo do percentual ainda dependem de validação.
+A DMcom administra e comercializa **cotas de consórcio**. A comercialização dessas cotas constitui o principal fluxo de negócio considerado neste projeto. Cada venda é formalizada por meio de um contrato, que passa por análise antes de ser reconhecido como aprovado. **Somente contratos aprovados** geram comissões válidas para os rankings comerciais do Rankcom. A empresa adota **comissão fixa de 5%** para todos os vendedores, calculada somente após a aprovação do contrato pelo gestor. A base financeira sobre a qual o percentual incidirá ainda será definida pela equipe.
 
 ---
 
@@ -68,7 +68,7 @@ O setor **comercial** é o foco do Rankcom. Está dividido em **três equipes de
 |---|---|---|
 | **Administrador** | Integrante do setor de TI | Gerencia a plataforma e os usuários; abre e encerra o ciclo de apuração compartilhado pelos rankings geral e internos. Na operação da empresa, é responsável pelas premiações do ranking geral, não gerenciadas pelo protótipo. |
 | **Gestor** | Gestor de uma equipe comercial | Analisa, aprova ou reprova os contratos de sua equipe; acompanha os rankings geral e internos. Na operação da empresa, define as premiações de sua equipe, fora do sistema nesta versão. |
-| **Funcionário (vendedor)** | Vendedor de uma equipe comercial | Cadastra clientes; registra contratos de consórcio; corrige e reenvia contratos reprovados; acompanha sua classificação nos rankings. |
+| **Vendedor** | Integrante de uma equipe comercial | Cadastra clientes; registra contratos de consórcio para análise do gestor; acompanha os resultados comerciais conforme as permissões do sistema. |
 
 ---
 
@@ -83,13 +83,10 @@ flowchart TD
     C --> D{"Gestor aprova?"}
     D -- "Sim" --> E["Comissão é contabilizada<br/>no ciclo vigente"]
     E --> F["Ranking geral e ranking<br/>da equipe são atualizados"]
-    D -- "Não" --> G["Reprovação com<br/>motivo registrado"]
-    G --> H["Vendedor corrige<br/>o contrato"]
-    H --> I["Reenvia para análise"]
-    I --> C
+    D -- "Não" --> G["Contrato reprovado:<br/>análise encerrada"]
 ```
 
-O registro de um contrato, isoladamente, **não gera pontuação no ranking**. A comissão é contabilizada para fins de classificação somente depois da aprovação pelo gestor. Em caso de reprovação, o motivo é registrado, e o vendedor pode corrigir e reenviar o contrato para nova análise.
+O registro de um contrato, isoladamente, **não gera pontuação no ranking**. A comissão é contabilizada para fins de classificação somente depois da aprovação pelo gestor. Em caso de reprovação, a análise é encerrada definitivamente, **sem exigência de justificativa, correção ou reenvio**. O contrato mantém o status de reprovado para consulta e rastreabilidade, mas não gera comissão.
 
 ### 6.2 Ciclo de apuração e classificação
 
@@ -99,7 +96,7 @@ flowchart TD
     B --> C["Comissão com percentual fixo<br/>é contabilizada"]
     C --> D["Ranking geral e rankings<br/>por equipe são atualizados"]
     D --> E["Administrador encerra<br/>o ciclo compartilhado"]
-    E --> F["Classificações finais e<br/>três primeiros colocados"]
+    E --> F["Classificações finais e<br/>um vencedor por ranking"]
     F --> G["Resultados preservados<br/>para consulta"]
 ```
 
@@ -112,17 +109,17 @@ O Rankcom apresenta **quatro classificações**, vinculadas a **um único ciclo 
 
 Todos os rankings ordenam os vendedores conforme o **total de comissões válidas no ciclo**, em ordem decrescente. A aprovação de um contrato atualiza automaticamente a posição do vendedor nos rankings aplicáveis. Ao encerrar o ciclo compartilhado, o administrador consolida os resultados dos quatro rankings.
 
-**A empresa poderá premiar os três primeiros colocados de cada ranking.** O administrador define as recompensas do ranking geral e cada gestor as de sua equipe. **O Rankcom não cadastra, distribui nem registra premiações nesta versão**: o módulo de gerenciamento de prêmios é uma possibilidade de evolução futura.
+O Rankcom destaca **um único vencedor em cada ranking**, sendo um no ranking geral e um em cada uma das três equipes. Em caso de empate no total de comissões válidas, prevalece o vendedor cuja **primeira venda válida no ciclo** tenha sido registrada antes, considerando a data e a hora de registro do contrato posteriormente aprovado. Se não houver vendas válidas, não há vencedor a destacar. A gestão de premiações permanece **fora do protótipo atual**, como possibilidade de evolução futura.
 
 ### 6.3 Descrição dos processos
 
 1. **Cadastro de clientes:** o vendedor registra os dados do cliente interessado em uma cota de consórcio.
 2. **Registro de contrato:** o vendedor formaliza a venda e vincula o contrato ao cliente cadastrado, encaminhando-o para análise.
-3. **Análise e aprovação:** o gestor responsável avalia o contrato e decide pela aprovação ou reprovação. Em caso de reprovação, registra o motivo para permitir a correção e o reenvio pelo vendedor.
-4. **Cálculo de comissão:** após a aprovação, o sistema aplica um percentual único e fixo a todos os vendedores e contabiliza a comissão válida para fins de apuração comercial. Para simulações, pode-se adotar **5% provisoriamente**, sem estabelecer esse número nem a base de incidência como definitivos.
+3. **Análise e aprovação:** o gestor responsável avalia o contrato e decide pela aprovação ou reprovação. Se reprovado, o contrato permanece registrado com esse status, sem correção ou reenvio do mesmo registro.
+4. **Cálculo de comissão:** após a aprovação, o sistema aplica um percentual único e fixo a todos os vendedores e contabiliza a comissão válida para fins de apuração comercial. O percentual está **definido em 5%**, permanecendo pendente apenas a definição da base financeira sobre a qual incide.
 5. **Atualização dos rankings:** as comissões aprovadas atualizam automaticamente o ranking geral e o ranking interno da equipe correspondente, durante o ciclo aberto.
 6. **Encerramento do ciclo:** o administrador encerra o ciclo compartilhado, consolidando a classificação final dos quatro rankings.
-7. **Reconhecimento e premiações:** na operação da empresa, o administrador define as premiações gerais e cada gestor as de sua equipe; a gestão dessas recompensas **não faz parte do escopo inicial do Rankcom**.
+7. **Reconhecimento e premiações:** possíveis recompensas vinculadas aos resultados são consideradas apenas para **evolução futura**, sem funcionalidades de cadastro, concessão ou acompanhamento de prêmios no protótipo.
 8. **Registro e preservação do histórico:** contratos, decisões e resultados relevantes são preservados para consulta e rastreabilidade, conforme as funcionalidades previstas. Políticas detalhadas para cancelamentos posteriores à aprovação ficam fora do escopo inicial.
 
 ---
@@ -148,7 +145,7 @@ O acompanhamento comercial baseado em controles predominantemente manuais aprese
 
 O **Rankcom** é proposto como uma solução de **transformação digital** voltada à gestão comercial da DMcom. O sistema reúne o registro de contratos, o acompanhamento da aprovação, o cálculo automatizado das comissões válidas e a atualização dos rankings, reduzindo a dependência de controles manuais.
 
-Por meio da **gamificação corporativa**, o Rankcom disponibiliza classificações atualizadas por equipe e em nível geral, destacando os três primeiros colocados de cada ranking. A empresa poderá associar premiações a essas classificações, mas o cadastro e o controle dos prêmios ficam para evolução futura do sistema.
+Por meio da **gamificação corporativa**, o Rankcom disponibiliza classificações atualizadas por equipe e em nível geral, destacando apenas o primeiro colocado de cada ranking. A empresa poderá associar premiações a essas classificações, mas o cadastro e o controle dos prêmios ficam para evolução futura do sistema.
 
 Além de ampliar a visibilidade dos resultados para os vendedores, a solução oferece aos gestores informações mais organizadas para acompanhar suas equipes e ao administrador instrumentos para controlar os ciclos de apuração. Dessa forma, pretende contribuir para maior transparência, agilidade operacional e engajamento da área comercial.
 
@@ -165,6 +162,6 @@ O escopo da transformação digital concentra-se **na gestão de contratos comer
 
 ## 11. Delimitação do escopo e possibilidades de evolução
 
-A versão inicial do **Rankcom** contempla cadastro de clientes, registro e análise de contratos, comissões com percentual fixo, atualização de rankings geral e por equipe e gestão do ciclo compartilhado. O percentual de **5%** pode ser utilizado apenas como parâmetro **provisório de simulação**. A **base financeira de cálculo** e o percentual definitivo permanecem sujeitos à aprovação do grupo.
+A versão inicial do **Rankcom** contempla cadastro de clientes, registro e análise de contratos, comissões com percentual fixo, atualização de rankings geral e por equipe e gestão do ciclo compartilhado. O percentual de comissão está **fixado em 5%**, aplicado somente a contratos aprovados. A **base financeira do cálculo** ainda precisa ser definida pelo grupo.
 
 A gestão de recompensas — cadastro de prêmios, atribuição e registro de entregas — e o tratamento de cancelamentos posteriores à aprovação **não integram o escopo inicial**, podendo ser considerados evoluções futuras.
