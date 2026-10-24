@@ -24,7 +24,7 @@ A **DMcom** atua na administração e comercialização de cotas de consórcio. 
 
 No cenário fictício definido para o projeto, o acompanhamento comercial e a consolidação dos resultados ainda dependem de **controles predominantemente manuais**. Isso dificulta a consulta rápida às informações e aumenta o esforço de apuração das comissões e das classificações.
 
-A estrutura organizacional, os processos de negócio e o contexto da empresa estão detalhados na [caracterização da DMcom](Docs/01-Empresa/caracteriza%C3%A7%C3%A3o.md).
+A estrutura organizacional, os processos de negócio e o contexto da empresa estão detalhados na [caracterização da DMcom](Docs/01-Empresa/caracteriza%C3%A7%C3%A3o_da_DMcom.md).
 
 ## Problemas e solução proposta
 
@@ -88,7 +88,7 @@ O repositório separa código-fonte, diagramas e documentação. Utilize a tabel
 
 | Diretório ou arquivo | Conteúdo | Acesso |
 |---|---|---|
-| `Código_em_C/` | Código-fonte do protótipo, rotinas em C e integração com o banco de dados. | [Ver código-fonte](Código_em_C/) |
+| `Código/` | Código-fonte do protótipo, rotinas em C e integração com o banco de dados. | [Ver código-fonte](C%C3%B3digo/) |
 | `Diagramas/` | Fluxogramas, modelos de dados e diagramas de análise do sistema. | [Ver diagramas](Diagramas/) |
 | `Docs/` | Documentação técnica da empresa, do produto e do desenvolvimento. | [Ver documentos](Docs/) |
 | `README.md` | Apresentação geral e ponto de entrada do repositório. | Você está aqui |
@@ -101,13 +101,13 @@ A pasta [`Docs/`](Docs/) concentra os arquivos Markdown que registram **o contex
 
 | Área | Arquivo ou pasta de referência | O que documenta | Situação |
 |---|---|---|---|
-| **01 · Empresa** | [Caracterização da DMcom](Docs/01-Empresa/caracteriza%C3%A7%C3%A3o.md) | Identificação, missão, estrutura, processos comerciais e cenário anterior à digitalização. | Documento disponível; sujeito à revisão da equipe |
+| **01 · Empresa** | [Caracterização da DMcom](Docs/01-Empresa/caracteriza%C3%A7%C3%A3o_da_DMcom.md) | Identificação, missão, estrutura, processos comerciais e cenário anterior à digitalização. | Documento disponível; sujeito à revisão da equipe |
 | **02 · Especificação e Planejamento** | [Requisitos](Docs/02-Especificacao-e-Planejamento/Requisitos.md) | Regras de negócio, requisitos funcionais, não funcionais e rastreabilidade. | Em validação pela equipe |
 | **02 · Especificação e Planejamento** | [Product Backlog](Docs/02-Especificacao-e-Planejamento/Product_Backlog.md) | Histórias de usuário, critérios de aceitação, prioridades e rastreabilidade. | Em validação pela equipe |
-| **Sprints** | [Consultar documentação geral](Docs/) | Planejamento, atividades e entregas das Sprints; acompanhamento da execução pelo Kanban. | Organização e histórico em revisão |
-| **Atas** | [Consultar documentação geral](Docs/) | Reuniões, decisões, responsáveis e pendências. | Conforme registros disponíveis |
+| **Sprints** | [Consultar Sprints](Docs/03-Sprints/) | Planejamento, atividades e entregas das Sprints; acompanhamento da execução pelo Kanban. | Organização e histórico em revisão |
+| **Atas** | [Consultar Atas](Docs/04-Atas/) | Reuniões, decisões, responsáveis e pendências. | Conforme registros disponíveis |
 
-> **Navegação:** os links de Sprints e Atas direcionam à pasta `Docs/` até a confirmação dos caminhos individuais. Os nomes dos arquivos de requisitos e backlog devem corresponder exatamente aos arquivos publicados, inclusive maiúsculas e minúsculas.
+> **Navegação:** os acessos direcionam para as pastas e documentos existentes na estrutura da branch `main` utilizada nesta revisão.
 
 ### Como consultar a documentação
 
@@ -124,7 +124,7 @@ git clone https://github.com/KauanRodolfo/Pim-2-ADS.git
 cd Pim-2-ADS
 ```
 
-Os arquivos de implementação disponíveis podem ser consultados na pasta [`Código_em_C/`](Código_em_C/). A presença de módulos ou projetos individuais não significa que todas as funcionalidades já estejam integradas.
+Os arquivos de implementação disponíveis podem ser consultados na pasta [`Código/`](C%C3%B3digo/). A presença de módulos ou projetos individuais não significa que todas as funcionalidades já estejam integradas.
 
 ## Organização do desenvolvimento
 
