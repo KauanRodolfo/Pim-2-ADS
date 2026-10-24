@@ -37,10 +37,10 @@ A estrutura organizacional, os processos de negócio e o contexto da empresa est
 
 ## Funcionalidades previstas
 
-- **Acesso por perfil:** administrador, gestor e funcionário (vendedor).
-- **Registro de eventos:** logs de tentativas de acesso e de decisões sobre contratos, conforme escopo do protótipo.
+- **Acesso por perfil:** administrador, gestor e vendedor.
+- **Logs de auditoria:** registro de tentativas de acesso e de aprovações ou reprovações de contratos, conforme o escopo do protótipo.
 - **Cadastro de clientes:** registro e consulta das informações necessárias à operação comercial.
-- **Gerenciamento de funcionários e equipes:** cadastro e associação dos vendedores às equipes comerciais.
+- **Gerenciamento de vendedores e equipes:** cadastro e associação dos vendedores às equipes comerciais.
 - **Registro de contratos:** vinculação de contratos aos clientes e encaminhamento para análise.
 - **Análise de contratos:** aprovação ou reprovação definitiva pelo gestor, sem justificativa obrigatória, correção ou reenvio do mesmo registro.
 - **Comissões:** cálculo de **5%**, aplicado somente aos contratos aprovados, sobre a base financeira que será definida.
@@ -102,16 +102,16 @@ A pasta [`Docs/`](Docs/) concentra os arquivos Markdown que registram **o contex
 | Área | Arquivo ou pasta de referência | O que documenta | Situação |
 |---|---|---|---|
 | **01 · Empresa** | [Caracterização da DMcom](Docs/01-Empresa/caracteriza%C3%A7%C3%A3o.md) | Identificação, missão, estrutura, processos comerciais e cenário anterior à digitalização. | Documento disponível; sujeito à revisão da equipe |
-| **02 · Especificação e Planejamento** | [Requisitos](Docs/02-Especificacao-e-Planejamento/requisitos.md) | Regras de negócio, requisitos funcionais, não funcionais e rastreabilidade. | Em validação pela equipe |
-| **02 · Especificação e Planejamento** | [Product Backlog](Docs/02-Especificacao-e-Planejamento/product_backlog.md) | Histórias de usuário, critérios de aceitação, tarefas e prioridades. | Em validação pela equipe |
-| **Sprints** | [Consultar documentação](Docs/) | Planejamento, tarefas e entregas das Sprints; acompanhamento da execução pelo Kanban. | Organização e histórico em revisão |
-| **Atas** | [Consultar documentação](Docs/) | Reuniões, decisões, responsáveis e pendências. | Conforme registros disponíveis |
+| **02 · Especificação e Planejamento** | [Requisitos](Docs/02-Especificacao-e-Planejamento/Requisitos.md) | Regras de negócio, requisitos funcionais, não funcionais e rastreabilidade. | Em validação pela equipe |
+| **02 · Especificação e Planejamento** | [Product Backlog](Docs/02-Especificacao-e-Planejamento/Product_Backlog.md) | Histórias de usuário, critérios de aceitação, prioridades e rastreabilidade. | Em validação pela equipe |
+| **Sprints** | [Consultar documentação geral](Docs/) | Planejamento, atividades e entregas das Sprints; acompanhamento da execução pelo Kanban. | Organização e histórico em revisão |
+| **Atas** | [Consultar documentação geral](Docs/) | Reuniões, decisões, responsáveis e pendências. | Conforme registros disponíveis |
 
-> **Navegação:** os links de Sprints e Atas levam à pasta geral `Docs/` até que os respectivos caminhos sejam confirmados. Isso evita apresentar como verificados diretórios que ainda não consegui conferir.
+> **Navegação:** os links de Sprints e Atas direcionam à pasta `Docs/` até a confirmação dos caminhos individuais. Os nomes dos arquivos de requisitos e backlog devem corresponder exatamente aos arquivos publicados, inclusive maiúsculas e minúsculas.
 
 ### Como consultar a documentação
 
-A **caracterização** apresenta a organização e o problema; os **requisitos** definem o comportamento esperado e as restrições do sistema; o **Product Backlog** registra as necessidades priorizadas e sua decomposição em tarefas; os documentos de **Sprints** acompanham o planejamento e as entregas; e as **atas** preservam as decisões coletivas.
+A **caracterização** apresenta a organização e o problema; os **requisitos** definem o comportamento esperado e as restrições do sistema; o **Product Backlog** registra as necessidades priorizadas e seus critérios de aceitação e prioridades; os documentos de **Sprints** acompanham o planejamento e as entregas; e as **atas** preservam as decisões coletivas.
 
 ## Execução do protótipo
 
@@ -130,7 +130,7 @@ Os arquivos de implementação disponíveis podem ser consultados na pasta [`Có
 
 A equipe utiliza práticas do **Scrum**, com planejamento semanal e apoio de um **quadro Kanban no GitHub Projects**. As reuniões aos sábados permitem revisar o que foi feito, identificar pendências e decidir as atividades da semana seguinte.
 
-Os registros detalhados das **Sprints** ficam na documentação do projeto, enquanto o **Kanban** apresenta o andamento das atividades. O histórico das Sprints anteriores será relacionado às tarefas atuais sem modificar retrospectivamente os resultados alcançados.
+Os registros detalhados das **Sprints** ficam na documentação do projeto, enquanto o **Kanban** apresenta o andamento das atividades. O histórico das Sprints anteriores será relacionado às atividades do Kanban sem modificar retrospectivamente os resultados alcançados.
 
 ## Equipe
 
