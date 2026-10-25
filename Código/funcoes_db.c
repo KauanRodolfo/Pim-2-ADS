@@ -21,6 +21,7 @@ int criar_db(sqlite3 **db) {
         "CREATE TABLE IF NOT EXISTS Usuarios ("
         "  id INTEGER PRIMARY KEY AUTOINCREMENT,"
         "  nome TEXT NOT NULL,"
+        "  CPF TEXT NOT NULL,"
         "  username TEXT NOT NULL UNIQUE,"
         "  email TEXT NOT NULL UNIQUE,"
         "  senha TEXT NOT NULL,"
@@ -39,12 +40,12 @@ int criar_db(sqlite3 **db) {
         "  criado_em TEXT NOT NULL DEFAULT (datetime('now','localtime'))"
         ");"
 
-        /* TipoConsorcio: tipos de consorcio vendidos (imovel, veiculo...) */
+        /* TipoConsorcio: tipos de consorcio vendidos (imovel, veiculo...) 
         "CREATE TABLE IF NOT EXISTS TiposConsorcio ("
         "  id INTEGER PRIMARY KEY AUTOINCREMENT,"
         "  nome TEXT NOT NULL,"
         "  ativo INTEGER NOT NULL DEFAULT 1 CHECK (ativo IN (0,1))"
-        ");"
+        ");"*/
 
         /* Cliente: quem compra o consorcio (dados pessoais, LGPD) */
         "CREATE TABLE IF NOT EXISTS Clientes ("
@@ -116,6 +117,14 @@ int criar_db(sqlite3 **db) {
         /*REGISTRA O ADMIN*/
         "INSERT INTO Usuarios (id, nome, username, email, senha, nivel) "
         "VALUES ('1','Administrador', 'admin', 'admin@pim.com', 'admin123', 'admin') "
+        "ON CONFLICT (id) DO NOTHING;"
+        
+        "INSERT INTO Usuarios (id, nome, username, email, senha, nivel) "
+        "VALUES ('2','Gestor', 'gestor', 'gestor@pim.com', 'gestor123', 'gestor') "
+        "ON CONFLICT (id) DO NOTHING;"
+        
+        "INSERT INTO Usuarios (id, nome, username, email, senha, nivel) "
+        "VALUES ('3','Vendedor', 'vendedor', 'vendedor@pim.com', 'vendedor123', 'vendedor') "
         "ON CONFLICT (id) DO NOTHING;";
 
     int resultado = sqlite3_exec(*db, sql, NULL, NULL, &erro);

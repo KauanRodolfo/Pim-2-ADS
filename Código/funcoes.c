@@ -72,7 +72,7 @@ int consultar(char banco) {
             return 1;
     }
 
-    rc = sqlite3_open("testeaula", &db);
+    rc = sqlite3_open("pim2", &db);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Nao foi possivel abrir o banco: %s\n",
                 sqlite3_errmsg(db));
@@ -192,7 +192,7 @@ int excluir(int id, char banco) {
             return 1;
     }
 
-    rc = sqlite3_open("testeaula", &db);
+    rc = sqlite3_open("pim2", &db);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Nao foi possivel abrir o banco: %s\n",
                 sqlite3_errmsg(db));
@@ -232,13 +232,13 @@ int excluir(int id, char banco) {
 }
 
 int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
-            Contrato *contrato, Evento *evento){
+            Contrato *contrato){
     sqlite3 *db;
     sqlite3_stmt *stmt = NULL;
 
     int rc;
 
-    rc = sqlite3_open("testeaula", &db); //retorna 0 se a conexo for bem Sucedida
+    rc = sqlite3_open("pim2", &db); //retorna 0 se a conexo for bem Sucedida
 
     if(rc){
 
@@ -248,7 +248,7 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
     const char *sql;
 
     switch(banco){
-        case 'E':
+        /*case 'E':
         case 'e':
             if(equipe == NULL){
                 sqlite3_close(db);
@@ -262,14 +262,14 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
                 rc |= sqlite3_bind_text(stmt, 3, equipe->status, -1, SQLITE_STATIC);
                 rc |= sqlite3_bind_text(stmt, 4, equipe->criado_em, -1, SQLITE_TRANSIENT);
             }
-            break;
+            break;*/
         case 'U':
         case 'u':
             if(usuario == NULL){
                 sqlite3_close(db);
                 return 1;
             }
-            sql = "INSERT INTO Usuario (nome, username, email, senha, nivel, equipe_id, status, criado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+            sql = "INSERT INTO Usuarios (nome, username, email, senha, nivel, equipe_id, status, criado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
             rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
             if(rc == SQLITE_OK){
                 rc = sqlite3_bind_text(stmt, 1, usuario->nome, -1, SQLITE_TRANSIENT);
@@ -279,7 +279,7 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
                 rc |= sqlite3_bind_text(stmt, 5, usuario->nivel, -1, SQLITE_TRANSIENT);
                 rc |= sqlite3_bind_int(stmt, 6, usuario->equipe_id);
                 rc |= sqlite3_bind_text(stmt, 7, usuario->status, -1, SQLITE_STATIC);
-                rc |= sqlite3_bind_text(stmt, 8, usuario->criado_em, -1, SQLITE_TRANSIENT);
+
             }
             break;
         case 'C':
@@ -288,19 +288,16 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
                 sqlite3_close(db);
                 return 1;
             }
-            sql = "INSERT INTO Cliente (nome, cpf, email, telefone, renda, consentimento_lgpd, data_consentimento, status, cadastrado_por, criado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            sql = "INSERT INTO Clientes (nome, cpf, email, telefone, renda, consentimento_lgpd, data_consentimento, status, cadastrado_por, criado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
             if(rc == SQLITE_OK){
                 rc = sqlite3_bind_text(stmt, 1, cliente->nome, -1, SQLITE_TRANSIENT);
                 rc |= sqlite3_bind_text(stmt, 2, cliente->cpf, -1, SQLITE_TRANSIENT);
                 rc |= sqlite3_bind_text(stmt, 3, cliente->email, -1, SQLITE_TRANSIENT);
                 rc |= sqlite3_bind_text(stmt, 4, cliente->telefone, -1, SQLITE_TRANSIENT);
-                rc |= sqlite3_bind_double(stmt, 5, cliente->renda);
-                rc |= sqlite3_bind_int(stmt, 6, cliente->consentimento_lgpd);
-                rc |= sqlite3_bind_text(stmt, 7, cliente->data_consentimento, -1, SQLITE_TRANSIENT);
+               // rc |= sqlite3_bind_float(stmt, 5, cliente->renda);
                 rc |= sqlite3_bind_text(stmt, 8, cliente->status, -1, SQLITE_STATIC);
                 rc |= sqlite3_bind_int(stmt, 9, cliente->cadastrado_por);
-                rc |= sqlite3_bind_text(stmt, 10, cliente->criado_em, -1, SQLITE_TRANSIENT);
             }
             break;
         case 'T':
@@ -309,11 +306,11 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
                 sqlite3_close(db);
                 return 1;
             }
-            sql = "INSERT INTO Contrato (cliente_id, vendedor_id, tipo_consorcio_id, valor_credito, data_contrato, status, avaliado_por, data_avaliacao, motivo_reprovacao, criado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            sql = "INSERT INTO Contratos (cliente_id, vendedor_id, tipo_consorcio_id, valor_credito, data_contrato, status, avaliado_por, data_avaliacao, motivo_reprovacao, criado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
             if(rc == SQLITE_OK){
                 rc = sqlite3_bind_int(stmt, 1, contrato->cliente_id);
-                rc |= sqlite3_bind_int(stmt, 2, contrato->vendedor_id);
+                rc |= sqlite3_bind_int(stmt, 2, contrato->usuario_id);
                 rc |= sqlite3_bind_int(stmt, 3, contrato->tipo_consorcio_id);
                 rc |= sqlite3_bind_double(stmt, 4, contrato->valor_credito);
                 rc |= sqlite3_bind_text(stmt, 5, contrato->data_contrato, -1, SQLITE_TRANSIENT);
@@ -321,9 +318,8 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
                 rc |= sqlite3_bind_int(stmt, 7, contrato->avaliado_por);
                 rc |= sqlite3_bind_text(stmt, 8, contrato->data_avaliacao, -1, SQLITE_TRANSIENT);
                 rc |= sqlite3_bind_text(stmt, 9, contrato->motivo_reprovacao, -1, SQLITE_TRANSIENT);
-                rc |= sqlite3_bind_text(stmt, 10, contrato->criado_em, -1, SQLITE_TRANSIENT);
             }
-            break;
+            break;/*
         case 'V':
         case 'v':
             if(evento == NULL){
@@ -339,7 +335,7 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
                 rc |= sqlite3_bind_text(stmt, 4, evento->premio, -1, SQLITE_TRANSIENT);
                 rc |= sqlite3_bind_text(stmt, 5, evento->data_evento, -1, SQLITE_TRANSIENT);
             }
-            break;
+            break;*/
         default:
             sqlite3_close(db);
             return 1;

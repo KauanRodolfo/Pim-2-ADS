@@ -44,22 +44,22 @@ int criar_db(sqlite3 **db);
 typedef struct {
     int id;
     char nome[TAM_NOME + 1];
-    int gestor_id;      /* FK -> Usuario.id (0 = sem gestor) */
-    char status[TAM_P]; /* ativa | arquivada */
-    char criado_em[TAM_DATAHORA + 1];
-} Equipe;
-
-typedef struct {
-    int id;
-    char nome[TAM_NOME + 1];
+    char cpf[TAM_CPF + 1];
     char username[TAM_USERNAME + 1]; /* unico */
     char email[TAM_EMAIL + 1];       /* unico */
     char senha[TAM_SENHA + 1];
     char nivel[TAM_P];
     int equipe_id; /* FK -> Equipe.id (0 = sem equipe, ex: admin) */
     char status[TAM_P];
-    char criado_em[TAM_DATAHORA + 1];
+    
 } Usuario;
+
+typedef struct {
+    int id;
+    char nome[TAM_NOME + 1];
+    int gestor_id;      /* FK -> Usuario.id (0 = sem gestor) */
+    char status[TAM_P]; /* ativa | arquivada */
+} Equipe;
 
 typedef struct {
     int id;
@@ -67,35 +67,30 @@ typedef struct {
     char cpf[TAM_CPF + 1]; /* unico, so os 11 digitos */
     char email[TAM_EMAIL + 1];
     char telefone[TAM_TELEFONE + 1];
-    double renda;
-    int consentimento_lgpd; /* 0 = nao, 1 = sim */
-    char data_consentimento[TAM_DATAHORA + 1];
+    float renda[TAM_P];
     char status[TAM_P];
     int cadastrado_por; /* FK -> Usuario.id */
-    char criado_em[TAM_DATAHORA + 1];
 } Cliente;
 
 typedef struct {
     int id;
     int cliente_id;        /* FK -> Cliente.id */
-    int vendedor_id;       /* FK -> Usuario.id */
+    int usuario_id;       /* FK -> Usuario.id */
     int tipo_consorcio_id; /* FK -> TipoConsorcio.id */
-    double valor_credito;
+    float valor_credito;
     char data_contrato[TAM_DATA + 1];
     char status[TAM_P];
     int avaliado_por;                      /* FK -> Usuario.id (0 = ainda nao avaliado) */
     char data_avaliacao[TAM_DATAHORA + 1]; /* vazio se nao avaliado */
     char motivo_reprovacao[TAM_TEXTO + 1]; /* vazio se nao reprovado */
-    char criado_em[TAM_DATAHORA + 1];
 } Contrato;
 
 typedef struct {
     int id;
-    int competicao_id; /* FK -> Competicao.id */
-    char titulo[TAM_TITULO + 1];
-    char descricao[TAM_TEXTO + 1];
-    char premio[TAM_PREMIO + 1];
-    char data_evento[TAM_DATAHORA + 1];
-} Evento;
+    int usuario_id;      
+    char acao[TAM];    
+} LogsAuditoria;
+
+
 
 #endif
