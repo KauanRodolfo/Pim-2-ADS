@@ -15,5 +15,5 @@ int consultar(char banco);
 
 int excluir(int id, char banco);
 
-int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente, Contrato *contrato, Evento *evento);
+int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente, Contrato *contrato);
 #endif
