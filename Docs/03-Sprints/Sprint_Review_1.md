@@ -1,41 +1,37 @@
-# Sprint 1 — Review e Retrospective (reconstrução)
+# Sprint 1 — Review e Retrospective (registro revisado)
 
 **Projeto:** Rankcom — DMcom Administradora de Consórcios  
-**Sprint:** 1  
 **Período estimado:** 26/09/2026 a 02/10/2026  
-**Reunião de encerramento estimada:** 03/10/2026  
-**Situação do registro:** reconstrução retrospectiva; **pendente de validação do grupo**.
+**Reunião de encerramento:** 03/10/2026  
 
 ## 1. Objetivo da Sprint
 
-**Objetivo reconstruído a partir dos títulos das Issues (não confirmado como objetivo originalmente acordado):** iniciar a base técnica e documental do projeto, com diagramas UML, documentação, banco de dados e desenvolvimento inicial em C.
+Iniciar a base técnica e documental do Rankcom, incluindo diagramas UML, documentação acadêmica, estrutura de banco de dados e a primeira versão das rotinas de login e CRUD em C.
 
-## 2. Sprint Review — tarefas identificadas
+## 2. Sprint Review — resultados da Sprint 1
 
-| Issue | Atividade registrada no Kanban | Estado observado em 17/10 | Observação |
-|---|---|---|---|
-| [#5](https://github.com/KauanRodolfo/Pim-2-ADS/issues/5) | Criação e desenvolvimento dos diagramas em UML — Sprint 1 | Feito | Não foi possível conferir nesta reconstrução a versão/qualidade dos diagramas |
-| [#6](https://github.com/KauanRodolfo/Pim-2-ADS/issues/6) | Criação da documentação — Sprint 1 | Feito | Conteúdo entregue a confirmar no histórico da Issue |
-| [#7](https://github.com/KauanRodolfo/Pim-2-ADS/issues/7) | Criação do banco de dados — Sprint 1 | Feito | Estrutura e testes a conferir nos arquivos do repositório |
-| [#4](https://github.com/KauanRodolfo/Pim-2-ADS/issues/4) | Criação de login e CRUD em C — Sprint 1 | Feito | **Atenção:** a Sprint Review 2 ainda menciona finalização do CRUD em C como pendente; confirmar se a Issue #4 corresponde a uma entrega inicial ou parcial |
+| Issue | Atividade | Resultado confirmado sobre a Sprint 1 |
+|---|---|---|
+| [#5](https://github.com/KauanRodolfo/Pim-2-ADS/issues/5) | Criação e desenvolvimento dos diagramas UML | **Concluída** na Sprint 1, considerando a versão então planejada |
+| [#6](https://github.com/KauanRodolfo/Pim-2-ADS/issues/6) | Criação da documentação | **Concluída** a entrega documental prevista para a Sprint 1 |
+| [#7](https://github.com/KauanRodolfo/Pim-2-ADS/issues/7) | Criação do banco de dados | **Concluída** a estrutura inicial prevista para a Sprint 1 |
+| [#4](https://github.com/KauanRodolfo/Pim-2-ADS/issues/4) | Criação do login e CRUD em C | **Entrega inicial/parcial** de login e CRUD; desenvolvimento integral não concluído nessa Sprint |
 
-### Resultado registrado
+## 3. Pendências e planejamento da Sprint 2
 
-Em 17/10, as quatro Issues identificadas como Sprint 1 constavam na coluna **Feito**. Isso representa o estado do quadro naquela data; não é confirmação independente de aceitação integral de cada funcionalidade na semana da Sprint 1.
+- Dar continuidade ao desenvolvimento em C, especialmente às funções de cadastro e ao CRUD.
+- Avançar no detalhamento dos diagramas UML.
+- Continuar a documentação e a caracterização da empresa.
 
-## 3. Pendências e observações
+A reunião de 03/10 também foi utilizada para planejar as atividades da Sprint 2.
 
-- Confirmar com o grupo se as quatro Issues foram efetivamente concluídas na Sprint 1 ou encerradas depois.
-- Conferir o escopo de **login e CRUD em C** da Issue #4 em relação às pendências de cadastro e CRUD registradas na Review 2.
-- Conferir os links das entregas (commits, arquivos do banco, diagramas e documentação) antes de marcar a revisão histórica como validada.
+## 4. Sprint Retrospective — informações recuperadas
 
-## 4. Sprint Retrospective — reconstrução a validar
+**Aspectos registrados no relato posterior:** o grupo avaliou as entregas da primeira semana, distinguiu as três tarefas concluídas da implementação inicial em C e decidiu dar continuidade ao desenvolvimento na Sprint 2.
 
-*Não foi fornecido registro da discussão retrospectiva de 03/10. Os campos abaixo não representam declarações já feitas pela equipe.*
+**Limite do registro:** não foi relatada uma discussão específica de pontos positivos, dificuldades e ação de melhoria além do encaminhamento das pendências.
 
-| Tópico | Registro |
-|---|---|
-| O que funcionou bem | **A confirmar com o grupo** |
-| Dificuldades encontradas | **A confirmar com o grupo** |
-| O que melhorar | **A confirmar com o grupo** |
-| Ação combinada e responsável | **A confirmar com o grupo** |
+## 5. Rastreabilidade
+
+- [Issues #4](https://github.com/KauanRodolfo/Pim-2-ADS/issues/4), [#5](https://github.com/KauanRodolfo/Pim-2-ADS/issues/5), [#6](https://github.com/KauanRodolfo/Pim-2-ADS/issues/6) e [#7](https://github.com/KauanRodolfo/Pim-2-ADS/issues/7).
+- Revisão documental elaborada a partir de esclarecimentos prestados em 26/10/2026.
