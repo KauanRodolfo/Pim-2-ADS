@@ -1,4 +1,4 @@
-# Rankcom — Product Backlog
+ # Rankcom — Product Backlog
 
 **Organização:** DMcom Administradora de Consórcios  
 **Produto:** Rankcom  
@@ -80,7 +80,7 @@
 - A comissão calculada pode ser utilizada pelo ranking.
 - **Pendente:** determinar a base financeira exata do cálculo; o percentual de **5% está definido**.
 
-### HU07* — Rankings comerciais
+### HU07 — Rankings comerciais
 
 **Como** Gestor, **quero** consultar a classificação geral e a de minha equipe, **para** acompanhar os resultados das vendas aprovadas no ciclo.
 
