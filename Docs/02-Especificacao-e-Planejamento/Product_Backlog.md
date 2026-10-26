@@ -91,7 +91,6 @@
 - A classificação é atualizada quando novas aprovações alteram os resultados.
 - Em empate no total de comissões válidas, vence quem registrou **mais cedo uma venda válida no ciclo**, conforme a data/hora do registro de contrato posteriormente aprovado.
 - Se não houver vendas válidas, não é destacado um vencedor.
-- **Pendente:** níveis de consulta dos rankings por perfil.
 
 ### HU08 — Ciclos de apuração
 
