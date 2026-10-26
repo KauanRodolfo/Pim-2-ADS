@@ -43,11 +43,9 @@ O Rankcom deve permitir que o **Vendedor** cadastre contratos vinculados a clien
 **Histórias vinculadas:** HU04 e HU05.  
 **Regra relacionada:** RN01.
 
-### RF04* — Cálculo automático de comissões
+### RF04 — Cálculo automático de comissões
 
 O Rankcom deve calcular automaticamente a comissão de **5%** sobre a base financeira adotada para o contrato, **exclusivamente depois da aprovação pelo Gestor**. O valor validado compõe a apuração do vendedor no ciclo correspondente.
-
-**Pendente:** identificar precisamente a base de cálculo da comissão; o percentual **já está definido em 5%**.
 
 **História vinculada:** HU06.  
 **Regra relacionada:** RN01.
