@@ -1,69 +1,41 @@
-# Sprint 2 — Review e Retrospective (revisão do registro original)
+# Sprint 2 — Review e Retrospective (registro revisado)
 
 **Projeto:** Rankcom — DMcom Administradora de Consórcios  
-**Sprint:** 2  
 **Período estimado:** 03/10/2026 a 09/10/2026  
-**Data registrada da Sprint Review:** **10/10/2026**  
-**Situação do registro:** conteúdo original preservado e complementado; retrospectiva e divergências a validar.
+**Sprint Review realizada:** 10/10/2026  
 
 ## 1. Objetivo da Sprint
 
-**Síntese inferida, a validar:** detalhar os diagramas UML, avançar na implementação de cadastros em C e desenvolver o contexto da empresa e a documentação do PIM.
+Detalhar diagramas de casos de uso, desenvolver o contexto da empresa e a documentação do PIM II e avançar nas funções de cadastro e CRUD em C.
 
-## 2. Sprint Review — tarefas concluídas
+## 2. Sprint Review — situação das entregas
 
-**Conforme o registro original de 10/10:**
-
-- Elaboração do contexto da empresa e avanço na documentação do PIM (criação do resumo, objetivo geral e objetivos específicos).
-
-### Relação com as Issues do Kanban
-
-| Issue | Atividade registrada | Estado observado em 17/10 | Leitura do histórico |
-|---|---|---|---|
-| [#8](https://github.com/KauanRodolfo/Pim-2-ADS/issues/8) | Detalhamento dos diagramas UML (`include` e `extend`) — Sprint 2 | Feito | Conclusão indicada pelo quadro em 17/10; **não constava explicitamente** na lista de concluídas da Review original |
-| [#10](https://github.com/KauanRodolfo/Pim-2-ADS/issues/10) | Elaboração do contexto da empresa e avanço da documentação — Sprint 2 | Feito | Coerente com a entrega declarada na Review original |
-| [#9](https://github.com/KauanRodolfo/Pim-2-ADS/issues/9) | Implementação das funções de cadastro em C — Sprint 2 | Fazer | Ainda não constava concluída no quadro de 17/10 |
-
-## 3. O que ainda será finalizado
-
-**Conforme o registro original de 10/10:**
-
-| Tarefa | Responsável | Previsão registrada |
+| Issue | Atividade | Resultado |
 |---|---|---|
-| Sistema de cadastro em C | Chayon | Início da semana seguinte |
-| Finalização do CRUD em C | Elton | Início da semana seguinte |
+| [#8](https://github.com/KauanRodolfo/Pim-2-ADS/issues/8) | Detalhamento dos diagramas UML com `include` e `extend` | **Concluída na Sprint 2**, conforme esclarecimento posterior |
+| [#10](https://github.com/KauanRodolfo/Pim-2-ADS/issues/10) | Elaboração do contexto da empresa e avanço da documentação | **Concluída na Sprint 2** conforme registro original e confirmação posterior |
+| [#9](https://github.com/KauanRodolfo/Pim-2-ADS/issues/9) | Implementação de funções de cadastro em C | **Não concluída**; permaneceu pendente para desenvolvimento posterior |
 
-> **Nota de consistência:** a Issue #4 da Sprint 1 aparecia como "Criação de login e CRUD em C" e estava em **Feito** na captura de 17/10. Como a Review 2 ainda registrou "Finalização do CRUD em C" como pendente, é necessário confirmar se se tratam de etapas diferentes, versões parciais ou atualização posterior do status. Nenhum dos registros foi apagado.
+## 3. Pendências reconhecidas na reunião de 10/10
 
-## 4. Atualizações da Sprint Review
+| Atividade | Responsável indicado na Review original | Encaminhamento |
+|---|---|---|
+| Desenvolvimento do sistema de cadastro em C | Chayon | Continuar após a organização da base do código |
+| Finalização do CRUD em C | Elton | Continuar o desenvolvimento |
 
-### Tarefa atualizada — registro original
+## 4. Preparação da Sprint 3 — planejamento em 10/10
 
-A tarefa criada pelo Kauan (*validar as tabelas do banco e ajustar as estruturas (`struct`) em C para refletirem fielmente os dados*) foi atualizada. Ficou definido que **Elton** trabalharia nela ao longo da **Sprint 3**.
-
-### Tarefa adicionada — registro original
-
-- Verificar melhorias na estrutura do banco de dados, realizar a normalização e dar continuidade ao desenvolvimento. **Na reunião, ainda estava sem Sprint definida.**
-
-### Atualização do backlog — registro original
-
-- O backlog do projeto foi atualizado, com definição de Sprint a que cada tarefa se refere (exemplo informado no documento original: revisão do banco de dados — Sprint 2).
-
-## 5. Planejamento da Sprint 3 — previsão registrada em 10/10
-
-| Tarefa | Responsável |
+| Atividade planejada | Responsável definido naquela reunião |
 |---|---|
-| Validar as tabelas do banco e ajustar as estruturas (`struct`) em C para refletirem fielmente os dados | Elton |
-| Verificar melhorias na estrutura do banco de dados, realizar a normalização e dar continuidade ao desenvolvimento | Chayon |
-| Revisar a documentação do PIM (Resumo, Objetivo Geral e Objetivos Específicos) e continuar a documentação: criação do Abstract, Introdução e tópico de Desenvolvimento do Projeto | Victor |
+| Validar tabelas do SQLite e adequar estruturas `struct` em C | Elton |
+| Revisar e normalizar o banco de dados, continuando o desenvolvimento | Chayon |
+| Revisar a documentação do PIM; avançar em Abstract, Introdução e Desenvolvimento | Victor |
 
-## 6. Sprint Retrospective — a complementar com a equipe
+## 5. Sprint Retrospective — informações recuperadas
 
-*O arquivo original contém a Sprint Review e o planejamento seguinte, mas não registra a discussão de Retrospective.*
+A equipe identificou a necessidade de continuar a implementação de cadastro e CRUD e de estruturar a base do código antes de finalizar as funções. O planejamento da Sprint 3 foi elaborado na mesma reunião, junto à revisão das pendências e ao avanço da caracterização e organização documental.
 
-| Tópico | Registro |
-|---|---|
-| O que funcionou bem | **A confirmar com o grupo** |
-| Dificuldades encontradas | **A confirmar com o grupo** |
-| O que melhorar | **A confirmar com o grupo** |
-| Ação combinada e responsável | **A confirmar com o grupo** |
+## 6. Rastreabilidade
+
+- [Issue #8](https://github.com/KauanRodolfo/Pim-2-ADS/issues/8), [#9](https://github.com/KauanRodolfo/Pim-2-ADS/issues/9) e [#10](https://github.com/KauanRodolfo/Pim-2-ADS/issues/10).
+- Planejamento da Sprint 3 originalmente descrito na Review 2; complementado pelo relato de 26/10/2026.
