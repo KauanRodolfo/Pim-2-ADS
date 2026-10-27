@@ -1,7 +1,7 @@
 /* ==========================================================
    main.c
    Comeco do programa: abre o banco, garante que o admin existe
-   e chama a tela de login.
+   e chama a tela de logiin.
    ========================================================== */
 #include "admin.h"
 #include "funcoes.h"
