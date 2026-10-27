@@ -30,11 +30,11 @@ O Rankcom deve autenticar usuários por e-mail e senha e permitir o acesso às f
 
 **História vinculada:** HU01.
 
-### RF02 — Gerenciamento de clientes, vendedores e equipes
+### RF02 — Gerenciamento de clientes, vendedores, gestores e equipes
 
-O Rankcom deve permitir que o **Vendedor** cadastre e consulte clientes vinculados aos contratos e que o **Administrador** cadastre e consulte vendedores, definindo seus cargos, perfis de acesso e equipes comerciais.
+O Rankcom deve permitir que o Vendedor cadastre e consulte clientes; que o Gestor cadastre, edite e arquive vendedores; e que o Administrador cadastre gestores, gerencie equipes, defina o gestor responsável por cada equipe e mova vendedores entre equipes. Cada operação deve ser restrita ao perfil autorizado.
 
-**Histórias vinculadas:** HU02 e HU03.
+**Histórias vinculadas:** HU02, HU03 e HU09.
 
 ### RF03 — Registro e análise de contratos
 
