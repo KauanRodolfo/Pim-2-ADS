@@ -11,8 +11,8 @@
 | História | Necessidade | RF relacionado | Prioridade | Observação |
 |---|---|---|---|---|
 | HU01 | Acessar funcionalidades de acordo com o perfil | RF01 | Alta | Administrador, Gestor e Vendedor |
-| HU02 | Gerenciar clientes | RF02 | Alta | Dados vinculados aos contratos |
-| HU03 | Gerenciar vendedores e associar equipes | RF02 | Alta | Equipes e perfis de acesso |
+| HU02 | Gerenciar clientes | RF02 | Alta | Cadastro e consulta pelo Vendedor; cliente selecionado no registro do contrato |
+| HU03 | Gerenciar vendedores | RF02 | Alta | Cadastro, edição e arquivamento pelo Gestor |
 | HU04 | Registrar contratos para análise | RF03 | Alta | Início como pendente |
 | HU05 | Aprovar ou reprovar contratos | RF03 | Alta | Reprovação definitiva, sem reenvio |
 | HU06 | Calcular comissões padronizadas | RF04* | Alta | 5% fixos; base de cálculo pendente |
@@ -34,21 +34,22 @@
 
 ### HU02 — Gerenciamento de clientes
 
-**Como** Vendedor, **quero** cadastrar e consultar clientes, **para** associá-los aos contratos.
+**Como** Vendedor, **quero** cadastrar e consultar clientes, **para** selecioná-los ao registrar contratos.
 
 **Critérios de aceitação:**
+- Somente o Vendedor pode cadastrar clientes.
 - O cadastro contempla nome, CPF/CNPJ e contato.
 - Campos obrigatórios são validados.
-- É possível consultar clientes cadastrados e selecioná-los ao registrar contratos.
+- O Vendedor pode consultar clientes cadastrados e selecioná-los ao registrar contratos.
 
-### HU03 — Gerenciamento de vendedores e equipes
+### HU03 — Gerenciamento de vendedores
 
-**Como** Administrador, **quero** cadastrar vendedores e vinculá-los às equipes comerciais, **para** organizar os perfis e as classificações.
+**Como** Gestor, **quero** cadastrar, editar e arquivar vendedores, **para** manter atualizada a equipe comercial.
 
 **Critérios de aceitação:**
-- O cadastro identifica vendedor, cargo, perfil e equipe, quando aplicável.
-- É possível consultar a equipe à qual cada vendedor pertence.
-- Os vínculos utilizados nos contratos e rankings são mantidos de maneira consistente.
+- Somente o Gestor pode cadastrar, editar e arquivar vendedores.
+- O cadastro identifica o vendedor e os dados necessários para seu acesso ao sistema.
+- O Administrador pode mover vendedores entre equipes, conforme a história de gerenciamento de equipes.
 
 ### HU04 — Registro de contratos
 
