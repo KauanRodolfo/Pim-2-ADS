@@ -31,9 +31,9 @@ int main(void) {
         menu_admin();
     } else if (strcmp(u.nivel, "gestor") == 0) {
         menu_gestor();
-    } /*else if (strcmp(u.nivel, "vendedor") == 0) {
+    } else if (strcmp(u.nivel, "vendedor") == 0) {
         menu_vendedor();
-    }*/
+    }
 
     // fecha o banco
     sqlite3_close(db);
