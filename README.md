@@ -139,7 +139,6 @@ Os registros detalhados das **Sprints** ficam na documentação do projeto, enqu
 | Victor de Souza Pascoaleto | Product Owner |
 | Kauan Rodolfo Machado Silva | Scrum Master |
 | Arthur Assis | Desenvolvedor |
-| Chayon Sunshine Silva e Priante | Desenvolvedor |
 | Elton Henrique da Silva | Desenvolvedor |
 | William Ramos Cintra | Desenvolvedor |
 
