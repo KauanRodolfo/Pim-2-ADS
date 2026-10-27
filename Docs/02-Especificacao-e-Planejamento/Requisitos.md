@@ -67,7 +67,7 @@ O Rankcom deve permitir que o **Administrador** abra e encerre **um ciclo único
 
 ### RF07 — Controle de acesso e registro de logs
 
-O Rankcom deve verificar as permissões do usuário autenticado e registrar em **log** eventos relevantes, como tentativas de acesso e decisões de aprovação ou reprovação de contratos, com identificação do evento e data/hora.
+O Rankcom deve verificar as permissões do usuário autenticado e registrar em log eventos relevantes, como tentativas de acesso e decisões de aprovação ou reprovação de contratos, com identificação do evento e data/hora. **A consulta aos logs de auditoria deve ser permitida exclusivamente ao Administrador.** Vendedores e Gestores podem gerar eventos registrados pelo sistema, mas não podem consultar os logs.
 
 **Histórias vinculadas:** HU01 e HU05.
 
