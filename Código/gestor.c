@@ -7,6 +7,9 @@
 #include "funcoes.h"
 #include "funcoes_db.h"
 #include <stdio.h>
+#include <string.h> // Ajuste temporario - Kauan: necessario para utilizar strcpy()
+
+int cadastro_vendedor(); // Ajuste temporario - Kauan: declara a funcao antes de sua chamada
 
 void menu_gestor() {
     int op;
@@ -105,7 +108,7 @@ int cadastro_vendedor(){
             scanf("%d", &vendedor.equipe_id);
             break;
         case 'n':
-            vendedor.equipe_id = NULL;
+            vendedor.equipe_id = 0;  // Ajuste temporario - Kauan: equipe_id e int; 0 representa ausencia de equipe
             break;
         default:
             printf("Opcao invalida.\n");

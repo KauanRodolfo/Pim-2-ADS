@@ -10,6 +10,9 @@
 #include "sqlite3.h"
 #include <stdio.h>
 #include <string.h>
+#include "gestor.h"   // Ajuste temporario - Kauan: disponibiliza a declaracao de menu_gestor()
+#include "vendedor.h" // Ajuste temporario - Kauan: disponibiliza a declaracao de menu_vendedor()
+
 
 int main(void) {
     int rc;
