@@ -1,7 +1,7 @@
 /* ==========================================================
    main.c
    Comeco do programa: abre o banco, garante que o admin existe
-   e chama a tela de login.
+   e chama a tela de logiin.
    ========================================================== */
 #include "admin.h"
 #include "funcoes.h"
@@ -31,9 +31,9 @@ int main(void) {
         menu_admin();
     } else if (strcmp(u.nivel, "gestor") == 0) {
         menu_gestor();
-    } /*else if (strcmp(u.nivel, "vendedor") == 0) {
+    } else if (strcmp(u.nivel, "vendedor") == 0) {
         menu_vendedor();
-    }*/
+    }
 
     // fecha o banco
     sqlite3_close(db);
