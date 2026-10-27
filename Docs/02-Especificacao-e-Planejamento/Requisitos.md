@@ -32,7 +32,7 @@ O Rankcom deve autenticar usuários por e-mail e senha e permitir o acesso às f
 
 ### RF02 — Gerenciamento de clientes, vendedores, gestores e equipes
 
-O Rankcom deve permitir que o Vendedor cadastre e consulte clientes; que o Gestor cadastre, edite e arquive vendedores; e que o Administrador cadastre gestores, gerencie equipes, defina o gestor responsável por cada equipe e mova vendedores entre equipes. Cada operação deve ser restrita ao perfil autorizado.
+O Rankcom deve permitir que o Vendedor cadastre e consulte clientes; que o Gestor cadastre, edite e arquive vendedores; e que o Administrador cadastre gestores, gerencie equipes, defina o gestor responsável por cada equipe e mova vendedores entre equipes. 
 
 **Histórias vinculadas:** HU02, HU03 e HU09.
 
