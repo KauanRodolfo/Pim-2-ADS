@@ -144,7 +144,7 @@ Os registros detalhados das **Sprints** ficam na documentação do projeto, enqu
 
 ## Colaboração e controle de versões
 
-O desenvolvimento é realizado em equipe, com uso de branches individuais e integração das alterações à `main` mediante alinhamento entre os integrantes. O GitHub é utilizado para preservar o histórico de evolução do projeto e apoiar a revisão das contribuições.
+O desenvolvimento é realizado em equipe, com uso de branches que são criadas conforme surgem novas funcionalidades no projeto. O GitHub é utilizado para preservar o histórico de evolução do projeto e apoiar a revisão das contribuições.
 
 ---
 
