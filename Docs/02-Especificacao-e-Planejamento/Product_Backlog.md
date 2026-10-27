@@ -11,13 +11,14 @@
 | História | Necessidade | RF relacionado | Prioridade | Observação |
 |---|---|---|---|---|
 | HU01 | Acessar funcionalidades de acordo com o perfil | RF01 | Alta | Administrador, Gestor e Vendedor |
-| HU02 | Cadastrar e consultar clientes | RF02 | Alta | Dados vinculados aos contratos |
-| HU03 | Cadastrar vendedores e associar equipes | RF02 | Alta | Equipes e perfis de acesso |
+| HU02 | Gerenciar clientes | RF02 | Alta | Dados vinculados aos contratos |
+| HU03 | Gerenciar vendedores e associar equipes | RF02 | Alta | Equipes e perfis de acesso |
 | HU04 | Registrar contratos para análise | RF03 | Alta | Início como pendente |
 | HU05 | Aprovar ou reprovar contratos | RF03 | Alta | Reprovação definitiva, sem reenvio |
 | HU06 | Calcular comissões padronizadas | RF04* | Alta | 5% fixos; base de cálculo pendente |
 | HU07* | Consultar rankings comerciais | RF05* | Alta | Vencedor único; visibilidade pendente |
 | HU08 | Abrir e encerrar ciclos de apuração | RF06 | Média | Um ciclo para os quatro rankings |
+| HU09 | Gerenciar equipes e gestores | RF02 | Alta | Equipes, promoção de gestores e movimentação de usuários pelo Administrador |
 
 ## 2. Histórias de usuário e critérios de aceitação
 
@@ -101,6 +102,16 @@
 - Ranking geral e rankings por equipe compartilham um único ciclo vigente.
 - O encerramento consolida a classificação do período.
 
+### HU09 — Gerenciamento de equipes e gestores
+
+**Como** Administrador, **quero** gerenciar equipes e gestores, **para** organizar a estrutura das equipes comerciais.
+
+**Critérios de aceitação:**
+- O Administrador pode criar, editar e arquivar equipes.
+- O Administrador pode promover um usuário a Gestor ou rebaixar um Gestor.
+- O Administrador pode definir o Gestor responsável por uma equipe.
+- O Administrador pode mover usuários entre equipes.
+
 ---
 
 ## 3. Rastreabilidade resumida
@@ -115,6 +126,8 @@
 | HU06 | RF04* | RN01 |
 | HU07* | RF05* | RN01 |
 | HU08 | RF06 | — |
+| HU09 | RF02 | — |
+
 
 Os requisitos não funcionais aplicam-se às histórias conforme sua pertinência e estão detalhados em `requisitos.md`.
 
