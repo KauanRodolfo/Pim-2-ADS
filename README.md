@@ -76,11 +76,11 @@ flowchart TD
 | Categoria | Tecnologia ou ferramenta | Finalidade no projeto |
 |---|---|---|
 | Programação | **C** | Implementação do protótipo e das rotinas principais |
-| Persistência | **SQLite** | Armazenamento local dos dados |
+| Persistência / Banco de dados | **SQLite** | Armazenamento local dos dados |
 | Ambiente de desenvolvimento | **Code::Blocks** | Edição, compilação e execução do protótipo |
-| Diagramas | **Draw.io** | Fluxogramas e modelagem visual |
-| Modelagem UML | **Astah** | Diagramas de análise e projeto |
-| Versionamento e colaboração | **Git e GitHub** | Controle de versões e integração das contribuições |
+| Diagramas | **Astah UML** | Fluxogramas e modelagem visual |
+| Modelagem UML | **Astah UML** | Diagramas de análise e projeto |
+| Versionamento, colaboração  e organização| **Git e GitHub** | Controle de versões e integração das contribuições |
 
 ## Estrutura do repositório
 
