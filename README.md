@@ -43,7 +43,7 @@ A estrutura organizacional, os processos de negócio e o contexto da empresa est
 - **Gerenciamento de vendedores e equipes:** cadastro e associação dos vendedores às equipes comerciais.
 - **Registro de contratos:** vinculação de contratos aos clientes e encaminhamento para análise.
 - **Análise de contratos:** aprovação ou reprovação definitiva pelo gestor, sem justificativa obrigatória, correção ou reenvio do mesmo registro.
-- **Comissões:** cálculo de **5%**, aplicado somente aos contratos aprovados, sobre a base financeira que será definida.
+- **Comissões:** cálculo de **5%**, aplicado somente aos contratos aprovados pelos gestores.
 - **Ranking geral:** classificação dos 21 vendedores das três equipes, destacando **apenas o primeiro colocado**.
 - **Rankings por equipe:** classificação dos sete vendedores de cada equipe, destacando **apenas o primeiro colocado**.
 - **Ciclos de apuração:** abertura e encerramento de um ciclo compartilhado entre os quatro rankings pelo administrador.
