@@ -6,22 +6,16 @@
 #include "vendedor.h"
 #include "funcoes.h"
 #include "funcoes_db.h"
+#include "ranking.h"
+
 #include <stdio.h>
 #include <string.h>
-
-// Declaracao das funcoes
-void gerenciar_contratos();
-void cadastro_contratos();
-void gerenciar_clientes();
-void cadastro_clientes();
-void ver_ranking_geral();
-void ver_ranking_equipe();
 
 /* ==========================================================
    Menu principal do vendedor
    ========================================================== */
 
-void menu_vendedor() {
+void menu_vendedor(Usuario u) {
     int op;
 
     do {
@@ -44,11 +38,11 @@ void menu_vendedor() {
                 break;
 
             case 3:
-                ver_ranking_geral();
+                ranking_geral();
                 break;
 
             case 4:
-                ver_ranking_equipe();
+                ranking_equipe(u.equipe_id);
                 break;
 
             case 0:
@@ -66,7 +60,7 @@ void menu_vendedor() {
    Gerenciamento de contratos
    ========================================================== */
 
-void gerenciar_contratos() {
+void contratos() {
     int op;
 
     do {
@@ -83,7 +77,7 @@ void gerenciar_contratos() {
                 break;
 
             case 2:
-                printf("Consulta de contratos em desenvolvimento.\n");
+                consultar('t', NULL);
                 break;
 
             case 0:
@@ -102,19 +96,32 @@ void gerenciar_contratos() {
    ========================================================== */
 
 void cadastro_contratos() {
-    Contrato contrato = {0};
+    Contrato contrato;
     char confirmar;
+    char filtro[TAM];
+    int op;
 
     printf("\n=== CADASTRAR CONTRATO ===\n");
 
     printf("ID do cliente: ");
-    if (scanf("%d", &contrato.cliente_id) != 1 ||
-        contrato.cliente_id <= 0) {
-        printf("ID do cliente invalido.\n");
-        return;
-    }
+    do{
+        scanf("%d", &contrato.cliente_id);
+        limpar_buffer();
+        snprintf(filtro, sizeof(filtro), "id = %d AND status = 'ativo'", contrato.cliente_id);
+        if(registro_existe('c', filtro, NULL) == 0) {
+            printf("ID do cliente nao encontrado. \n gostaria de tentar novamente? (1 para sim, 0 para nao): ");
+            scanf("%d", &op);
+            limpar_buffer();
+            if(op == 0) {
+                printf("Operacao cancelada.\n");
+                return;
+            }
+        } else {
+            break;
+        }
+    }while(op);
 
-    printf("ID do vendedor: ");
+    printf("ID do vendedor: ");  //precisa ser o id do vendedor logado
     if (scanf("%d", &contrato.usuario_id) != 1 ||
         contrato.usuario_id <= 0) {
         printf("ID do vendedor invalido.\n");
@@ -185,7 +192,7 @@ void gerenciar_clientes() {
                 break;
 
             case 2:
-                printf("Consulta de clientes em desenvolvimento.\n");
+                consultar('c', NULL);
                 break;
 
             case 0:
@@ -203,48 +210,59 @@ void gerenciar_clientes() {
    Cadastro de clientes
    ========================================================== */
 
-void cadastro_clientes() {
+int cadastro_clientes() {
     Cliente cliente = {0};
     char confirmar;
+    char renda[TAM_P];
+    int rc;
+
+    limpar_buffer();
 
     printf("\n=== CADASTRAR CLIENTE ===\n");
 
-    // Dados do cliente
     printf("Nome completo: ");
-    scanf(" %100[^\n]", cliente.nome);
+    fgets(cliente.nome, sizeof(cliente.nome), stdin);
 
     printf("CPF (11 numeros): ");
-    scanf("%11s", cliente.cpf);
-
+    fgets(cliente.cpf, sizeof(cliente.cpf), stdin);
+    limpar_buffer();
+    
     printf("Email: ");
-    scanf("%100s", cliente.email);
+    fgets(cliente.email, sizeof(cliente.email), stdin);
 
     printf("Telefone: ");
-    scanf("%20s", cliente.telefone);
+    fgets(cliente.telefone, sizeof(cliente.telefone), stdin);
 
-    // Status definido automaticamente
+    printf("Renda mensal: R$ ");
+    fgets(renda, sizeof(renda), stdin);
+    sscanf(renda, "%f", &cliente.renda[0]);
+
     strcpy(cliente.status, "ativo");
+    cliente.cadastrado_por = 3;
 
-    // Exibe os dados antes da confirmacao
     printf("\n=== CONFIRMAR DADOS ===\n");
     printf("Nome: %s\n", cliente.nome);
     printf("CPF: %s\n", cliente.cpf);
     printf("Email: %s\n", cliente.email);
     printf("Telefone: %s\n", cliente.telefone);
+    printf("Renda: R$ %.2f\n", cliente.renda[0]);
 
     printf("\nConfirmar cadastro? (s/n): ");
     scanf(" %c", &confirmar);
 
     if (confirmar == 's' || confirmar == 'S') {
-        printf("\nCadastro confirmado!\n");
-        printf("Persistencia no banco ainda pendente.\n");
-
+        rc = salvar('c', NULL, NULL, &cliente, NULL, NULL);
+        if (rc == 0) {
+            printf("\nCliente cadastrado com sucesso.\n");
+            return 0;
+        }
     } else if (confirmar == 'n' || confirmar == 'N') {
         printf("\nCadastro cancelado.\n");
-
     } else {
         printf("\nOpcao invalida. Cadastro cancelado.\n");
     }
+
+    return 1;
 }
 
 /* ==========================================================

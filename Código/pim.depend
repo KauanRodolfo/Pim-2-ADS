@@ -1,0 +1,160 @@
+# depslib dependency file v1.0
+1794247947 source:/home/elton/Documentos/UNIP/PIM/pim/admin.c
+	"admin.h"
+	"equipe.h"
+	"funcoes.h"
+	"funcoes_db.h"
+	<stdio.h>
+	<string.h>
+
+1794065030 /home/elton/Documentos/UNIP/PIM/pim/admin.h
+	"funcoes_db.h"
+
+1792877169 /home/elton/Documentos/UNIP/PIM/pim/sqlite3.h
+	<stdarg.h>
+
+1794247947 /home/elton/Documentos/UNIP/PIM/pim/funcoes.h
+	"funcoes_db.h"
+	"sqlite3.h"
+
+1794248197 /home/elton/Documentos/UNIP/PIM/pim/funcoes_db.h
+	"sqlite3.h"
+
+1793630042 source:/home/elton/Documentos/UNIP/PIM/pim/funcoes.c
+	<stdio.h>
+	<string.h>
+	"funcoes.h"
+	"funcoes_db.h"
+
+1794252205 source:/home/elton/Documentos/UNIP/PIM/pim/funcoes_db.c
+	"funcoes_db.h"
+	<stdio.h>
+
+1793630042 source:/home/elton/Documentos/UNIP/PIM/pim/gestor.c
+	"gestor.h"
+	"funcoes.h"
+	"funcoes_db.h"
+	<stdio.h>
+	<string.h>
+
+1794254741 /home/elton/Documentos/UNIP/PIM/pim/gestor.h
+	"funcoes_db.h"
+
+1794252091 source:/home/elton/Documentos/UNIP/PIM/pim/login.c
+	"login.h"
+	"admin.h"
+	"funcoes.h"
+	"funcoes_db.h"
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+
+1792877169 /home/elton/Documentos/UNIP/PIM/pim/login.h
+	"funcoes_db.h"
+	"sqlite3.h"
+
+1794072335 source:/home/elton/Documentos/UNIP/PIM/pim/main.c
+	"admin.h"
+	"funcoes.h"
+	"funcoes_db.h"
+	"login.h"
+	"sqlite3.h"
+	<stdio.h>
+	<string.h>
+	"gestor.h"
+	"vendedor.h"
+
+1794249046 source:/home/elton/Documentos/UNIP/PIM/pim/vendedor.c
+	"vendedor.h"
+	"funcoes.h"
+	"funcoes_db.h"
+	"ranking.h"
+	<stdio.h>
+	<string.h>
+
+1794240930 /home/elton/Documentos/UNIP/PIM/pim/vendedor.h
+	"funcoes_db.h"
+
+1792877169 source:/home/elton/Documentos/UNIP/PIM/pim/sqlite3.c
+	<vxWorks.h>
+	<pthread.h>
+	"mingw.h"
+	"_mingw.h"
+	<stdarg.h>
+	"sqlite_cfg.h"
+	<stdint.h>
+	<inttypes.h>
+	<intrin.h>
+	<cmnintrin.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<stddef.h>
+	<ctype.h>
+	<TargetConditionals.h>
+	<time.h>
+	<sys/sysctl.h>
+	<malloc/malloc.h>
+	<libkern/OSAtomic.h>
+	<malloc.h>
+	<pthread.h>
+	"windows.h"
+	<sys/cygwin.h>
+	<sys/stat.h>
+	<unistd.h>
+	<errno.h>
+	<process.h>
+	<math.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<unistd.h>
+	<sys/time.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<fcntl.h>
+	<sys/ioctl.h>
+	<unistd.h>
+	<sys/time.h>
+	<errno.h>
+	<sys/mman.h>
+	<sys/file.h>
+	<sys/param.h>
+	<semaphore.h>
+	<limits.h>
+	<sys/mount.h>
+	<utime.h>
+	<sys/dcmd_blk.h>
+	<sys/statvfs.h>
+	<dlfcn.h>
+	<Windows.h>
+	<profileapi.h>
+	"tclsqlite.h"
+	"sqlite3rtree.h"
+	<ctype.h>
+	<unicode/utypes.h>
+	<unicode/uregex.h>
+	<unicode/ustring.h>
+	<unicode/ucol.h>
+	<unicode/ubrk.h>
+	<unicode/utf16.h>
+	<sys/uio.h>
+	<math.h>
+
+1793989034 /home/elton/Documentos/UNIP/PIM/pim/equipe.h
+
+1794247947 source:/home/elton/Documentos/UNIP/PIM/pim/equipe.c
+	"equipe.h"
+	"funcoes.h"
+	"funcoes_db.h"
+	<stdio.h>
+	<string.h>
+
+1794248826 source:/home/elton/Documentos/UNIP/PIM/pim/ranking.c
+	<stdio.h>
+	"sqlite3.h"
+	"ranking.h"
+	"funcoes.h"
+
+1794248829 /home/elton/Documentos/UNIP/PIM/pim/ranking.h
+

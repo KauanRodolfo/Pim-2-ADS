@@ -87,7 +87,19 @@ typedef struct {
 
 typedef struct {
     int id;
-    int usuario_id;      
+    char nome[TAM_NOME + 1];
+    char tipo[TAM_P];                /* geral | interna */
+    int equipe_id;                   /* FK -> Equipe.id (0 = geral, sem equipe) */
+    char data_inicio[TAM_DATA + 2];
+    char data_fim[TAM_DATA + 2];
+    char status[TAM_P];              /* aberta | arquivado */
+    int criada_por;                  /* FK -> Usuario.id */
+    int vencedor_id;                 /* FK -> Usuario.id (0 = sem vencedor) */
+} Competicao;
+
+typedef struct {
+    int id;
+    int usuario_id;
     char acao[TAM];    
 } LogsAuditoria;
 

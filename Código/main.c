@@ -15,7 +15,6 @@
 
 
 int main(void) {
-    int rc;
     Usuario u;
     sqlite3 *db;
 
@@ -31,11 +30,11 @@ int main(void) {
     u = fazer_login(db);
 
     if (strcmp(u.nivel, "admin") == 0) {
-        menu_admin();
+        menu_admin(u);//adicionar o nome do admin futuramente
     } else if (strcmp(u.nivel, "gestor") == 0) {
-        menu_gestor();
+        menu_gestor(u);
     } else if (strcmp(u.nivel, "vendedor") == 0) {
-        menu_vendedor();
+        menu_vendedor(u);
     }
 
     // fecha o banco

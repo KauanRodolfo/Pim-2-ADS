@@ -8,13 +8,12 @@
 #include "funcoes_db.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 Usuario fazer_login(sqlite3 *db) {
     char usuario[TAM], senha[TAM], sql[400];
-    char nome[TAM], nivel[TAM_P];
     char **resultado = NULL;
     int linhas = 0, colunas = 0, op;
-    sqlite3_stmt *stmt = NULL;
     Usuario u;
 
     printf("\n=== SISTEMA DE CONSORCIO ===\n");
@@ -37,7 +36,7 @@ Usuario fazer_login(sqlite3 *db) {
 
             tratar_texto(usuario);
             sprintf(sql,
-                    "SELECT nome, senha, nivel FROM Usuarios "
+                    "SELECT nome, senha, nivel, id, equipe_id FROM Usuarios "
                     "WHERE username = '%s' AND status = 'ativo';",
                     usuario);
 
@@ -57,9 +56,16 @@ Usuario fazer_login(sqlite3 *db) {
         verificação da senha*/
 
         if (linhas) {
-            strcpy(u.nome, resultado[3]);
-            strcpy(u.senha, resultado[4]);
-            strcpy(u.nivel, resultado[5]);
+            /* 5 colunas: os valores comecam em resultado[5] */
+            strcpy(u.nome, resultado[5]);
+            strcpy(u.senha, resultado[6]);
+            strcpy(u.nivel, resultado[7]);
+            u.id = atoi(resultado[8]);
+            if (resultado[9] != NULL) {
+                u.equipe_id = atoi(resultado[9]);
+            } else {
+                u.equipe_id = 0; /* admin nao tem equipe */
+            }
 
             do {
                 printf("\nSenha: ");
