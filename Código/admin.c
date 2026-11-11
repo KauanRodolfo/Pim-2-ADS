@@ -1,14 +1,15 @@
 /* ==========================================================
    admin.c
-   Tela do admin. Os menus e submenus estao prontos; as opcoes
-   ainda nao fazem nada (as funcoes de cada uma serao feitas depois).
+   Menus do admin.
    ========================================================== */
 #include "admin.h"
+#include "usuario.h"
 #include "equipe.h"
-#include "funcoes.h"
-#include "funcoes_db.h"
+#include "util.h"
+#include "banco.h"
 #include <stdio.h>
 #include <string.h>
+
 
 /* ==========================================================
    Menu principal do admin
@@ -18,14 +19,18 @@ void menu_admin(Usuario u) {
     int op;
 
     do {
-        printf("\n=== MENU ADMIN ===\n");
-        printf("1 - Gerenciar Equipes\n");
-        printf("2 - Gerenciar Gestores\n");
-        printf("3 - Gerenciar Ciclos de Apuracao\n");
-        printf("4 - Ranking Geral\n");
-        printf("5 - Consultar Log\n");
-        printf("0 - Sair da conta\n");
+        printf("\n+----------------------------------------------------------+\n");
+        printf("|                        MENU ADMIN                        |\n");
+        printf("+----------------------------------------------------------+\n");
+        printf("|   1 - Gerenciar Equipes                                  |\n");
+        printf("|   2 - Gerenciar Gestores                                 |\n");
+        printf("|   3 - Gerenciar Ciclos de Apuracao                       |\n");
+        printf("|   4 - Ranking Geral                                      |\n");
+        printf("|   5 - Consultar Log                                      |\n");
+        printf("|   0 - Sair da conta                                      |\n");
 
+        printf("+----------------------------------------------------------+\n");
+        printf("|   Escolha uma opcao: ");
         scanf("%d", &op);
 
         switch (op) {
@@ -50,11 +55,11 @@ void menu_admin(Usuario u) {
                 break;
 
             case 0:
-                printf("Saindo da conta...\n"); //futuro logout
+                printf("|                    Saindo da conta...                    |\n"); //futuro logout
                 break;
 
             default:
-                printf("Opcao invalida.\n");
+                printf("|                     Opcao invalida.                      |\n");
         }
 
     } while (op != 0);
@@ -68,13 +73,17 @@ void gerenciar_gestores() {
     int op;
 
     do {
-        printf("\n=== GERENCIAR GESTORES ===\n");
-        printf("1 - Cadastrar gestor\n");
-        printf("2 - Consultar gestores\n");
-        printf("3 - Atualizar gestor\n");
-        printf("4 - Arquivar gestor\n");
-        printf("0 - Voltar\n");
+        printf("\n+----------------------------------------------------------+\n");
+        printf("|                    GERENCIAR GESTORES                    |\n");
+        printf("+----------------------------------------------------------+\n");
+        printf("|   1 - Cadastrar gestor                                   |\n");
+        printf("|   2 - Consultar gestores                                 |\n");
+        printf("|   3 - Atualizar gestor                                   |\n");
+        printf("|   4 - Arquivar gestor                                    |\n");
+        printf("|   0 - Voltar                                             |\n");
 
+        printf("+----------------------------------------------------------+\n");
+        printf("|   Escolha uma opcao: ");
         scanf("%d", &op);
 
         switch (op) {
@@ -95,67 +104,65 @@ void gerenciar_gestores() {
                 break;
 
             case 0:
-                printf("Voltando ao menu do admin...\n");
+                printf("|               Voltando ao menu do admin...               |\n");
                 break;
 
             default:
-                printf("Opcao invalida.\n");
+                printf("|                     Opcao invalida.                      |\n");
         }
 
     } while (op != 0);
 }
 
-int cadastro_gestor() {
-    Usuario gestor;
-    char confirmar;
-    int i;
-    int rc;
+void gerenciar_equipes() {
+    int op;
 
-    limpar_buffer();
+    do {
+        printf("\n+----------------------------------------------------------+\n");
+        printf("|                    GERENCIAR EQUIPES                     |\n");
+        printf("+----------------------------------------------------------+\n");
+        printf("|   1 - Cadastrar equipe                                   |\n");
+        printf("|   2 - Consultar equipes                                  |\n");
+        printf("|   3 - Definir gestor da equipe                           |\n");
+        printf("|   4 - Mover vendedor de equipe                           |\n");
+        printf("|   5 - Arquivar equipe                                    |\n");
+        printf("|   0 - Voltar                                             |\n");
 
-    printf("\n=== CADASTRAR GESTOR ===\n");
+        printf("+----------------------------------------------------------+\n");
+        printf("|   Escolha uma opcao: ");
+        scanf("%d", &op);
+        
 
-    printf("Nome do gestor: ");
-    fgets(gestor.nome, sizeof(gestor.nome), stdin);
+        switch (op) {
+            case 1:
+                cadastro_equipe();
+                break;
 
-    printf("Nome de usuario do gestor: ");
-    fgets(gestor.username, sizeof(gestor.username), stdin);
+            case 2:
+                consultar('e', NULL);
+                break;
 
-    printf("Email do gestor: ");
-    fgets(gestor.email, sizeof(gestor.email), stdin);
+            case 3:
+                definir_gestor_equipe();
+                break;
 
-    printf("CPF do gestor: ");
-    fgets(gestor.cpf, sizeof(gestor.cpf), stdin);
+            case 4:
+                mover_vendedor_equipe();
+                break;
 
-    for (i = 6; i < 11; i++) {
-        gestor.senha[i - 6] = gestor.cpf[i];
-    }
-    gestor.senha[5] = '\0';
-    gestor.equipe_id = 0;
-    strcpy(gestor.nivel, "gestor");
-    strcpy(gestor.status, "ativo");
+            case 5:
+                arquivar_equipe();
+                break;
 
-    printf("\n=== CONFIRMAR DADOS ===\n");
-    printf("Nome: %s", gestor.nome);
-    printf("Nome de usuario: %s", gestor.username);
-    printf("Email: %s", gestor.email);
-    printf("CPF: %s", gestor.cpf);
+            case 0:
+                printf("|               Voltando ao menu do admin...               |\n");
+                break;
 
-    printf("\nConfirmar cadastro? (s/n): ");
-    scanf(" %c", &confirmar);
+            default:
+                printf("|                     Opcao invalida.                      |\n");
+        }
 
-    if (confirmar != 's' && confirmar != 'S') {
-        printf("\nCadastro cancelado.\n");
-        return 1;
-    }
-
-    rc = salvar('u', NULL, &gestor, NULL, NULL, NULL);
-    if (rc == 0) {
-        printf("\nGestor cadastrado com sucesso.\n");
-        return 0;
-    }
-
-    return 1;
+    } while (op != 0);
 }
 
 /* ==========================================================
@@ -166,21 +173,25 @@ void gerenciar_ciclos() {
     int op;
 
     do {
-        printf("\n=== GERENCIAR CICLOS DE APURACAO ===\n");
-        printf("1 - Abrir ciclo\n");
-        printf("2 - Encerrar ciclo\n");
-        printf("3 - Consultar ciclos\n");
-        printf("0 - Voltar\n");
+        printf("\n+----------------------------------------------------------+\n");
+        printf("|               GERENCIAR CICLOS DE APURACAO               |\n");
+        printf("+----------------------------------------------------------+\n");
+        printf("|   1 - Abrir ciclo                                        |\n");
+        printf("|   2 - Encerrar ciclo                                     |\n");
+        printf("|   3 - Consultar ciclos                                   |\n");
+        printf("|   0 - Voltar                                             |\n");
 
+        printf("+----------------------------------------------------------+\n");
+        printf("|   Escolha uma opcao: ");
         scanf("%d", &op);
 
         switch (op) {
             case 1:
-                printf("Abertura de ciclo em desenvolvimento.\n");
+                printf("|          Abertura de ciclo em desenvolvimento.           |\n");
                 break;
 
             case 2:
-                printf("Encerramento de ciclo em desenvolvimento.\n");
+                printf("|        Encerramento de ciclo em desenvolvimento.         |\n");
                 break;
 
             case 3:
@@ -188,11 +199,11 @@ void gerenciar_ciclos() {
                 break;
 
             case 0:
-                printf("Voltando ao menu do admin...\n");
+                printf("|               Voltando ao menu do admin...               |\n");
                 break;
 
             default:
-                printf("Opcao invalida.\n");
+                printf("|                     Opcao invalida.                      |\n");
         }
 
     } while (op != 0);
@@ -206,28 +217,32 @@ void ranking_geral_admin() {
     int op;
 
     do {
-        printf("\n=== RANKING GERAL ===\n");
-        printf("1 - Ver ranking geral\n");
-        printf("2 - Ver ranking por equipe\n");
-        printf("0 - Voltar\n");
+        printf("\n+----------------------------------------------------------+\n");
+        printf("|                      RANKING GERAL                       |\n");
+        printf("+----------------------------------------------------------+\n");
+        printf("|   1 - Ver ranking geral                                  |\n");
+        printf("|   2 - Ver ranking por equipe                             |\n");
+        printf("|   0 - Voltar                                             |\n");
 
+        printf("+----------------------------------------------------------+\n");
+        printf("|   Escolha uma opcao: ");
         scanf("%d", &op);
 
         switch (op) {
             case 1:
-                printf("Ranking geral em desenvolvimento.\n");
+                printf("|            Ranking geral em desenvolvimento.             |\n");
                 break;
 
             case 2:
-                printf("Ranking por equipe em desenvolvimento.\n");
+                printf("|          Ranking por equipe em desenvolvimento.          |\n");
                 break;
 
             case 0:
-                printf("Voltando ao menu do admin...\n");
+                printf("|               Voltando ao menu do admin...               |\n");
                 break;
 
             default:
-                printf("Opcao invalida.\n");
+                printf("|                     Opcao invalida.                      |\n");
         }
 
     } while (op != 0);
@@ -244,12 +259,16 @@ void consultar_log() {
     char filtro[100];
 
     do {
-        printf("\n=== CONSULTAR LOG ===\n");
-        printf("1 - Ver todos os eventos\n");
-        printf("2 - Filtrar por usuario\n");
-        printf("3 - Filtrar por data\n");
-        printf("0 - Voltar\n");
+        printf("\n+----------------------------------------------------------+\n");
+        printf("|                      CONSULTAR LOG                       |\n");
+        printf("+----------------------------------------------------------+\n");
+        printf("|   1 - Ver todos os eventos                               |\n");
+        printf("|   2 - Filtrar por usuario                                |\n");
+        printf("|   3 - Filtrar por data                                   |\n");
+        printf("|   0 - Voltar                                             |\n");
 
+        printf("+----------------------------------------------------------+\n");
+        printf("|   Escolha uma opcao: ");
         scanf("%d", &op);
 
         switch (op) {
@@ -258,18 +277,18 @@ void consultar_log() {
                 break;
 
             case 2:
-                printf("Id do usuario: ");
+                printf("|   Id do usuario: ");
                 if (scanf("%d", &usuario_id) == 1) {
                     snprintf(filtro, sizeof(filtro), "usuario_id = %d", usuario_id);
                     consultar('l', filtro);
                 } else {
-                    printf("Id invalido.\n");
+                    printf("|                       Id invalido.                       |\n");
                     limpar_buffer();
                 }
                 break;
 
             case 3:
-                printf("Data (AAAA-MM-DD): ");
+                printf("|   Data (AAAA-MM-DD): ");
                 limpar_buffer();
                 fgets(data, sizeof(data), stdin);
                 tratar_texto(data);
@@ -278,92 +297,12 @@ void consultar_log() {
                 break;
 
             case 0:
-                printf("Voltando ao menu do admin...\n");
+                printf("|               Voltando ao menu do admin...               |\n");
                 break;
 
             default:
-                printf("Opcao invalida.\n");
+                printf("|                     Opcao invalida.                      |\n");
         }
 
     } while (op != 0);
-}
-void arquivar_gestor() {
-    Usuario gestor;
-    char filtro[TAM];
-    int op;
-    printf("Selecione o gestor a ser arquivado:\n");
-    consultar('u', NULL);
-    printf("Entre com o ID do gestor a ser arquivado: ");
-
-    do{
-        scanf("%d", &gestor.id);
-        limpar_buffer();
-        snprintf(filtro, sizeof(filtro), "id = %d AND status = 'ativo'", gestor.id);
-        if(registro_existe('u', filtro, &gestor) == 0) {
-            printf("ID do gestor nao encontrado. \n gostaria de tentar novamente? (1 para sim, 0 para nao): ");
-            scanf("%d", &op);
-            limpar_buffer();
-            if(op == 0) {
-                printf("Operacao cancelada.\n");
-                return;
-            }
-        } else {
-            break;
-        }
-    }while(op);
-
-    printf("Deseja realmente arquivar o gestor %s? (1 para sim, 0 para nao): ", gestor.nome);
-    scanf("%d", &op);
-    limpar_buffer();
-
-    if(op == 1) {
-        if(excluir('u', gestor.id)){
-            printf("Erro ao arquivar o gestor.\n");
-        } else {
-            printf("gestor arquivado com sucesso.\n");
-        }
-    } else {
-        printf("Operacao cancelada.\n");
-    }
-}
-void atualizar_gestor() {
-    Usuario gestor;
-    char filtro[TAM];
-    int op, id;
-    printf("Selecione o gestor a ser atualizado:\n");
-    snprintf(filtro, sizeof(filtro), "nivel = 'gestor'");
-    consultar('u', filtro);
-    printf("Entre com o ID do gestor a ser atualizado: ");
-
-    do{
-        scanf("%d", &id);
-        limpar_buffer();
-        snprintf(filtro, sizeof(filtro), "id = %d AND status = 'ativo'", id);
-        if(registro_existe('u', filtro, &gestor) == 0) {
-            printf("ID do gestor nao encontrado. \n gostaria de tentar novamente? (1 para sim, 0 para nao): ");
-            scanf("%d", &op);
-            limpar_buffer();
-            if(op == 0) {
-                printf("Operacao cancelada.\n");
-                return;
-            }
-        }else{
-           break;
-        }
-    }while(op);
-
-    printf("Deseja realmente atualizar o gestor %s? (1 para sim, 0 para nao): ", gestor.nome);
-    scanf("%d", &op);
-    limpar_buffer();
-
-    if(op == 1) {
-        if(editar('u', gestor.id) == 0) {
-            printf("Gestor atualizado com sucesso.\n");
-        } else {
-            printf("Erro ao atualizar o gestor.\n");
-        }
-    } else {
-        printf("Operacao cancelada.\n");
-    }
-
 }

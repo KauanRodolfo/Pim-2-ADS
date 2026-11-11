@@ -4,8 +4,8 @@
    e chama a tela de logiin.
    ========================================================== */
 #include "admin.h"
-#include "funcoes.h"
-#include "funcoes_db.h"
+#include "util.h"
+#include "banco.h"
 #include "login.h"
 #include "sqlite3.h"
 #include <stdio.h>
@@ -21,7 +21,7 @@ int main(void) {
     // Constroi o banco de dados
 
     if (criar_db(&db) != SQLITE_OK) {
-        printf("Nao foi possivel criar o banco de dados.\n");
+        printf("|         Nao foi possivel criar o banco de dados.         |\n");
         // printf("%d",criar_db(&db));
         // return 1;
     }

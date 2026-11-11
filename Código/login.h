@@ -5,7 +5,7 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
-#include "funcoes_db.h"
+#include "banco.h"
 #include "sqlite3.h"
 
 /* Mostra o menu inicial (Login / Sair) e fica nele ate a pessoa sair. */

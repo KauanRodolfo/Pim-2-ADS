@@ -1,9 +1,9 @@
 /* ==========================================================
-   funcoes_db.h
-   Criacao das tabelas do banco pim2.db.
+   banco.h
+   Structs das tabelas e funcoes de acesso ao banco pim2.db.
    ========================================================== */
-#ifndef funcoes_db_H
-#define funcoes_db_H
+#ifndef BANCO_H
+#define BANCO_H
 
 #include "sqlite3.h"
 
@@ -38,6 +38,8 @@ int criar_db(sqlite3 **db);
 #define TAM_TEXTO 1000 /* campos "text" (descricao, motivo...) */
 #define TAM_DATA 10
 #define TAM_DATAHORA 19
+#define TAM_FILTRO 256 /* textos de filtro do WHERE montados com snprintf */
+#define MAX_COLUNAS 20 /* maximo de colunas que a tabela das consultas consegue mostrar */
 
 /* ---------- Tabelas ---------- */
 
@@ -79,7 +81,7 @@ typedef struct {
     int tipo_consorcio_id; /* FK -> TipoConsorcio.id */
     float valor_credito;
     char data_contrato[TAM_DATA + 1];
-    char status[TAM_P];
+    char status[TAM_P + 1];                /* +1: "em_analise" tem 10 letras */
     int avaliado_por;                      /* FK -> Usuario.id (0 = ainda nao avaliado) */
     char data_avaliacao[TAM_DATAHORA + 1]; /* vazio se nao avaliado */
     char motivo_reprovacao[TAM_TEXTO + 1]; /* vazio se nao reprovado */
@@ -104,5 +106,24 @@ typedef struct {
 } LogsAuditoria;
 
 
+
+/* ---------- ACESSO AS TABELAS ---------- */
+
+/* Executa o SELECT e mostra o resultado em tabela, com cada coluna
+   da largura do seu maior texto. Devolve quantas linhas mostrou (-1 se deu erro). */
+int mostrar_tabela(sqlite3 *db, const char *sql);
+
+int registro_existe(char ini_tabela, const char *filtro, void *saida);
+
+/* Lista os registros da tabela de 10 em 10.
+   banco: e=Equipes u=Usuarios c=Clientes t=Contratos v=Eventos o=Competicoes l=LogsAuditoria
+   filtro: condicao do WHERE ou NULL para trazer tudo. */
+int consultar(char banco, const char *filtro);
+
+int excluir(char banco, int id);
+
+int editar(char banco, int id);
+
+int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente, Contrato *contrato, Competicao *competicao);
 
 #endif
