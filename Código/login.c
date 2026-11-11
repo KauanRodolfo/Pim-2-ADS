@@ -4,29 +4,35 @@
    ========================================================== */
 #include "login.h"
 #include "admin.h"
-#include "funcoes.h"
-#include "funcoes_db.h"
+#include "util.h"
+#include "banco.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 Usuario fazer_login(sqlite3 *db) {
     char usuario[TAM], senha[TAM], sql[400];
-    char nome[TAM], nivel[TAM_P];
     char **resultado = NULL;
     int linhas = 0, colunas = 0, op;
-    sqlite3_stmt *stmt = NULL;
     Usuario u;
 
-    printf("\n=== SISTEMA DE CONSORCIO ===\n");
-    printf("1 - Login\n");
-    printf("0 - Sair\n");
+    printf("\n+----------------------------------------------------------+\n");
+    printf("|                   SISTEMA DE CONSORCIO                   |\n");
+    printf("+----------------------------------------------------------+\n");
+    printf("|   1 - Login                                              |\n");
+    printf("|   0 - Sair                                               |\n");
+    printf("+----------------------------------------------------------+\n");
+    printf("|   Escolha uma opcao: ");
     scanf("%d", &op);
 
     switch (op) {
     case 1:
 
-        printf("\n=== LOGIN ===\n");
-        printf("CPF (so numeros) ou admin - 0 para voltar: ");
+        printf("\n+----------------------------------------------------------+\n");
+        printf("|                          LOGIN                           |\n");
+        printf("+----------------------------------------------------------+\n");
+        printf("|   Use 0 para voltar                                      |\n");
+        printf("|   Nome de usuario: ");
 
         do {
             scanf("%s", &usuario);
@@ -37,14 +43,14 @@ Usuario fazer_login(sqlite3 *db) {
 
             tratar_texto(usuario);
             sprintf(sql,
-                    "SELECT nome, senha, nivel FROM Usuarios "
+                    "SELECT nome, senha, nivel, id, equipe_id FROM Usuarios "
                     "WHERE username = '%s' AND status = 'ativo';",
                     usuario);
 
             sqlite3_get_table(db, sql, &resultado, &linhas, &colunas, NULL);
 
             if (linhas == 0) {
-                printf("Usuario nao encontrado.\nTente novamente:");
+                printf("|                 Usuario nao encontrado.                  |\n|   Tente novamente:");
                 sqlite3_free_table(resultado);
                 // return 0;
             }
@@ -57,32 +63,39 @@ Usuario fazer_login(sqlite3 *db) {
         verificação da senha*/
 
         if (linhas) {
-            strcpy(u.nome, resultado[3]);
-            strcpy(u.senha, resultado[4]);
-            strcpy(u.nivel, resultado[5]);
+            /* 5 colunas: os valores comecam em resultado[5] */
+            strcpy(u.nome, resultado[5]);
+            strcpy(u.senha, resultado[6]);
+            strcpy(u.nivel, resultado[7]);
+            u.id = atoi(resultado[8]);
+            if (resultado[9] != NULL) {
+                u.equipe_id = atoi(resultado[9]);
+            } else {
+                u.equipe_id = 0; /* admin nao tem equipe */
+            }
 
             do {
-                printf("\nSenha: ");
+                printf("|   Senha: ");
                 scanf("%s", &senha);
 
                 tratar_texto(senha);
 
                 if (strcmp(u.senha, senha) != 0) {
-                    printf("Senha incorreta, tente novamente\n");
+                    printf("|             Senha incorreta, tente novamente             |\n");
                 }
             } while (strcmp(u.senha, senha) != 0);
 
-            printf("Login bem sucedido!\n");
+            printf("|                   Login bem sucedido!                    |\n");
         }
 
         sqlite3_free_table(resultado);
         break;
 
     case 0:
-        printf("Ate logo!\n");
+        printf("|                        Ate logo!                         |\n");
         break;
     default:
-        printf("Opcao invalida.\n");
+        printf("|                     Opcao invalida.                      |\n");
     }
 
     return u;

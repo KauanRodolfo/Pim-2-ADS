@@ -1,117 +1,182 @@
 /* ==========================================================
    gestor.c
-   Tela do gestor. Por enquanto so o menu esta pronto: as opcoes
-   ainda nao fazem nada (as funcoes de cada uma serao feitas depois).
+   Menus do gestor.
    ========================================================== */
 #include "gestor.h"
-#include "funcoes.h"
-#include "funcoes_db.h"
+#include "usuario.h"
+#include "contrato.h"
+#include "ranking.h"
+#include "util.h"
+#include "banco.h"
 #include <stdio.h>
 
-void menu_gestor() {
+
+/* ==========================================================
+Menu principal do gestor
+========================================================== */
+
+void menu_gestor(Usuario u) {
     int op;
 
     do {
-        printf("\n=== MENU gestor ===\n");
-        printf("1 - Gerenciar Vendedores\n");
-        printf("2 - Gerenciar Contratos\n");
-        printf("4 - Gerenciar Ranking da equipe\n");
-        printf("0 - Sair da conta\n");
+        printf("\n+----------------------------------------------------------+\n");
+        printf("|                       MENU GESTOR                        |\n");
+        printf("+----------------------------------------------------------+\n");
+        printf("|   1 - Gerenciar Vendedores                               |\n");
+        printf("|   2 - Gerenciar Contratos                                |\n");
+        printf("|   3 - Ranking da Equipe                                  |\n");
+        printf("|   0 - Sair da conta                                      |\n");
+
+        printf("+----------------------------------------------------------+\n");
+        printf("|   Escolha uma opcao: ");
         scanf("%d", &op);
 
         switch (op) {
-        case 1:
-            // AQUI: chamar a funcao
-            break;
+            case 1:
+                gerenciar_vendedores();
+                break;
 
-        case 2:
-            // AQUI: chamar a funcao
-            break;
-        case 3:
-            // AQUI: chamar a funcao
-            break;
-        case 0:
-            break;
-        default:
-            printf("Opcao invalida.\n");
+            case 2:
+                gerenciar_contratos(u);
+                break;
+
+            case 3:
+                ranking_equipe_gestor(u);
+                break;
+
+            case 0:
+                printf("|                    Saindo da conta...                    |\n");
+                break;
+
+            default:
+                printf("|                     Opcao invalida.                      |\n");
         }
+
     } while (op != 0);
 }
 
-void gerenciar_vendedores(){
+/* ==========================================================
+Gerenciamento de vendedores
+========================================================== */
+
+void gerenciar_vendedores() {
     int op;
+
     do {
-        printf("\n=== Gerenciar Vendedores ===\n");
-        printf("1 - Listar Vendedores\n");
-        printf("2 - Cadastrar Vendedor\n");
-        printf("3 - Arquivar Vendedor\n");
-        printf("4 - Atualizar Vendedor\n");
-        printf("0 - Voltar\n");
+        printf("\n+----------------------------------------------------------+\n");
+        printf("|                   GERENCIAR VENDEDORES                   |\n");
+        printf("+----------------------------------------------------------+\n");
+        printf("|   1 - Listar vendedores                                  |\n");
+        printf("|   2 - Cadastrar vendedor                                 |\n");
+        printf("|   3 - Atualizar vendedor                                 |\n");
+        printf("|   4 - Arquivar vendedor                                  |\n");
+        printf("|   0 - Voltar                                             |\n");
+
+        printf("+----------------------------------------------------------+\n");
+        printf("|   Escolha uma opcao: ");
         scanf("%d", &op);
 
         switch (op) {
-        case 1:
-            consultar('u');  //adicionar filtro where
-            break;
+            case 1:
+                consultar('u', "nivel = 'vendedor'");
+                break;
 
-        case 2:
-            cadastro_vendedor();
-            break;
+            case 2:
+                cadastro_vendedor();
+                break;
 
-        case 3:
-            //excluir();
-            break;
+            case 3:
+                atualizar_vendedor();
+                break;
 
-        case 0:
-            return;
-        default:
-            printf("Opcao invalida.\n");
+            case 4:
+                //excluir();
+                arquivar_vendedor();
+                break;
+
+            case 0:
+                printf("|              Voltando ao menu do gestor...               |\n");
+                break;
+
+            default:
+                printf("|                     Opcao invalida.                      |\n");
         }
+
     } while (op != 0);
 }
 
+void gerenciar_contratos(Usuario u) {
+    int op;
 
-int cadastro_vendedor(){
+    do {
+        printf("\n+----------------------------------------------------------+\n");
+        printf("|                   GERENCIAR CONTRATOS                    |\n");
+        printf("+----------------------------------------------------------+\n");
+        printf("|   1 - Listar contratos                                   |\n");
+        printf("|   2 - Aprovar ou reprovar contrato                       |\n");
+        printf("|   3 - Consultar contratos da equipe                      |\n");
+        printf("|   0 - Voltar                                             |\n");
 
-    Usuario vendedor;
-    char op;
-    int i;
+        printf("+----------------------------------------------------------+\n");
+        printf("|   Escolha uma opcao: ");
+        scanf("%d", &op);
 
-    printf("Nome do vendedor: ");
-    fgets(vendedor.nome, sizeof(vendedor.nome), stdin);
+        switch (op) {
+            case 1:
+                consultar('t', NULL);//lista todos os tipos de contratos da propria equipe
+                break;
 
-    printf("\nNome de usuario do vendedor: ");
-    fgets(vendedor.username, sizeof(vendedor.username), stdin);
+            case 2:
+                avaliar_contrato(u);
+                break;
 
-    printf("\nEmail do vendedor: ");
-    fgets(vendedor.email, sizeof(vendedor.email), stdin);
+            case 3:
+                consultar('t', NULL);
+                break;
 
-    printf("\nCPF do vendedor: ");
-    fgets(vendedor.cpf, sizeof(vendedor.cpf), stdin);
+            case 0:
+                printf("|              Voltando ao menu do gestor...               |\n");
+                break;
 
-    printf("\nA senha será os 5 ultimos numeros do CPF");
-    for (i = 7; i < 12; i++) {
-        vendedor.senha[i-7] = vendedor.cpf[i];
-    }
-    strcpy(vendedor.status, "ativo");
-    strcpy(vendedor.nivel, "vendedor");
+            default:
+                printf("|                     Opcao invalida.                      |\n");
+        }
 
-    printf("\nGostaria de atribuir o vendedor a uma equipe? Sim ou Não? (s ou n)");
-    scanf("%c", &op);
+    } while (op != 0);
+}
 
-    switch(op){
-        case 's':
-            consultar('e');
-            scanf("%d", &vendedor.equipe_id);
-            break;
-        case 'n':
-            vendedor.equipe_id = NULL;
-            break;
-        default:
-            printf("Opcao invalida.\n");
-    }
+void ranking_equipe_gestor(Usuario u) {
+    int op;
+    
 
-    if (!salvar('u', NULL, &vendedor, NULL, NULL)) {
-        return 0;
-    }
+    do {
+        printf("\n+----------------------------------------------------------+\n");
+        printf("|                    RANKING DA EQUIPE                     |\n");
+        printf("+----------------------------------------------------------+\n");
+        printf("|   1 - Ver ranking da equipe                              |\n");
+        printf("|   2 - Ver comissoes dos vendedores                       |\n");
+        printf("|   0 - Voltar                                             |\n");
+
+        printf("+----------------------------------------------------------+\n");
+        printf("|   Escolha uma opcao: ");
+        scanf("%d", &op);
+
+        switch (op) {
+            case 1:
+                ranking_equipe(u.equipe_id);
+                break;
+
+            case 2:
+                comissao_equipe(u.equipe_id);
+                break;
+
+            case 0:
+                printf("|              Voltando ao menu do gestor...               |\n");
+                break;
+
+            default:
+                printf("|                     Opcao invalida.                      |\n");
+        }
+
+    } while (op != 0);
 }

@@ -4,22 +4,24 @@
    e chama a tela de logiin.
    ========================================================== */
 #include "admin.h"
-#include "funcoes.h"
-#include "funcoes_db.h"
+#include "util.h"
+#include "banco.h"
 #include "login.h"
 #include "sqlite3.h"
 #include <stdio.h>
 #include <string.h>
+#include "gestor.h"   // Ajuste temporario - Kauan: disponibiliza a declaracao de menu_gestor()
+#include "vendedor.h" // Ajuste temporario - Kauan: disponibiliza a declaracao de menu_vendedor()
+
 
 int main(void) {
-    int rc;
     Usuario u;
     sqlite3 *db;
 
     // Constroi o banco de dados
 
     if (criar_db(&db) != SQLITE_OK) {
-        printf("Nao foi possivel criar o banco de dados.\n");
+        printf("|         Nao foi possivel criar o banco de dados.         |\n");
         // printf("%d",criar_db(&db));
         // return 1;
     }
@@ -28,11 +30,11 @@ int main(void) {
     u = fazer_login(db);
 
     if (strcmp(u.nivel, "admin") == 0) {
-        menu_admin();
+        menu_admin(u);//adicionar o nome do admin futuramente
     } else if (strcmp(u.nivel, "gestor") == 0) {
-        menu_gestor();
+        menu_gestor(u);
     } else if (strcmp(u.nivel, "vendedor") == 0) {
-        menu_vendedor();
+        menu_vendedor(u);
     }
 
     // fecha o banco

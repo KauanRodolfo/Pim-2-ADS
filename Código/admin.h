@@ -1,13 +1,17 @@
 /* ==========================================================
    admin.h
-   Tela do admin.
+   Menus do admin.
    ========================================================== */
 #ifndef ADMIN_H
 #define ADMIN_H
 
-#include "sqlite3.h"
+#include "banco.h"
 
-/* Menu do admin. Fica nele ate o admin escolher sair da conta. */
-void menu_admin();
+void menu_admin(Usuario u);
+void gerenciar_gestores();
+void gerenciar_equipes();
+void gerenciar_ciclos();
+void ranking_geral_admin();
+void consultar_log();
 
 #endif

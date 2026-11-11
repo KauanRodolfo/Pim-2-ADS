@@ -1,64 +1,82 @@
-
 /* ==========================================================
    vendedor.c
-   Tela do vendedor.
+   Menus do vendedor.
+   ========================================================== */
+#include "vendedor.h"
+#include "cliente.h"
+#include "contrato.h"
+#include "ranking.h"
+#include "util.h"
+#include "banco.h"
+#include <stdio.h>
+
+
+/* ==========================================================
+   Menu principal do vendedor
    ========================================================== */
 
-#include "vendedor.h"
-#include "funcoes.h"
-#include "funcoes_db.h"
-#include <stdio.h>
-#include <string.h>
-
-// Declaracao das funcoes
-void gerenciar_contratos();
-void cadastro_contratos();
-
-// Menu principal do vendedor
-void menu_vendedor() {
+void menu_vendedor(Usuario u) {
     int op;
 
     do {
-        printf("\n=== MENU vendedor ===\n");
-        printf("1 - Gerenciar clientes\n");
-        printf("2 - Gerenciar contratos\n");
-        printf("3 - Ver Ranking Geral\n");
-        printf("0 - Sair da conta\n");
+        printf("\n+----------------------------------------------------------+\n");
+        printf("|                      MENU VENDEDOR                       |\n");
+        printf("+----------------------------------------------------------+\n");
+        printf("|   1 - Gerenciar clientes                                 |\n");
+        printf("|   2 - Gerenciar contratos                                |\n");
+        printf("|   3 - Ver Ranking Geral                                  |\n");
+        printf("|   4 - Ver Ranking da Equipe                              |\n");
+        printf("|   0 - Sair da conta                                      |\n");
 
+        printf("+----------------------------------------------------------+\n");
+        printf("|   Escolha uma opcao: ");
         scanf("%d", &op);
 
         switch (op) {
             case 1:
-                // Gerenciar clientes
+                gerenciar_clientes();
                 break;
 
             case 2:
-                gerenciar_contratos();
+                contratos();
                 break;
 
             case 3:
-                // Ver Ranking Geral
+                ranking_geral();
+                break;
+
+            case 4:
+                ranking_equipe(u.equipe_id);
                 break;
 
             case 0:
+                printf("|                    Saindo da conta...                    |\n");
                 break;
 
             default:
-                printf("Opcao invalida.\n");
+                printf("|                     Opcao invalida.                      |\n");
         }
+
     } while (op != 0);
 }
 
-// Funcao gerenciar contratos
-void gerenciar_contratos() {
+/* ==========================================================
+   Gerenciamento de contratos
+   ========================================================== */
+
+void contratos() {
     int op;
 
     do {
-        printf("\n=== GERENCIAR CONTRATOS ===\n");
-        printf("1 - Cadastrar contratos\n");
-        printf("2 - Consultar contratos\n");
-        printf("0 - Voltar\n");
+        printf("\n+----------------------------------------------------------+\n");
+        printf("|                   GERENCIAR CONTRATOS                    |\n");
+        printf("+----------------------------------------------------------+\n");
+        printf("|   1 - Cadastrar contratos                                |\n");
+        printf("|   2 - Consultar contratos                                |\n");
+        printf("|   0 - Voltar                                             |\n");
 
+        printf("+----------------------------------------------------------+\n");
+        printf("|   Escolha uma opcao: ");
         scanf("%d", &op);
 
         switch (op) {
@@ -67,67 +85,55 @@ void gerenciar_contratos() {
                 break;
 
             case 2:
-                printf("Consulta de contratos em desenvolvimento.\n");
+                consultar('t', NULL);
                 break;
 
             case 0:
-                printf("Voltando ao menu do vendedor...\n");
+                printf("|             Voltando ao menu do vendedor...              |\n");
                 break;
 
             default:
-                printf("Opcao invalida.\n");
+                printf("|                     Opcao invalida.                      |\n");
         }
 
     } while (op != 0);
 }
 
 /* ==========================================================
-   Cadastro de contratos
+   Gerenciamento de clientes
    ========================================================== */
 
-void cadastro_contratos() {
-    Contrato contrato = {0};
+void gerenciar_clientes() {
+    int op;
 
-    printf("\n=== CADASTRAR CONTRATO ===\n");
+    do {
+        printf("\n+----------------------------------------------------------+\n");
+        printf("|                    GERENCIAR CLIENTES                    |\n");
+        printf("+----------------------------------------------------------+\n");
+        printf("|   1 - Cadastrar cliente                                  |\n");
+        printf("|   2 - Consultar clientes                                 |\n");
+        printf("|   0 - Voltar                                             |\n");
 
-    printf("ID do cliente: ");
-    if (scanf("%d", &contrato.cliente_id) != 1 ||
-        contrato.cliente_id <= 0) {
-        printf("ID do cliente invalido.\n");
-        return;
-    }
+        printf("+----------------------------------------------------------+\n");
+        printf("|   Escolha uma opcao: ");
+        scanf("%d", &op);
 
-    printf("ID do vendedor: ");
-    if (scanf("%d", &contrato.usuario_id) != 1 ||
-        contrato.usuario_id <= 0) {
-        printf("ID do vendedor invalido.\n");
-        return;
-    }
+        switch (op) {
+            case 1:
+                cadastro_clientes();
+                break;
 
-    printf("ID do tipo de consorcio: ");
-    if (scanf("%d", &contrato.tipo_consorcio_id) != 1 ||
-        contrato.tipo_consorcio_id <= 0) {
-        printf("Tipo de consorcio invalido.\n");
-        return;
-    }
+            case 2:
+                consultar('c', NULL);
+                break;
 
-    printf("Valor do credito: R$ ");
-    if (scanf("%f", &contrato.valor_credito) != 1 ||
-        contrato.valor_credito <= 0) {
-        printf("Valor invalido.\n");
-        return;
-    }
+            case 0:
+                printf("|             Voltando ao menu do vendedor...              |\n");
+                break;
 
-    strcpy(contrato.status, "em_analise");
+            default:
+                printf("|                     Opcao invalida.                      |\n");
+        }
 
-    printf("\n--- DADOS DO CONTRATO ---\n");
-    printf("Cliente ID: %d\n", contrato.cliente_id);
-    printf("Vendedor ID: %d\n", contrato.usuario_id);
-    printf("Tipo de consorcio ID: %d\n",
-           contrato.tipo_consorcio_id);
-    printf("Valor do credito: R$ %.2f\n",
-           contrato.valor_credito);
-    printf("Status: %s\n", contrato.status);
-
-    printf("\nDados coletados. Persistencia ainda pendente.\n");
+    } while (op != 0);
 }
