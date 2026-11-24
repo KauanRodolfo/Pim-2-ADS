@@ -60,9 +60,3 @@ Estas atualizações descrevem o andamento durante a Sprint 5, sem modificar ret
 | O que funcionou bem | A preencher após retrospectiva |
 | Dificuldades enfrentadas | A preencher após retrospectiva |
 | Decisões de melhoria | A preencher após retrospectiva |
-
-## 7. Referências
-
-- [Sprint Review 4](./Sprint_Review_4.md)
-- [Product Backlog](../02-Especificacao-e-Planejamento/Product_Backlog.md)
-- [Pasta de Sprints](./)
