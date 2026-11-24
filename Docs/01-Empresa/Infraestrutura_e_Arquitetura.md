@@ -39,7 +39,7 @@ A figura apresenta a disposição das salas, das estações de trabalho e dos po
 
 *Figura 1 — Representação da infraestrutura física de rede proposta para a DMcom.*
 
-![Planta do escritório com topologia de rede em estrela](topologia-rede.png)
+<img width="1448" height="1013" alt="topologia-rede" src="https://github.com/user-attachments/assets/121daf52-6107-4480-a685-dbacb8e2c9fb" />
 
 ## 2. Arquitetura do sistema Rankcom
 
@@ -85,4 +85,4 @@ A figura abaixo apresenta a divisão lógica do Rankcom, destacando a responsabi
 
 *Figura 2 — Representação da arquitetura lógica do Rankcom em três camadas.*
 
-![Arquitetura do sistema Rankcom em três camadas](arquitetura-sistema-camadas.png)
+<img width="1535" height="1024" alt="arquitetura-sistema-camadas" src="https://github.com/user-attachments/assets/ba07775a-10fc-4c4c-b28e-54a0adc5f709" />
