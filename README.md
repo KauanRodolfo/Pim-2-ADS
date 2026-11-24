@@ -6,7 +6,7 @@
 
 **Uma proposta de transformação digital para a DMcom Administradora de Consórcios**
 
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-orange)
+![Status](https://img.shields.io/badge/status-protótipo%20integrado-brightgreen)
 ![Linguagem](https://img.shields.io/badge/linguagem-C-blue)
 ![Banco de dados](https://img.shields.io/badge/banco%20de%20dados-SQLite-07405E)
 
@@ -30,7 +30,7 @@ A estrutura organizacional, os processos de negócio e o contexto da empresa est
 
 | Desafio identificado | Como o Rankcom pretende contribuir |
 |---|---|
-| Apuração manual e demorada das comissões | Automatizar o cálculo de **5%** de comissão sobre contratos aprovados, com percentual fixo para todos os vendedores |
+| Apuração manual e demorada das comissões | Automatizar o cálculo da comissão fixa de **5% sobre o valor do crédito contratado**, contabilizada exclusivamente após a aprovação pelo gestor |
 | Dificuldade de acompanhar contratos | Centralizar o registro, a análise e a situação de cada contrato |
 | Visibilidade limitada do desempenho comercial | Disponibilizar rankings por equipe e um ranking geral, atualizados com base nas comissões válidas |
 | Baixo engajamento e reconhecimento pouco visível | Destacar **um vencedor** no ranking geral e **um vencedor por equipe**, com critério de desempate definido |
@@ -42,13 +42,13 @@ A estrutura organizacional, os processos de negócio e o contexto da empresa est
 - **Cadastro de clientes:** registro e consulta das informações necessárias à operação comercial.
 - **Gerenciamento de vendedores e equipes:** cadastro e associação dos vendedores às equipes comerciais.
 - **Registro de contratos:** vinculação de contratos aos clientes e encaminhamento para análise.
-- **Análise de contratos:** aprovação ou reprovação definitiva pelo gestor, sem justificativa obrigatória, correção ou reenvio do mesmo registro.
-- **Comissões:** cálculo de **5%**, aplicado somente aos contratos aprovados pelos gestores.
+- **Análise de contratos:** aprovação ou reprovação definitiva pelo gestor, com justificativa opcional (`motivo_reprovacao` no banco de dados), sem correção ou reenvio do mesmo registro.
+- **Comissões:** cálculo automático de **5% sobre o valor do crédito contratado**, igual para todos os vendedores e contabilizado exclusivamente após a aprovação pelo gestor.
 - **Ranking geral:** classificação dos 21 vendedores das três equipes, destacando **apenas o primeiro colocado**.
 - **Rankings por equipe:** classificação dos sete vendedores de cada equipe, destacando **apenas o primeiro colocado**.
 - **Ciclos de apuração:** abertura e encerramento de um ciclo compartilhado entre os quatro rankings pelo administrador.
 
-> **Limites do escopo inicial:** o gerenciamento de premiações e o tratamento de cancelamentos posteriores à aprovação dos contratos são possibilidades para versões futuras. O percentual de **5% está definido**, mas a base financeira do cálculo ainda será especificada. A autenticação do protótipo será testada com credenciais fictícias; a utilização de logs não equivale à proteção de senhas exigida em produção.
+> **Limites do escopo inicial:** o gerenciamento de premiações e o tratamento de cancelamentos posteriores à aprovação dos contratos são possibilidades para versões futuras. A autenticação do protótipo será testada com credenciais fictícias; a utilização de logs não equivale à proteção de senhas exigida em produção.
 
 ## Como funciona o fluxo comercial
 
@@ -59,16 +59,16 @@ flowchart TD
     C --> D{"Gestor aprova?"}
     D -- "Não" --> E["Contrato reprovado: processo encerrado, sem reenvio e sem comissão"]
     D -- "Sim" --> G["Contrato aprovado"]
-    G --> H["Cálculo e contabilização da comissão fixa de 5%"]
+    G --> H["Cálculo automático de 5% sobre o valor do crédito contratado"]
     H --> I["Atualização dos rankings geral e por equipe"]
 ```
 
 **Funcionamento definido para a proposta:**
 
 - Apenas contratos **aprovados** contribuem para as comissões contabilizadas e para a classificação nos rankings.
-- O percentual de comissão é **5% para todos os vendedores**; a base financeira sobre a qual se aplica será especificada.
+- O percentual de comissão é **5% para todos os vendedores**; Fixa ao valor do crédito contratado.
 - O **administrador** controla a abertura e o encerramento do **ciclo compartilhado** dos rankings.
-- O ranking geral e os três rankings por equipe possuem **classificações próprias** e destacam **somente um vencedor por ranking**. Em caso de empate no total de comissões válidas, prevalece quem registrou primeiro uma venda válida no ciclo, vinculada a contrato posteriormente aprovado.
+- O ranking geral e os três rankings por equipe possuem **classificações próprias** e destacam **somente um vencedor por ranking**. Em caso de empate no total de comissões válidas, prevalece o vendedor que registrou primeiro a última venda que posteriormente foi aprovada pelo gestor.
 - **O sistema não gerencia premiações nesta versão**; esse recurso fica reservado a uma possível evolução futura.
 
 ## Tecnologias e ferramentas
@@ -99,13 +99,13 @@ A pasta [`Docs/`](Docs/) concentra os arquivos Markdown que registram **o contex
 
 ### Organização dos documentos
 
-| Área | Arquivo ou pasta de referência | O que documenta | Situação |
-|---|---|---|---|
-| **01 · Empresa** | [Caracterização da DMcom](Docs/01-Empresa/caracteriza%C3%A7%C3%A3o_da_DMcom.md) | Identificação, missão, estrutura, processos comerciais e cenário anterior à digitalização. | Documento disponível; sujeito à revisão da equipe |
-| **02 · Especificação e Planejamento** | [Requisitos](Docs/02-Especificacao-e-Planejamento/Requisitos.md) | Regras de negócio, requisitos funcionais, não funcionais e rastreabilidade. | Em validação pela equipe |
-| **02 · Especificação e Planejamento** | [Product Backlog](Docs/02-Especificacao-e-Planejamento/Product_Backlog.md) | Histórias de usuário, critérios de aceitação, prioridades e rastreabilidade. | Em validação pela equipe |
-| **Sprints** | [Consultar Sprints](Docs/03-Sprints/) | Planejamento, atividades e entregas das Sprints; acompanhamento da execução pelo Kanban. | Organização e histórico em revisão |
-| **Atas** | [Consultar Atas](Docs/04-Atas/) | Reuniões, decisões, responsáveis e pendências. | Conforme registros disponíveis |
+| Área | Arquivo ou pasta de referência | O que documenta |
+|---|---|---|
+| **01 · Empresa** | [Caracterização da DMcom](Docs/01-Empresa/caracteriza%C3%A7%C3%A3o_da_DMcom.md) | Identificação, missão, estrutura, processos comerciais e cenário anterior à digitalização. |
+| **01 · Empresa** | [Infraestrutura_e_Arquitetura](Docs/01-Empresa/Infraestrutura_e_Arquitetura.md) | Infraestrutura de Redes e Arquitetura em Camadas. |
+| **02 · Especificação e Planejamento** | [Requisitos](Docs/02-Especificacao-e-Planejamento/Requisitos.md) | Regras de negócio, requisitos funcionais, não funcionais e rastreabilidade. |
+| **02 · Especificação e Planejamento** | [Product Backlog](Docs/02-Especificacao-e-Planejamento/Product_Backlog.md) | Histórias de usuário, critérios de aceitação, prioridades e rastreabilidade. |
+| **Sprints** | [Consultar Sprints](Docs/03-Sprints/) | Planejamento, atividades e entregas das Sprints; acompanhamento da execução pelo Kanban. |
 
 > **Navegação:** os acessos direcionam para as pastas e documentos existentes na estrutura da branch `main` utilizada nesta revisão.
 
