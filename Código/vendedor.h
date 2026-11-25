@@ -8,7 +8,7 @@
 #include "banco.h"
 
 void menu_vendedor(Usuario u);
-void contratos();
-void gerenciar_clientes();
+void contratos(Usuario u);
+void gerenciar_clientes(Usuario u);
 
 #endif

@@ -177,18 +177,16 @@ void comissao_equipe(int equipe_id) {
     char sql[1024];
     int registros = 0;
 
-    /* Conta so os contratos feitos dentro do periodo da competicao aberta da equipe */
+    /* Comissao = 5% de todos os contratos aprovados do vendedor */
     snprintf(sql, sizeof(sql),
         "SELECT u.id, u.nome, COUNT(c.id) AS contratos, "
         "SUM(c.valor_credito) AS total_vendido, "
         "SUM(c.valor_credito) * 0.05 AS comissao "
         "FROM Usuarios u "
         "JOIN Contratos c ON u.id = c.vendedor_id "
-        "JOIN Competicoes co ON co.equipe_id = %d AND co.status = 'aberta' "
         "WHERE u.nivel = 'vendedor' AND u.equipe_id = %d AND c.status = 'aprovado' "
-        "  AND c.data_contrato BETWEEN co.data_inicio AND co.data_fim "
         "GROUP BY u.id "
-        "ORDER BY comissao DESC;", equipe_id, equipe_id);
+        "ORDER BY comissao DESC;", equipe_id);
 
     if (sqlite3_open("pim2.db", &db) != SQLITE_OK) {
         printf("|   Erro ao abrir o banco: %-32s|\n", sqlite3_errmsg(db));

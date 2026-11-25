@@ -13,7 +13,7 @@
    Cadastro de clientes
    ========================================================== */
 
-int cadastro_clientes() {
+int cadastro_clientes(Usuario u) {
     Cliente cliente = {0};
     char confirmar;
     char renda[TAM_P];
@@ -45,7 +45,7 @@ int cadastro_clientes() {
     sscanf(renda, "%f", &cliente.renda[0]);
 
     strcpy(cliente.status, "ativo");
-    cliente.cadastrado_por = 3;
+    cliente.cadastrado_por = u.id;   /* antes era 3 fixo */
 
     printf("\n+----------------------------------------------------------+\n");
     printf("|   CONFIRMAR DADOS                                        |\n");

@@ -7,7 +7,7 @@
 
 #include "banco.h"
 
-void cadastro_contratos();
+void cadastro_contratos(Usuario u);
 void avaliar_contrato(Usuario u);
 
 #endif

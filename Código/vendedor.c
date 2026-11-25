@@ -37,11 +37,11 @@ void menu_vendedor(Usuario u) {
 
         switch (op) {
             case 1:
-                gerenciar_clientes();
+                gerenciar_clientes(u);
                 break;
 
             case 2:
-                contratos();
+                contratos(u);
                 break;
 
             case 3:
@@ -67,7 +67,7 @@ void menu_vendedor(Usuario u) {
    Gerenciamento de contratos
    ========================================================== */
 
-void contratos() {
+void contratos(Usuario u) {
     int op;
 
     do {
@@ -87,7 +87,7 @@ void contratos() {
 
         switch (op) {
             case 1:
-                cadastro_contratos();
+                cadastro_contratos(u);
                 break;
 
             case 2:
@@ -109,7 +109,7 @@ void contratos() {
    Gerenciamento de clientes
    ========================================================== */
 
-void gerenciar_clientes() {
+void gerenciar_clientes(Usuario u) {
     int op;
 
     do {
@@ -129,7 +129,7 @@ void gerenciar_clientes() {
 
         switch (op) {
             case 1:
-                cadastro_clientes();
+                cadastro_clientes(u);
                 break;
 
             case 2:

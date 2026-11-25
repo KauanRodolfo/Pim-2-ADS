@@ -14,7 +14,7 @@
    Cadastro de contratos
    ========================================================== */
 
-void cadastro_contratos() {
+void cadastro_contratos(Usuario u) {
     Contrato contrato;
     char confirmar;
     char filtro[TAM];
@@ -60,12 +60,8 @@ void cadastro_contratos() {
         }
     }while(op);
 
-    printf("|   ID do vendedor: ");  //precisa ser o id do vendedor logado
-    if (scanf("%d", &contrato.usuario_id) != 1 ||
-        contrato.usuario_id <= 0) {
-        printf("|   ID do vendedor invalido.                               |\n");
-        return;
-    }
+    /* O contrato fica no nome de quem esta logado */
+    contrato.usuario_id = u.id;
 
     printf("|   ID do tipo de consorcio: ");
     if (scanf("%d", &contrato.tipo_consorcio_id) != 1 ||
