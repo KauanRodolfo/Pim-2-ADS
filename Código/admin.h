@@ -10,7 +10,7 @@
 void menu_admin(Usuario u);
 void gerenciar_gestores();
 void gerenciar_equipes();
-void gerenciar_ciclos();
+void gerenciar_competicoes(Usuario u);
 void ranking_geral_admin();
 void consultar_log();
 

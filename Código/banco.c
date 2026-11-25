@@ -94,11 +94,11 @@ int criar_db(sqlite3 **db) {
         ");"
 
 
-        /* LogAuditoria: registra exclusoes e arquivamentos (LGPD) */
+        /* LogAuditoria: registra tudo que altera o banco (LGPD) */
         "CREATE TABLE IF NOT EXISTS LogsAuditoria ("
         "  id INTEGER PRIMARY KEY AUTOINCREMENT,"
         "  usuario_id INTEGER NOT NULL REFERENCES Usuarios(id),"
-        "  acao TEXT NOT NULL CHECK (acao IN ('exclusao','arquivamento')),"
+        "  acao TEXT NOT NULL CHECK (acao IN ('cadastro','edicao','arquivamento','aprovacao','reprovacao','exclusao')),"
         "  entidade TEXT NOT NULL,"
         "  entidade_id INTEGER NOT NULL,"
         "  detalhes TEXT,"
@@ -214,6 +214,40 @@ int criar_db(sqlite3 **db) {
     return resultado;
 }
 
+/* ---------- LOG DE AUDITORIA ---------- */
+
+/* Usuario que esta logado agora. O main preenche depois do login,
+   e o registrar_log usa para saber quem fez a acao. */
+int usuario_logado = 0;
+
+/* Grava uma linha na tabela LogsAuditoria.
+   acao:        o que foi feito  (ex: "cadastro", "arquivamento", "aprovacao")
+   entidade:    tabela afetada   (ex: "Equipes", "Contratos")
+   entidade_id: id do registro afetado
+   detalhes:    texto explicando (ex: "Equipe Delta") ou "" se nao tiver
+   A data e a hora sao preenchidas pelo proprio banco. */
+void registrar_log(const char *acao, const char *entidade, int entidade_id, const char *detalhes) {
+    sqlite3 *db;
+    char sql[TAM_TEXTO + 300]; /* espaco para os detalhes + o resto do comando */
+
+    if (sqlite3_open("pim2.db", &db) != SQLITE_OK) {
+        printf("|   Erro ao abrir o banco para gravar o log.               |\n");
+        sqlite3_close(db);
+        return;
+    }
+
+    snprintf(sql, sizeof(sql),
+             "INSERT INTO LogsAuditoria (usuario_id, acao, entidade, entidade_id, detalhes) "
+             "VALUES (%d, '%s', '%s', %d, '%s');",
+             usuario_logado, acao, entidade, entidade_id, detalhes);
+
+    if (sqlite3_exec(db, sql, NULL, NULL, NULL) != SQLITE_OK) {
+        printf("|   Erro ao gravar o log.                                  |\n");
+    }
+
+    sqlite3_close(db);
+}
+
 /* ---------- TABELA DAS CONSULTAS ---------- */
 
 /* Desenha a linha de borda da tabela:  +----+-------------+
@@ -221,7 +255,7 @@ int criar_db(sqlite3 **db) {
 void borda_tabela(char **resultado, int colunas, int largura[]) {
     int col, i;
 
-    printf("   +");
+    printf("+");
     for (col = 0; col < colunas; col++) {
         if (strcmp(resultado[col], "senha") == 0) {
             continue;   /* a coluna senha nao e mostrada */
@@ -290,7 +324,7 @@ int mostrar_tabela(sqlite3 *db, const char *sql) {
     borda_tabela(resultado, colunas, largura);
 
     for (lin = 0; lin <= linhas; lin++) {
-        printf("   |");
+        printf("|");
         for (col = 0; col < colunas; col++) {
             if (strcmp(resultado[col], "senha") == 0) {
                 continue;   /* a coluna senha nao e mostrada */
@@ -369,7 +403,7 @@ int consultar(char banco, const char *filtro) {
             tabela = "LogsAuditoria";
             break;
         default:
-            fprintf(stderr, "|              Banco invalido para consulta.               |\n");
+            fprintf(stderr, "|   Banco invalido para consulta.                          |\n");
             return 1;
     }
 
@@ -417,12 +451,12 @@ int consultar(char banco, const char *filtro) {
         }
 
         if (registros == 0 && offset == 0) {
-            printf("|               Nenhum registro encontrado.                |\n");
+            printf("|   Nenhum registro encontrado.                            |\n");
             break;
         }
 
         if (registros == 0) {
-            printf("|           Nao ha mais registros nesta pagina.            |\n");
+            printf("|   Nao ha mais registros nesta pagina.                    |\n");
             offset -= 10;
             continue;
         }
@@ -434,7 +468,7 @@ int consultar(char banco, const char *filtro) {
 
         printf("|   [p] proxima pagina | [a] pagina anterior | [q] sair: ");
         if (scanf(" %c", &opcao) != 1) {
-            fprintf(stderr, "|              Nao foi possivel ler a opcao.               |\n");
+            fprintf(stderr, "|   Nao foi possivel ler a opcao.                          |\n");
             sqlite3_close(db);
             return 1;
         }
@@ -454,7 +488,7 @@ int consultar(char banco, const char *filtro) {
             case 'Q':
                 break;
             default:
-                printf("|                     Opcao invalida.                      |\n");
+                printf("|   Opcao invalida.                                        |\n");
         }
     } while (opcao != 'q' && opcao != 'Q');
 
@@ -466,10 +500,11 @@ int excluir(char banco, int id) {
     sqlite3 *db;
     char *erro = NULL;
     char sql[256];
+    const char *tabela = NULL; /* nome da tabela, usado no log */
     int rc = SQLITE_OK;
 
     if (id <= 0) {
-        fprintf(stderr, "|                Id invalido para exclusao.                |\n");
+        fprintf(stderr, "|   Id invalido para exclusao.                             |\n");
         return 1;
     }
 
@@ -484,30 +519,35 @@ int excluir(char banco, int id) {
     switch (banco) {
         case 'E':
         case 'e':
+            tabela = "Equipes";
             snprintf(sql, sizeof(sql),
                      "UPDATE Equipes SET status = 'arquivado' WHERE id = %d;", id);
             break;
 
         case 'U':
         case 'u':
+            tabela = "Usuarios";
             snprintf(sql, sizeof(sql),
                      "UPDATE Usuarios SET status = 'arquivado' WHERE id = %d;", id);
             break;
 
         case 'C':
         case 'c':
+            tabela = "Clientes";
             snprintf(sql, sizeof(sql),
                      "UPDATE Clientes SET status = 'arquivado' WHERE id = %d;", id);
             break;
 
         case 'T':
         case 't':
+            tabela = "Contratos";
             snprintf(sql, sizeof(sql),
                      "UPDATE Contratos SET status = 'arquivado' WHERE id = %d;", id);
             break;
 
         case 'O':
         case 'o':
+            tabela = "Competicoes";
             snprintf(sql, sizeof(sql),
                      "UPDATE Competicoes SET status = 'arquivado' WHERE id = %d;", id);
             break;
@@ -526,6 +566,7 @@ int excluir(char banco, int id) {
     }
 
     sqlite3_close(db);
+    registrar_log("arquivamento", tabela, id, "");
     return 0;
 }
 
@@ -534,6 +575,9 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
     sqlite3 *db;
     char *erro = NULL;
     char sql[2048];
+    const char *tabela = NULL;      /* nome da tabela, usado no log */
+    char detalhes[TAM_NOME + 50];   /* texto curto que vai para o log */
+    int novo_id;
     int rc = SQLITE_OK;
 
     rc = sqlite3_open("pim2.db", &db); //retorna 0 se a conexo for bem Sucedida
@@ -551,6 +595,8 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
                 sqlite3_close(db);
                 return 1;
             }
+            tabela = "Equipes";
+            snprintf(detalhes, sizeof(detalhes), "%s", equipe->nome);
 
             if (equipe->gestor_id == 0) {
                 snprintf(sql, sizeof(sql),
@@ -571,7 +617,8 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
                 sqlite3_close(db);
                 return 1;
             }
-            
+            tabela = "Usuarios";
+            snprintf(detalhes, sizeof(detalhes), "%s (%s)", usuario->nome, usuario->nivel);
 
             if (usuario->equipe_id == 0) {
                 snprintf(sql, sizeof(sql),
@@ -598,6 +645,9 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
                 sqlite3_close(db);
                 return 1;
             }
+            tabela = "Clientes";
+            snprintf(detalhes, sizeof(detalhes), "%s", cliente->nome);
+
             snprintf(sql, sizeof(sql),
                      "INSERT INTO Clientes "
                      "(nome, cpf, email, telefone, renda, status, cadastrado_por) "
@@ -613,6 +663,10 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
                 sqlite3_close(db);
                 return 1;
             }
+            tabela = "Contratos";
+            snprintf(detalhes, sizeof(detalhes), "cliente %d, valor R$ %.2f",
+                     contrato->cliente_id, contrato->valor_credito);
+
             snprintf(sql, sizeof(sql),
                      "INSERT INTO Contratos "
                      "(cliente_id, vendedor_id, tipo_consorcio_id, valor_credito, "
@@ -647,6 +701,8 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
             tratar_texto(competicao->nome);
             tratar_texto(competicao->data_inicio);
             tratar_texto(competicao->data_fim);
+            tabela = "Competicoes";
+            snprintf(detalhes, sizeof(detalhes), "%s (%s)", competicao->nome, competicao->tipo);
 
             if (competicao->equipe_id == 0) {
                 snprintf(sql, sizeof(sql),
@@ -680,7 +736,10 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
         return 1;
     }
 
+    /* Pega o id que o banco acabou de gerar, para gravar no log */
+    novo_id = sqlite3_last_insert_rowid(db);
     sqlite3_close(db);
+    registrar_log("cadastro", tabela, novo_id, detalhes);
     return 0;
 }
 
@@ -689,17 +748,18 @@ int editar(char banco, int id) {
     char *erro = NULL;
     char sql[2048];
     char valor[TAM_TEXTO + 2];
+    char detalhes[100];   /* texto que vai para o log */
     const char *tabela = NULL;
     const char *coluna = NULL;
     int opcao;
     int rc = SQLITE_OK;
 
     if (id <= 0) {
-        fprintf(stderr, "|                 Id invalido para edicao.                 |\n");
+        fprintf(stderr, "|   Id invalido para edicao.                               |\n");
         return 1;
     }
 
-    printf("|              qual campo gostaria de editar?              |\n");
+    printf("|   qual campo gostaria de editar?                         |\n");
 
     switch (banco) {
         case 'E':
@@ -708,7 +768,9 @@ int editar(char banco, int id) {
             printf("|   1 - Nome                                               |\n|   2 - Gestor (id)                                        |\n");
             printf("+----------------------------------------------------------+\n");
             printf("|   Escolha uma opcao: ");
-            scanf("%d", &opcao);
+            if (scanf("%d", &opcao) != 1) {
+                opcao = -1;
+            }
             switch (opcao) {
                 case 1: coluna = "nome"; break;
                 case 2: coluna = "gestor_id"; break;
@@ -721,7 +783,9 @@ int editar(char banco, int id) {
             printf("|   1 - Nome                                               |\n|   2 - CPF                                                |\n|   3 - Username                                           |\n|   4 - Email                                              |\n|   5 - Senha                                              |\n|   6 - Nivel                                              |\n|   7 - Equipe (id)                                        |\n");
             printf("+----------------------------------------------------------+\n");
             printf("|   Escolha uma opcao: ");
-            scanf("%d", &opcao);
+            if (scanf("%d", &opcao) != 1) {
+                opcao = -1;
+            }
             switch (opcao) {
                 case 1: coluna = "nome"; break;
                 case 2: coluna = "cpf"; break;
@@ -739,7 +803,9 @@ int editar(char banco, int id) {
             printf("|   1 - Nome                                               |\n|   2 - CPF                                                |\n|   3 - Email                                              |\n|   4 - Telefone                                           |\n|   5 - Renda                                              |\n");
             printf("+----------------------------------------------------------+\n");
             printf("|   Escolha uma opcao: ");
-            scanf("%d", &opcao);
+            if (scanf("%d", &opcao) != 1) {
+                opcao = -1;
+            }
             switch (opcao) {
                 case 1: coluna = "nome"; break;
                 case 2: coluna = "cpf"; break;
@@ -755,7 +821,9 @@ int editar(char banco, int id) {
             printf("|   1 - Cliente (id)                                       |\n|   2 - Vendedor (id)                                      |\n|   3 - Valor do credito                                   |\n|   4 - Data do contrato                                   |\n|   5 - Status                                             |\n|   6 - Motivo da reprovacao                               |\n");
             printf("+----------------------------------------------------------+\n");
             printf("|   Escolha uma opcao: ");
-            scanf("%d", &opcao);
+            if (scanf("%d", &opcao) != 1) {
+                opcao = -1;
+            }
             switch (opcao) {
                 case 1: coluna = "cliente_id"; break;
                 case 2: coluna = "vendedor_id"; break;
@@ -772,7 +840,9 @@ int editar(char banco, int id) {
             printf("|   1 - Nome                                               |\n|   2 - Data de inicio                                     |\n|   3 - Data de fim                                        |\n");
             printf("+----------------------------------------------------------+\n");
             printf("|   Escolha uma opcao: ");
-            scanf("%d", &opcao);
+            if (scanf("%d", &opcao) != 1) {
+                opcao = -1;
+            }
             switch (opcao) {
                 case 1: coluna = "nome"; break;
                 case 2: coluna = "data_inicio"; break;
@@ -781,14 +851,14 @@ int editar(char banco, int id) {
             break;
 
         default:
-            fprintf(stderr, "|               Banco invalido para edicao.                |\n");
+            fprintf(stderr, "|   Banco invalido para edicao.                            |\n");
             return 1;
     }
 
     limpar_buffer();
 
     if (coluna == NULL) {
-        printf("|                     Opcao invalida.                      |\n");
+        printf("|   Opcao invalida.                                        |\n");
         return 1;
     }
 
@@ -817,6 +887,10 @@ int editar(char banco, int id) {
     }
 
     sqlite3_close(db);
+
+    /* O novo valor nao vai para o log porque pode ser uma senha */
+    snprintf(detalhes, sizeof(detalhes), "campo %s alterado", coluna);
+    registrar_log("edicao", tabela, id, detalhes);
     return 0;
 }
 int registro_existe(char ini_tabela, const char *filtro, void *saida) {
@@ -858,7 +932,7 @@ int registro_existe(char ini_tabela, const char *filtro, void *saida) {
             tabela = "LogsAuditoria";
             break;
         default:
-            fprintf(stderr, "|              Banco invalido para consulta.               |\n");
+            fprintf(stderr, "|   Banco invalido para consulta.                          |\n");
             return 1;
     }
 

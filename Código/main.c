@@ -21,13 +21,16 @@ int main(void) {
     // Constroi o banco de dados
 
     if (criar_db(&db) != SQLITE_OK) {
-        printf("|         Nao foi possivel criar o banco de dados.         |\n");
+        printf("|   Nao foi possivel criar o banco de dados.               |\n");
         // printf("%d",criar_db(&db));
         // return 1;
     }
 
     // Tela de login (fica aqui ate a pessoa escolher Sair)
     u = fazer_login(db);
+
+    // Guarda quem entrou, para o log saber quem fez cada acao
+    usuario_logado = u.id;
 
     if (strcmp(u.nivel, "admin") == 0) {
         menu_admin(u);//adicionar o nome do admin futuramente

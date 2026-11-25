@@ -6,6 +6,7 @@
 #include "usuario.h"
 #include "contrato.h"
 #include "ranking.h"
+#include "competicao.h"
 #include "util.h"
 #include "banco.h"
 #include <stdio.h>
@@ -25,11 +26,15 @@ void menu_gestor(Usuario u) {
         printf("|   1 - Gerenciar Vendedores                               |\n");
         printf("|   2 - Gerenciar Contratos                                |\n");
         printf("|   3 - Ranking da Equipe                                  |\n");
+        printf("|   4 - Cadastrar Competicao da Equipe                     |\n");
         printf("|   0 - Sair da conta                                      |\n");
 
         printf("+----------------------------------------------------------+\n");
         printf("|   Escolha uma opcao: ");
-        scanf("%d", &op);
+        if (scanf("%d", &op) != 1) {
+            op = -1;
+        }
+        limpar_buffer();
 
         switch (op) {
             case 1:
@@ -44,12 +49,16 @@ void menu_gestor(Usuario u) {
                 ranking_equipe_gestor(u);
                 break;
 
+            case 4:
+                competicao_equipe(u);
+                break;
+
             case 0:
-                printf("|                    Saindo da conta...                    |\n");
+                printf("|   Saindo da conta...                                     |\n");
                 break;
 
             default:
-                printf("|                     Opcao invalida.                      |\n");
+                printf("|   Opcao invalida.                                        |\n");
         }
 
     } while (op != 0);
@@ -74,7 +83,10 @@ void gerenciar_vendedores() {
 
         printf("+----------------------------------------------------------+\n");
         printf("|   Escolha uma opcao: ");
-        scanf("%d", &op);
+        if (scanf("%d", &op) != 1) {
+            op = -1;
+        }
+        limpar_buffer();
 
         switch (op) {
             case 1:
@@ -95,11 +107,11 @@ void gerenciar_vendedores() {
                 break;
 
             case 0:
-                printf("|              Voltando ao menu do gestor...               |\n");
+                printf("|   Voltando ao menu do gestor...                          |\n");
                 break;
 
             default:
-                printf("|                     Opcao invalida.                      |\n");
+                printf("|   Opcao invalida.                                        |\n");
         }
 
     } while (op != 0);
@@ -119,7 +131,10 @@ void gerenciar_contratos(Usuario u) {
 
         printf("+----------------------------------------------------------+\n");
         printf("|   Escolha uma opcao: ");
-        scanf("%d", &op);
+        if (scanf("%d", &op) != 1) {
+            op = -1;
+        }
+        limpar_buffer();
 
         switch (op) {
             case 1:
@@ -135,11 +150,11 @@ void gerenciar_contratos(Usuario u) {
                 break;
 
             case 0:
-                printf("|              Voltando ao menu do gestor...               |\n");
+                printf("|   Voltando ao menu do gestor...                          |\n");
                 break;
 
             default:
-                printf("|                     Opcao invalida.                      |\n");
+                printf("|   Opcao invalida.                                        |\n");
         }
 
     } while (op != 0);
@@ -159,7 +174,10 @@ void ranking_equipe_gestor(Usuario u) {
 
         printf("+----------------------------------------------------------+\n");
         printf("|   Escolha uma opcao: ");
-        scanf("%d", &op);
+        if (scanf("%d", &op) != 1) {
+            op = -1;
+        }
+        limpar_buffer();
 
         switch (op) {
             case 1:
@@ -171,11 +189,11 @@ void ranking_equipe_gestor(Usuario u) {
                 break;
 
             case 0:
-                printf("|              Voltando ao menu do gestor...               |\n");
+                printf("|   Voltando ao menu do gestor...                          |\n");
                 break;
 
             default:
-                printf("|                     Opcao invalida.                      |\n");
+                printf("|   Opcao invalida.                                        |\n");
         }
 
     } while (op != 0);

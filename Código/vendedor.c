@@ -30,7 +30,10 @@ void menu_vendedor(Usuario u) {
 
         printf("+----------------------------------------------------------+\n");
         printf("|   Escolha uma opcao: ");
-        scanf("%d", &op);
+        if (scanf("%d", &op) != 1) {
+            op = -1;
+        }
+        limpar_buffer();
 
         switch (op) {
             case 1:
@@ -50,11 +53,11 @@ void menu_vendedor(Usuario u) {
                 break;
 
             case 0:
-                printf("|                    Saindo da conta...                    |\n");
+                printf("|   Saindo da conta...                                     |\n");
                 break;
 
             default:
-                printf("|                     Opcao invalida.                      |\n");
+                printf("|   Opcao invalida.                                        |\n");
         }
 
     } while (op != 0);
@@ -77,7 +80,10 @@ void contratos() {
 
         printf("+----------------------------------------------------------+\n");
         printf("|   Escolha uma opcao: ");
-        scanf("%d", &op);
+        if (scanf("%d", &op) != 1) {
+            op = -1;
+        }
+        limpar_buffer();
 
         switch (op) {
             case 1:
@@ -89,11 +95,11 @@ void contratos() {
                 break;
 
             case 0:
-                printf("|             Voltando ao menu do vendedor...              |\n");
+                printf("|   Voltando ao menu do vendedor...                        |\n");
                 break;
 
             default:
-                printf("|                     Opcao invalida.                      |\n");
+                printf("|   Opcao invalida.                                        |\n");
         }
 
     } while (op != 0);
@@ -116,7 +122,10 @@ void gerenciar_clientes() {
 
         printf("+----------------------------------------------------------+\n");
         printf("|   Escolha uma opcao: ");
-        scanf("%d", &op);
+        if (scanf("%d", &op) != 1) {
+            op = -1;
+        }
+        limpar_buffer();
 
         switch (op) {
             case 1:
@@ -128,11 +137,11 @@ void gerenciar_clientes() {
                 break;
 
             case 0:
-                printf("|             Voltando ao menu do vendedor...              |\n");
+                printf("|   Voltando ao menu do vendedor...                        |\n");
                 break;
 
             default:
-                printf("|                     Opcao invalida.                      |\n");
+                printf("|   Opcao invalida.                                        |\n");
         }
 
     } while (op != 0);

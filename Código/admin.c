@@ -7,6 +7,8 @@
 #include "equipe.h"
 #include "util.h"
 #include "banco.h"
+#include "competicao.h"
+#include "ranking.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -24,14 +26,17 @@ void menu_admin(Usuario u) {
         printf("+----------------------------------------------------------+\n");
         printf("|   1 - Gerenciar Equipes                                  |\n");
         printf("|   2 - Gerenciar Gestores                                 |\n");
-        printf("|   3 - Gerenciar Ciclos de Apuracao                       |\n");
+        printf("|   3 - Gerenciar Competicoes                              |\n");
         printf("|   4 - Ranking Geral                                      |\n");
         printf("|   5 - Consultar Log                                      |\n");
         printf("|   0 - Sair da conta                                      |\n");
 
         printf("+----------------------------------------------------------+\n");
         printf("|   Escolha uma opcao: ");
-        scanf("%d", &op);
+        if (scanf("%d", &op) != 1) {
+            op = -1;
+        }
+        limpar_buffer();
 
         switch (op) {
             case 1:
@@ -43,7 +48,7 @@ void menu_admin(Usuario u) {
                 break;
 
             case 3:
-                gerenciar_ciclos();//falta implementar
+                gerenciar_competicoes(u);
                 break;
 
             case 4:
@@ -55,11 +60,11 @@ void menu_admin(Usuario u) {
                 break;
 
             case 0:
-                printf("|                    Saindo da conta...                    |\n"); //futuro logout
+                printf("|   Saindo da conta...                                     |\n"); //futuro logout
                 break;
 
             default:
-                printf("|                     Opcao invalida.                      |\n");
+                printf("|   Opcao invalida.                                        |\n");
         }
 
     } while (op != 0);
@@ -84,7 +89,10 @@ void gerenciar_gestores() {
 
         printf("+----------------------------------------------------------+\n");
         printf("|   Escolha uma opcao: ");
-        scanf("%d", &op);
+        if (scanf("%d", &op) != 1) {
+            op = -1;
+        }
+        limpar_buffer();
 
         switch (op) {
             case 1:
@@ -104,11 +112,11 @@ void gerenciar_gestores() {
                 break;
 
             case 0:
-                printf("|               Voltando ao menu do admin...               |\n");
+                printf("|   Voltando ao menu do admin...                           |\n");
                 break;
 
             default:
-                printf("|                     Opcao invalida.                      |\n");
+                printf("|   Opcao invalida.                                        |\n");
         }
 
     } while (op != 0);
@@ -130,7 +138,10 @@ void gerenciar_equipes() {
 
         printf("+----------------------------------------------------------+\n");
         printf("|   Escolha uma opcao: ");
-        scanf("%d", &op);
+        if (scanf("%d", &op) != 1) {
+            op = -1;
+        }
+        limpar_buffer();
         
 
         switch (op) {
@@ -155,43 +166,46 @@ void gerenciar_equipes() {
                 break;
 
             case 0:
-                printf("|               Voltando ao menu do admin...               |\n");
+                printf("|   Voltando ao menu do admin...                           |\n");
                 break;
 
             default:
-                printf("|                     Opcao invalida.                      |\n");
+                printf("|   Opcao invalida.                                        |\n");
         }
 
     } while (op != 0);
 }
 
 /* ==========================================================
-   Gerenciamento de ciclos de apuracao
+   Gerenciamento de competicoes
    ========================================================== */
 
-void gerenciar_ciclos() {
+void gerenciar_competicoes(Usuario u) {
     int op;
 
     do {
         printf("\n+----------------------------------------------------------+\n");
-        printf("|               GERENCIAR CICLOS DE APURACAO               |\n");
+        printf("|                 GERENCIAR COMPETICOES                    |\n");
         printf("+----------------------------------------------------------+\n");
-        printf("|   1 - Abrir ciclo                                        |\n");
-        printf("|   2 - Encerrar ciclo                                     |\n");
-        printf("|   3 - Consultar ciclos                                   |\n");
+        printf("|   1 - Cadastrar competicao geral                         |\n");
+        printf("|   2 - Encerrar competicao                                |\n");
+        printf("|   3 - Consultar competicoes                              |\n");
         printf("|   0 - Voltar                                             |\n");
 
         printf("+----------------------------------------------------------+\n");
         printf("|   Escolha uma opcao: ");
-        scanf("%d", &op);
+        if (scanf("%d", &op) != 1) {
+            op = -1;
+        }
+        limpar_buffer();
 
         switch (op) {
             case 1:
-                printf("|          Abertura de ciclo em desenvolvimento.           |\n");
+                competicao_geral(u);
                 break;
 
             case 2:
-                printf("|        Encerramento de ciclo em desenvolvimento.         |\n");
+                printf("|   Encerramento de competicao em desenvolvimento.         |\n");
                 break;
 
             case 3:
@@ -199,11 +213,11 @@ void gerenciar_ciclos() {
                 break;
 
             case 0:
-                printf("|               Voltando ao menu do admin...               |\n");
+                printf("|   Voltando ao menu do admin...                           |\n");
                 break;
 
             default:
-                printf("|                     Opcao invalida.                      |\n");
+                printf("|   Opcao invalida.                                        |\n");
         }
 
     } while (op != 0);
@@ -215,6 +229,7 @@ void gerenciar_ciclos() {
 
 void ranking_geral_admin() {
     int op;
+    int equipe_id;
 
     do {
         printf("\n+----------------------------------------------------------+\n");
@@ -226,23 +241,31 @@ void ranking_geral_admin() {
 
         printf("+----------------------------------------------------------+\n");
         printf("|   Escolha uma opcao: ");
-        scanf("%d", &op);
+        if (scanf("%d", &op) != 1) {
+            op = -1;
+        }
+        limpar_buffer();
 
         switch (op) {
             case 1:
-                printf("|            Ranking geral em desenvolvimento.             |\n");
+                ranking_geral();
                 break;
 
             case 2:
-                printf("|          Ranking por equipe em desenvolvimento.          |\n");
+                printf("|   ID da equipe: ");
+                if (scanf("%d", &equipe_id) != 1) {
+                    equipe_id = 0;
+                }
+                limpar_buffer();
+                ranking_equipe(equipe_id);
                 break;
 
             case 0:
-                printf("|               Voltando ao menu do admin...               |\n");
+                printf("|   Voltando ao menu do admin...                           |\n");
                 break;
 
             default:
-                printf("|                     Opcao invalida.                      |\n");
+                printf("|   Opcao invalida.                                        |\n");
         }
 
     } while (op != 0);
@@ -252,57 +275,11 @@ void ranking_geral_admin() {
    Consulta dos logs de auditoria
    ========================================================== */
 
+/* Mostra todos os eventos do log, de 10 em 10 */
 void consultar_log() {
-    int op;
-    int usuario_id;
-    char data[TAM_DATA + 2];
-    char filtro[100];
+    printf("\n+----------------------------------------------------------+\n");
+    printf("|                      CONSULTAR LOG                       |\n");
+    printf("+----------------------------------------------------------+\n");
 
-    do {
-        printf("\n+----------------------------------------------------------+\n");
-        printf("|                      CONSULTAR LOG                       |\n");
-        printf("+----------------------------------------------------------+\n");
-        printf("|   1 - Ver todos os eventos                               |\n");
-        printf("|   2 - Filtrar por usuario                                |\n");
-        printf("|   3 - Filtrar por data                                   |\n");
-        printf("|   0 - Voltar                                             |\n");
-
-        printf("+----------------------------------------------------------+\n");
-        printf("|   Escolha uma opcao: ");
-        scanf("%d", &op);
-
-        switch (op) {
-            case 1:
-                consultar('l', NULL);
-                break;
-
-            case 2:
-                printf("|   Id do usuario: ");
-                if (scanf("%d", &usuario_id) == 1) {
-                    snprintf(filtro, sizeof(filtro), "usuario_id = %d", usuario_id);
-                    consultar('l', filtro);
-                } else {
-                    printf("|                       Id invalido.                       |\n");
-                    limpar_buffer();
-                }
-                break;
-
-            case 3:
-                printf("|   Data (AAAA-MM-DD): ");
-                limpar_buffer();
-                fgets(data, sizeof(data), stdin);
-                tratar_texto(data);
-                snprintf(filtro, sizeof(filtro), "date(data_hora) = '%s'", data);
-                consultar('l', filtro);
-                break;
-
-            case 0:
-                printf("|               Voltando ao menu do admin...               |\n");
-                break;
-
-            default:
-                printf("|                     Opcao invalida.                      |\n");
-        }
-
-    } while (op != 0);
+    consultar('l', NULL);
 }
