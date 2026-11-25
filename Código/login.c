@@ -92,6 +92,7 @@ Usuario fazer_login(sqlite3 *db) {
             u.equipe_id = resultado[9] != NULL ? atoi(resultado[9]) : 0;
 
             sqlite3_free_table(resultado);
+            usuario_logado = u.id; /* para o registrar_log saber quem tentou */
 
             do {
                 printf("|   Senha: ");
@@ -104,9 +105,11 @@ Usuario fazer_login(sqlite3 *db) {
 
                 if (strcmp(u.senha, senha) != 0) {
                     printf("|   Senha incorreta, tente novamente.                    |\n");
+                    registrar_log("login_falha", "Usuarios", u.id, "senha incorreta");
                 }
             } while (strcmp(u.senha, senha) != 0);
 
+            registrar_log("login", "Usuarios", u.id, "");
             printf("|   Login bem sucedido!                                   |\n");
             return u;
 
