@@ -22,7 +22,7 @@ void cadastro_contratos() {
     time_t agora;
 
     printf("\n+----------------------------------------------------------+\n");
-    printf("|                    CADASTRAR CONTRATO                    |\n");
+    printf("|   CADASTRAR CONTRATO                                     |\n");
     printf("+----------------------------------------------------------+\n");
 
     printf("|   1 - Digitar ID do cliente                              |\n");
@@ -30,12 +30,14 @@ void cadastro_contratos() {
     printf("|   0 - Cancelar                                           |\n");
     printf("+----------------------------------------------------------+\n");
     printf("|   Escolha uma opcao: ");
-    scanf("%d", &op);
+    if (scanf("%d", &op) != 1) {
+        op = -1;
+    }
     limpar_buffer();
     if (op == 2) {
         consultar('c', "status = 'ativo'");
     } else if (op != 1) {
-        printf("|                   Operacao cancelada.                    |\n");
+        printf("|   Operacao cancelada.                                    |\n");
         return;
     }
     printf("|   ID do cliente: ");
@@ -44,11 +46,13 @@ void cadastro_contratos() {
         limpar_buffer();
         snprintf(filtro, sizeof(filtro), "id = %d AND status = 'ativo'", contrato.cliente_id);
         if(registro_existe('c', filtro, NULL) == 0) {
-            printf("|              ID do cliente nao encontrado.               |\n|   gostaria de tentar novamente? (1 para sim, 0 para nao): ");
-            scanf("%d", &op);
+            printf("|   ID do cliente nao encontrado.                          |\n|   gostaria de tentar novamente? (1 para sim, 0 para nao): ");
+            if (scanf("%d", &op) != 1) {
+                op = -1;
+            }
             limpar_buffer();
             if(op == 0) {
-                printf("|                   Operacao cancelada.                    |\n");
+                printf("|   Operacao cancelada.                                    |\n");
                 return;
             }
         } else {
@@ -59,21 +63,21 @@ void cadastro_contratos() {
     printf("|   ID do vendedor: ");  //precisa ser o id do vendedor logado
     if (scanf("%d", &contrato.usuario_id) != 1 ||
         contrato.usuario_id <= 0) {
-        printf("|                 ID do vendedor invalido.                 |\n");
+        printf("|   ID do vendedor invalido.                               |\n");
         return;
     }
 
     printf("|   ID do tipo de consorcio: ");
     if (scanf("%d", &contrato.tipo_consorcio_id) != 1 ||
         contrato.tipo_consorcio_id <= 0) {
-        printf("|               Tipo de consorcio invalido.                |\n");
+        printf("|   Tipo de consorcio invalido.                            |\n");
         return;
     }
 
     printf("|   Valor do credito: R$ ");
     if (scanf("%f", &contrato.valor_credito) != 1 ||
         contrato.valor_credito <= 0) {
-        printf("|                     Valor invalido.                      |\n");
+        printf("|   Valor invalido.                                        |\n");
         return;
     }
 
@@ -82,7 +86,7 @@ void cadastro_contratos() {
 
     // Exibe os dados informados
     printf("\n+----------------------------------------------------------+\n");
-    printf("|                    DADOS DO CONTRATO                     |\n");
+    printf("|   DADOS DO CONTRATO                                      |\n");
     printf("+----------------------------------------------------------+\n");
     printf("|   Cliente ID: %-43d|\n", contrato.cliente_id);
     printf("|   Vendedor ID: %-42d|\n", contrato.usuario_id);
@@ -104,16 +108,16 @@ void cadastro_contratos() {
         contrato.motivo_reprovacao[0] = '\0';
 
         if (salvar('t', NULL, NULL, NULL, &contrato, NULL) == 0) {
-            printf("|            Contrato cadastrado com sucesso.              |\n");
+            printf("|   Contrato cadastrado com sucesso.                       |\n");
         } else {
-            printf("|               Erro ao cadastrar contrato.                |\n");
+            printf("|   Erro ao cadastrar contrato.                            |\n");
         }
 
     } else if (confirmar == 'n' || confirmar == 'N') {
-        printf("|             Cadastro do contrato cancelado.              |\n");
+        printf("|   Cadastro do contrato cancelado.                        |\n");
 
     } else {
-        printf("|           Opcao invalida. Cadastro cancelado.            |\n");
+        printf("|   Opcao invalida. Cadastro cancelado.                    |\n");
     }
 }
 
@@ -129,7 +133,8 @@ void avaliar_contrato(Usuario u) {
     char sql[1024];
     char filtro[256];
     char busca[300];
-    char motivo[TAM_TEXTO + 2];
+    char motivo[TAM_TEXTO + 2] = "";   /* fica vazio se nao tiver motivo */
+    const char *acao;                   /* "aprovacao" ou "reprovacao", usado no log */
     int id, op;
     Contrato contrato;
 
@@ -142,13 +147,15 @@ void avaliar_contrato(Usuario u) {
     printf("|   0 - Cancelar                                           |\n");
     printf("+----------------------------------------------------------+\n");
     printf("|   Escolha uma opcao: ");
-    scanf("%d", &op);
+    if (scanf("%d", &op) != 1) {
+        op = -1;
+    }
     limpar_buffer();
     if (op == 2) {
-        printf("|           Contratos em analise da sua equipe:            |\n");
+        printf("|   Contratos em analise da sua equipe:                    |\n");
         consultar('t', filtro);
     } else if (op != 1) {
-        printf("|                   Operacao cancelada.                    |\n");
+        printf("|   Operacao cancelada.                                    |\n");
         return;
     }
 
@@ -158,11 +165,13 @@ void avaliar_contrato(Usuario u) {
         limpar_buffer();
         snprintf(busca, sizeof(busca), "id = %d AND %s", id, filtro);
         if(registro_existe('t', busca, &contrato) == 0) {
-            printf("|              ID do contrato nao encontrado.              |\n|   gostaria de tentar novamente? (1 para sim, 0 para nao): ");
-            scanf("%d", &op);
+            printf("|   ID do contrato nao encontrado.                         |\n|   gostaria de tentar novamente? (1 para sim, 0 para nao): ");
+            if (scanf("%d", &op) != 1) {
+                op = -1;
+            }
             limpar_buffer();
             if(op == 0) {
-                printf("|                   Operacao cancelada.                    |\n");
+                printf("|   Operacao cancelada.                                    |\n");
                 return;
             }
         } else {
@@ -181,17 +190,23 @@ void avaliar_contrato(Usuario u) {
     printf("|   1 - Aprovar                                            |\n|   2 - Reprovar                                           |\n|   0 - Cancelar                                           |\n");
     printf("+----------------------------------------------------------+\n");
     printf("|   Escolha uma opcao: ");
-    scanf("%d", &op);
+    if (scanf("%d", &op) != 1) {
+        op = -1;
+    }
     limpar_buffer();
 
     if (op == 1) {
+        acao = "aprovacao";
         snprintf(sql, sizeof(sql),
                  "UPDATE Contratos SET status = 'aprovado', avaliado_por = %d, "
                  "data_avaliacao = datetime('now','localtime') "
                  "WHERE id = %d;", u.id, id);
     } else if (op == 2) {
+        acao = "reprovacao";
         printf("|   Deseja deixar um motivo? (1 para sim, 0 para nao): ");
-        scanf("%d", &op);
+        if (scanf("%d", &op) != 1) {
+            op = -1;
+        }
         limpar_buffer();
 
         if (op == 1) {
@@ -209,7 +224,7 @@ void avaliar_contrato(Usuario u) {
                      "WHERE id = %d;", u.id, id);
         }
     } else {
-        printf("|                   Operacao cancelada.                    |\n");
+        printf("|   Operacao cancelada.                                    |\n");
         return;
     }
 
@@ -223,7 +238,8 @@ void avaliar_contrato(Usuario u) {
         printf("|   Erro ao atualizar contrato: %-27s|\n", erro);
         sqlite3_free(erro);
     } else {
-        printf("|             Contrato atualizado com sucesso.             |\n");
+        printf("|   Contrato atualizado com sucesso.                       |\n");
+        registrar_log(acao, "Contratos", id, motivo);
     }
 
     sqlite3_close(db);

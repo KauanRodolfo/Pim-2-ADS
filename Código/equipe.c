@@ -15,13 +15,14 @@ int editar_equipe_vendedor(int usuario_id, int equipe_id) {
     sqlite3 *db;
     char *erro = NULL;
     char sql[256];
+    char detalhes[100];   /* texto que vai para o log */
     int rc;
     
     rc = sqlite3_open("pim2.db", &db);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "|   Nao foi possivel abrir o banco: %-23s|\n", sqlite3_errmsg(db));
         sqlite3_close(db);
-        return 0;
+        return 1;
     }
 
     snprintf(sql, sizeof(sql),
@@ -34,24 +35,28 @@ int editar_equipe_vendedor(int usuario_id, int equipe_id) {
         fprintf(stderr, "|   Erro ao atualizar equipe do usuario: %-18s|\n", erro);
         sqlite3_free(erro);
         sqlite3_close(db);
-        return 0;
+        return 1;
     }
 
     sqlite3_close(db);
-    return 1; 
+
+    snprintf(detalhes, sizeof(detalhes), "movido para a equipe %d", equipe_id);
+    registrar_log("edicao", "Usuarios", usuario_id, detalhes);
+    return 0;
 }
 
 int editar_equipe_gestor(int equipe_id, int gestor_id) {
     sqlite3 *db;
     char *erro = NULL;
     char sql[256];
+    char detalhes[100];   /* texto que vai para o log */
     int rc;
     
     rc = sqlite3_open("pim2.db", &db);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "|   Nao foi possivel abrir o banco: %-23s|\n", sqlite3_errmsg(db));
         sqlite3_close(db);
-        return 0;
+        return 1;
     }
 
     snprintf(sql, sizeof(sql),
@@ -64,11 +69,14 @@ int editar_equipe_gestor(int equipe_id, int gestor_id) {
         fprintf(stderr, "|   Erro ao atualizar equipe do usuario: %-18s|\n", erro);
         sqlite3_free(erro);
         sqlite3_close(db);
-        return 0;
+        return 1;
     }
 
     sqlite3_close(db);
-    return 1; 
+
+    snprintf(detalhes, sizeof(detalhes), "gestor %d definido", gestor_id);
+    registrar_log("edicao", "Equipes", equipe_id, detalhes);
+    return 0;
 }
 
 /* Define o gestor de uma equipe (opcao 3 do menu de equipes) */
@@ -78,18 +86,20 @@ void definir_gestor_equipe() {
     Equipe equipe;
     char filtro[TAM_FILTRO];
 
-    printf("|        Selecione a equipe para definir o gestor:         |\n");
+    printf("|   Selecione a equipe para definir o gestor:              |\n");
     printf("|   1 - Digitar ID da equipe                               |\n");
     printf("|   2 - Consultar equipes                                  |\n");
     printf("|   0 - Cancelar                                           |\n");
     printf("+----------------------------------------------------------+\n");
     printf("|   Escolha uma opcao: ");
-    scanf("%d", &op);
+    if (scanf("%d", &op) != 1) {
+        op = -1;
+    }
     limpar_buffer();
     if (op == 2) {
         consultar('e', "status = 'ativa'");
     } else if (op != 1) {
-        printf("|                   Operacao cancelada.                    |\n");
+        printf("|   Operacao cancelada.                                    |\n");
         return;
     }
     printf("|   Entre com o ID da equipe: ");
@@ -98,11 +108,13 @@ void definir_gestor_equipe() {
         limpar_buffer();
         snprintf(filtro, sizeof(filtro), "id = %d AND status = 'ativa'", equipe.id);
         if(registro_existe('e', filtro, &equipe) == 0) {
-            printf("|               ID da equipe nao encontrado.               |\n|   gostaria de tentar novamente? (1 para sim, 0 para nao): ");
-            scanf("%d", &op);
+            printf("|   ID da equipe nao encontrado.                           |\n|   gostaria de tentar novamente? (1 para sim, 0 para nao): ");
+            if (scanf("%d", &op) != 1) {
+                op = -1;
+            }
             limpar_buffer();
             if(op == 0) {
-                printf("|                   Operacao cancelada.                    |\n");
+                printf("|   Operacao cancelada.                                    |\n");
                 return;
             }
         } else {
@@ -110,18 +122,20 @@ void definir_gestor_equipe() {
         }
     }while(op);
 
-    printf("|                   Selecione o gestor:                    |\n");
+    printf("|   Selecione o gestor:                                    |\n");
     printf("|   1 - Digitar ID do gestor                               |\n");
     printf("|   2 - Consultar gestores                                 |\n");
     printf("|   0 - Cancelar                                           |\n");
     printf("+----------------------------------------------------------+\n");
     printf("|   Escolha uma opcao: ");
-    scanf("%d", &op);
+    if (scanf("%d", &op) != 1) {
+        op = -1;
+    }
     limpar_buffer();
     if (op == 2) {
         consultar('u', "nivel = 'gestor' AND status = 'ativo'");
     } else if (op != 1) {
-        printf("|                   Operacao cancelada.                    |\n");
+        printf("|   Operacao cancelada.                                    |\n");
         return;
     }
     printf("|   Entre com o ID do gestor: ");
@@ -130,11 +144,13 @@ void definir_gestor_equipe() {
         limpar_buffer();
         snprintf(filtro, sizeof(filtro), "id = %d AND nivel = 'gestor' AND status = 'ativo'", gestor.id);
         if(registro_existe('u', filtro, &gestor) == 0) {
-            printf("|               ID do gestor nao encontrado.               |\n|   gostaria de tentar novamente? (1 para sim, 0 para nao): ");
-            scanf("%d", &op);
+            printf("|   ID do gestor nao encontrado.                           |\n|   gostaria de tentar novamente? (1 para sim, 0 para nao): ");
+            if (scanf("%d", &op) != 1) {
+                op = -1;
+            }
             limpar_buffer();
             if(op == 0) {
-                printf("|                   Operacao cancelada.                    |\n");
+                printf("|   Operacao cancelada.                                    |\n");
                 return;
             }
         } else {
@@ -143,23 +159,25 @@ void definir_gestor_equipe() {
     }while(op);
 
     printf("|   Deseja definir o gestor %s para a equipe %s? (1 para sim, 0 para nao): ", gestor.nome, equipe.nome);
-    scanf("%d", &op);
+    if (scanf("%d", &op) != 1) {
+        op = -1;
+    }
     limpar_buffer();
 
     switch(op) {
         case 1:
             if(editar_equipe_gestor(equipe.id, gestor.id) == 0) {
-                printf("|               Gestor definido com sucesso.               |\n");
+                printf("|   Gestor definido com sucesso.                           |\n");
                 break;
             } else {
-                printf("|                Erro ao definir o gestor.                 |\n");
+                printf("|   Erro ao definir o gestor.                              |\n");
             }
             break;
         case 0:
-            printf("|                   Operacao cancelada.                    |\n");
+            printf("|   Operacao cancelada.                                    |\n");
             break;
         default:
-            printf("|                     Opcao invalida.                      |\n");
+            printf("|   Opcao invalida.                                        |\n");
     }
 }
 
@@ -170,18 +188,20 @@ void mover_vendedor_equipe() {
     Usuario vendedor;
     Equipe equipe;
 
-    printf("|            Selecione o vendedor a ser movido:            |\n");
+    printf("|   Selecione o vendedor a ser movido:                     |\n");
     printf("|   1 - Digitar ID do vendedor                             |\n");
     printf("|   2 - Consultar vendedores                               |\n");
     printf("|   0 - Cancelar                                           |\n");
     printf("+----------------------------------------------------------+\n");
     printf("|   Escolha uma opcao: ");
-    scanf("%d", &op);
+    if (scanf("%d", &op) != 1) {
+        op = -1;
+    }
     limpar_buffer();
     if (op == 2) {
         consultar('u', "nivel = 'vendedor' AND status = 'ativo'");
     } else if (op != 1) {
-        printf("|                   Operacao cancelada.                    |\n");
+        printf("|   Operacao cancelada.                                    |\n");
         return;
     }
     printf("|   Entre com o ID do vendedor: ");
@@ -192,11 +212,13 @@ void mover_vendedor_equipe() {
         snprintf(filtro, sizeof(filtro), "id = %d AND nivel = 'vendedor' AND status = 'ativo'", vendedor.id);
 
         if(registro_existe('u', filtro, &vendedor) == 0) {
-            printf("|              ID do vendedor nao encontrado.              |\n|   gostaria de tentar novamente? (1 para sim, 0 para nao): ");
-            scanf("%d", &op);
+            printf("|   ID do vendedor nao encontrado.                         |\n|   gostaria de tentar novamente? (1 para sim, 0 para nao): ");
+            if (scanf("%d", &op) != 1) {
+                op = -1;
+            }
             limpar_buffer();
             if(op == 0) {
-                printf("|                   Operacao cancelada.                    |\n");
+                printf("|   Operacao cancelada.                                    |\n");
                 return;
             }
         } else {
@@ -205,18 +227,20 @@ void mover_vendedor_equipe() {
     }while(op);
 
     printf("|   Vendedor selecionado: %-33s|\n", vendedor.nome);
-    printf("|              Selecione a equipe de destino:              |\n");
+    printf("|   Selecione a equipe de destino:                         |\n");
     printf("|   1 - Digitar ID da equipe                               |\n");
     printf("|   2 - Consultar equipes                                  |\n");
     printf("|   0 - Cancelar                                           |\n");
     printf("+----------------------------------------------------------+\n");
     printf("|   Escolha uma opcao: ");
-    scanf("%d", &op);
+    if (scanf("%d", &op) != 1) {
+        op = -1;
+    }
     limpar_buffer();
     if (op == 2) {
         consultar('e', "status = 'ativa'");
     } else if (op != 1) {
-        printf("|                   Operacao cancelada.                    |\n");
+        printf("|   Operacao cancelada.                                    |\n");
         return;
     }
     printf("|   Entre com o ID da equipe: ");
@@ -227,11 +251,13 @@ void mover_vendedor_equipe() {
         snprintf(filtro, sizeof(filtro), "id = %d AND status = 'ativa'", equipe.id);
 
         if(registro_existe('e', filtro, &equipe) == 0) {
-            printf("|               ID da equipe nao encontrado.               |\n|   Gostaria de tentar novamente? (1 para sim, 0 para nao): ");
-            scanf("%d", &op);
+            printf("|   ID da equipe nao encontrado.                           |\n|   Gostaria de tentar novamente? (1 para sim, 0 para nao): ");
+            if (scanf("%d", &op) != 1) {
+                op = -1;
+            }
             limpar_buffer();
             if(op == 0) {
-                printf("|                   Operacao cancelada.                    |\n");
+                printf("|   Operacao cancelada.                                    |\n");
                 return;
             }
         } else {
@@ -240,18 +266,20 @@ void mover_vendedor_equipe() {
     }while (op);
 
     printf("|   Deseja realmente mover o vendedor %s para a equipe %s? (1 para sim, 0 para nao): ", vendedor.nome, equipe.nome);
-    scanf("%d", &op);
+    if (scanf("%d", &op) != 1) {
+        op = -1;
+    }
     limpar_buffer();
 
     if(op == 1) {
         if(editar_equipe_vendedor(vendedor.id, equipe.id) == 0) {
-            printf("|               Vendedor movido com sucesso.               |\n");
+            printf("|   Vendedor movido com sucesso.                           |\n");
             return;
         } else {
-            printf("|                Erro ao mover o vendedor.                 |\n");
+            printf("|   Erro ao mover o vendedor.                              |\n");
         }
     } else {
-        printf("|                   Operacao cancelada.                    |\n");
+        printf("|   Operacao cancelada.                                    |\n");
         return;
     }
 }
@@ -261,18 +289,20 @@ void arquivar_equipe() {
     Equipe equipe;
     char filtro[TAM];
     int op;
-    printf("|           Selecione a equipe a ser arquivada:            |\n");
+    printf("|   Selecione a equipe a ser arquivada:                    |\n");
     printf("|   1 - Digitar ID da equipe                               |\n");
     printf("|   2 - Consultar equipes                                  |\n");
     printf("|   0 - Cancelar                                           |\n");
     printf("+----------------------------------------------------------+\n");
     printf("|   Escolha uma opcao: ");
-    scanf("%d", &op);
+    if (scanf("%d", &op) != 1) {
+        op = -1;
+    }
     limpar_buffer();
     if (op == 2) {
         consultar('e', "status = 'ativa'");
     } else if (op != 1) {
-        printf("|                   Operacao cancelada.                    |\n");
+        printf("|   Operacao cancelada.                                    |\n");
         return;
     }
     printf("|   Entre com o ID da equipe a ser arquivada: ");
@@ -282,11 +312,13 @@ void arquivar_equipe() {
         limpar_buffer();
         snprintf(filtro, sizeof(filtro), "id = %d AND status = 'ativa'", equipe.id);
         if(registro_existe('e', filtro, &equipe) == 0) {
-            printf("|               ID da equipe nao encontrado.               |\n|   gostaria de tentar novamente? (1 para sim, 0 para nao): ");
-            scanf("%d", &op);
+            printf("|   ID da equipe nao encontrado.                           |\n|   gostaria de tentar novamente? (1 para sim, 0 para nao): ");
+            if (scanf("%d", &op) != 1) {
+                op = -1;
+            }
             limpar_buffer();
             if(op == 0) {
-                printf("|                   Operacao cancelada.                    |\n");
+                printf("|   Operacao cancelada.                                    |\n");
                 return;
             }
         } else {
@@ -295,17 +327,19 @@ void arquivar_equipe() {
     }while(op);
 
     printf("|   Deseja realmente arquivar a equipe %s? (1 para sim, 0 para nao): ", equipe.nome);
-    scanf("%d", &op);
+    if (scanf("%d", &op) != 1) {
+        op = -1;
+    }
     limpar_buffer();
 
     if(op == 1) {
         if(excluir('e', equipe.id)){
-            printf("|                Erro ao arquivar a equipe.                |\n");
+            printf("|   Erro ao arquivar a equipe.                             |\n");
         } else {
-            printf("|              Equipe arquivada com sucesso.               |\n");
+            printf("|   Equipe arquivada com sucesso.                          |\n");
         }
     } else {
-        printf("|                   Operacao cancelada.                    |\n");
+        printf("|   Operacao cancelada.                                    |\n");
     }
 }
 
@@ -317,23 +351,24 @@ int cadastro_equipe() {
     int rc, op;
     char filtro[TAM_FILTRO];
 
-    limpar_buffer();
 
     printf("\n+----------------------------------------------------------+\n");
-    printf("|                     CADASTRAR EQUIPE                     |\n");
+    printf("|   CADASTRAR EQUIPE                                       |\n");
     printf("+----------------------------------------------------------+\n");
 
     printf("|   Nome da equipe: ");
     fgets(equipe.nome, sizeof(equipe.nome), stdin);
     tratar_texto(equipe.nome);
-    printf("|   A equipe precisa de um lider. Entre com o ID do gestor da equipe|\n");
+    printf("|   A equipe precisa de um lider. Escolha uma opcao:       |\n");
     printf("|   1 - Digitar ID do gestor                               |\n");
     printf("|   2 - Consultar gestores                                 |\n");
     printf("|   0 - Sem gestor                                         |\n");
     printf("+----------------------------------------------------------+\n");
     printf("|   Escolha uma opcao: ");
-    scanf("%d", &op);   
-    limpar_buffer(); 
+    if (scanf("%d", &op) != 1) {
+        op = -1;
+    }
+    limpar_buffer();
     if (op == 0) {
         equipe.gestor_id = 0;
         strcpy(gestor.nome, "sem gestor");
@@ -341,7 +376,7 @@ int cadastro_equipe() {
         if (op == 2) {
             consultar('u', "nivel = 'gestor' AND status = 'ativo'");
         } else if (op != 1) {
-            printf("|                     Opcao invalida.                      |\n");
+            printf("|   Opcao invalida.                                        |\n");
             return 1;
         }
         printf("|   Entre com o ID do gestor: ");
@@ -350,11 +385,13 @@ int cadastro_equipe() {
             limpar_buffer();
             snprintf(filtro, sizeof(filtro), "id = %d AND nivel = 'gestor' AND status = 'ativo'", equipe.gestor_id);
             if(registro_existe('u', filtro, &gestor) == 0) {
-                printf("|               ID do gestor nao encontrado.               |\n|   Gostaria de tentar novamente? (1 para sim, 0 para nao): ");
-                scanf("%d", &op);
+                printf("|   ID do gestor nao encontrado.                           |\n|   Gostaria de tentar novamente? (1 para sim, 0 para nao): ");
+                if (scanf("%d", &op) != 1) {
+                    op = -1;
+                }
                 limpar_buffer();
                 if(op == 0) {
-                    printf("|                   Operacao cancelada.                    |\n");
+                    printf("|   Operacao cancelada.                                    |\n");
                     return 1;
                 }
             } else {
@@ -365,7 +402,7 @@ int cadastro_equipe() {
 
     strcpy(equipe.status, "ativa");
     printf("\n+----------------------------------------------------------+\n");
-    printf("|                     CONFIRMAR DADOS                      |\n");
+    printf("|   CONFIRMAR DADOS                                        |\n");
     printf("+----------------------------------------------------------+\n");
     printf("|   Nome: %-49s|\n", equipe.nome);
     printf("|   Gestor ID: %-44d|\n", equipe.gestor_id);
@@ -376,13 +413,13 @@ int cadastro_equipe() {
     scanf(" %c", &confirmar);
 
     if (confirmar != 's' && confirmar != 'S') {
-        printf("|                   Cadastro cancelado.                    |\n");
+        printf("|   Cadastro cancelado.                                    |\n");
         return 1;
     }
 
     rc = salvar('e', &equipe, NULL, NULL, NULL, NULL);
     if (rc == 0) {
-        printf("|              Equipe cadastrada com sucesso.              |\n");
+        printf("|   Equipe cadastrada com sucesso.                         |\n");
         return 0;
     }
 

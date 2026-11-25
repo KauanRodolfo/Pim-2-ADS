@@ -12,6 +12,15 @@
 /* Cria as tabelas que ainda nao existem. Retorna SQLITE_OK se deu certo. */
 int criar_db(sqlite3 **db);
 
+/* ---------- LOG DE AUDITORIA ---------- */
+
+/* Id de quem esta logado (o main preenche depois do login). */
+extern int usuario_logado;
+
+/* Grava uma linha no log: quem (usuario_logado) fez o que (acao),
+   em qual tabela (entidade) e em qual registro (entidade_id). */
+void registrar_log(const char *acao, const char *entidade, int entidade_id, const char *detalhes);
+
 /*
  * Structs que representam as tabelas do banco.
  *

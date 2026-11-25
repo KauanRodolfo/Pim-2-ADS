@@ -19,10 +19,9 @@ int cadastro_clientes() {
     char renda[TAM_P];
     int rc;
 
-    limpar_buffer();
 
     printf("\n+----------------------------------------------------------+\n");
-    printf("|                    CADASTRAR CLIENTE                     |\n");
+    printf("|   CADASTRAR CLIENTE                                      |\n");
     printf("+----------------------------------------------------------+\n");
 
     printf("|   Nome completo: ");
@@ -49,7 +48,7 @@ int cadastro_clientes() {
     cliente.cadastrado_por = 3;
 
     printf("\n+----------------------------------------------------------+\n");
-    printf("|                     CONFIRMAR DADOS                      |\n");
+    printf("|   CONFIRMAR DADOS                                        |\n");
     printf("+----------------------------------------------------------+\n");
     printf("|   Nome: %-49s|\n", cliente.nome);
     printf("|   CPF: %-50s|\n", cliente.cpf);
@@ -63,13 +62,13 @@ int cadastro_clientes() {
     if (confirmar == 's' || confirmar == 'S') {
         rc = salvar('c', NULL, NULL, &cliente, NULL, NULL);
         if (rc == 0) {
-            printf("|             Cliente cadastrado com sucesso.              |\n");
+            printf("|   Cliente cadastrado com sucesso.                        |\n");
             return 0;
         }
     } else if (confirmar == 'n' || confirmar == 'N') {
-        printf("|                   Cadastro cancelado.                    |\n");
+        printf("|   Cadastro cancelado.                                    |\n");
     } else {
-        printf("|           Opcao invalida. Cadastro cancelado.            |\n");
+        printf("|   Opcao invalida. Cadastro cancelado.                    |\n");
     }
 
     return 1;
