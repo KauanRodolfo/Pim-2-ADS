@@ -699,8 +699,6 @@ int salvar(char banco, Equipe *equipe, Usuario *usuario, Cliente *cliente,
                 return 1;
             }
             tratar_texto(competicao->nome);
-            tratar_texto(competicao->data_inicio);
-            tratar_texto(competicao->data_fim);
             tabela = "Competicoes";
             snprintf(detalhes, sizeof(detalhes), "%s (%s)", competicao->nome, competicao->tipo);
 
@@ -780,7 +778,7 @@ int editar(char banco, int id) {
         case 'U':
         case 'u':
             tabela = "Usuarios";
-            printf("|   1 - Nome                                               |\n|   2 - CPF                                                |\n|   3 - Username                                           |\n|   4 - Email                                              |\n|   5 - Senha                                              |\n|   6 - Nivel                                              |\n|   7 - Equipe (id)                                        |\n");
+            printf("|   1 - Nome                                               |\n|   2 - CPF                                                |\n|   3 - Username                                           |\n|   4 - Email                                              |\n|   5 - Senha                                              |\n|   6 - Equipe (id)                                        |\n");
             printf("+----------------------------------------------------------+\n");
             printf("|   Escolha uma opcao: ");
             if (scanf("%d", &opcao) != 1) {
@@ -792,8 +790,7 @@ int editar(char banco, int id) {
                 case 3: coluna = "username"; break;
                 case 4: coluna = "email"; break;
                 case 5: coluna = "senha"; break;
-                case 6: coluna = "nivel"; break;
-                case 7: coluna = "equipe_id"; break;
+                case 6: coluna = "equipe_id"; break;
             }
             break;
 
