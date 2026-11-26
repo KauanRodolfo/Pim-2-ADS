@@ -68,7 +68,7 @@ flowchart TD
 - Apenas contratos **aprovados** contribuem para as comissões contabilizadas e para a classificação nos rankings.
 - O percentual de comissão é **5% para todos os vendedores**; Fixa ao valor do crédito contratado.
 - O **administrador** controla a abertura e o encerramento do **ciclo compartilhado** dos rankings.
-- O ranking geral e os três rankings por equipe possuem **classificações próprias** e destacam **somente um vencedor por ranking**. Em caso de empate no total de comissões válidas, prevalece o vendedor que registrou primeiro a última venda que posteriormente foi aprovada pelo gestor.
+- O ranking geral e os três rankings por equipe possuem **classificações próprias** e destacam **somente um vencedor por ranking**. Em caso de empate no total de comissões válidas, prevalece o vendedor que fez a primeira venda válida no ciclo.
 - **O sistema não gerencia premiações nesta versão**; esse recurso fica reservado a uma possível evolução futura.
 
 ## Tecnologias e ferramentas
