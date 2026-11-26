@@ -66,7 +66,7 @@
 
 **Critérios de aceitação:**
 - O gestor consulta os contratos pendentes da sua equipe.
-- O gestor pode aprovar ou reprovar um contrato, sem necessidade de justificativa.
+- O gestor pode aprovar ou reprovar um contrato, com justificativa opcional.
 - A reprovação encerra definitivamente o processo daquele registro; não há opção de correção ou reenvio.
 - Contratos reprovados permanecem identificados no histórico para consulta, sem gerar comissão.
 - Somente contratos aprovados ficam aptos à contabilização de comissão.
