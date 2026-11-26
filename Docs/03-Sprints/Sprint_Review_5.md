@@ -51,12 +51,4 @@ Estas atualizações descrevem o andamento durante a Sprint 5, sem modificar ret
 
 ## 6. Review e Retrospective da Sprint 5 — reservadas para 31/10
 
-**A reunião de encerramento ainda não ocorreu em 26/10.** Não registrar resultados finais antecipadamente.
-
-| Tópico | Registro após 31/10 |
-|---|---|
-| Entregas efetivamente concluídas | A preencher após encerramento |
-| Pendências remanescentes | A preencher após encerramento |
-| O que funcionou bem | A preencher após retrospectiva |
-| Dificuldades enfrentadas | A preencher após retrospectiva |
-| Decisões de melhoria | A preencher após retrospectiva |
+A equipe priorizou a conclusão das tarefas pendentes do Rankcom, inclusive de Sprints anteriores, antes de iniciar novas entregas. O foco esteve na finalização da documentação, dos diagramas, da modelagem do banco de dados e do desenvolvimento em C, considerando também a preparação do vídeo de apresentação previsto para 28/10.
