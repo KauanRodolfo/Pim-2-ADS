@@ -1,4 +1,4 @@
-# Sprint 5 — Planejamento e acompanhamento (atualização em 26/10)
+# Sprint 5 — Review e Retrospective (registro revisado)
 
 **Projeto:** Rankcom — DMcom Administradora de Consórcios  
 **Período:** 24/10/2026 a 31/10/2026  
