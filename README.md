@@ -16,7 +16,7 @@
 
 O **Rankcom** é um projeto de sistema de gestão comercial voltado à **DMcom Administradora de Consórcios**, empresa fictícia com **64 colaboradores**. Seu propósito é apoiar a digitalização de processos da área comercial, reunindo o registro e a análise de contratos, a apuração de comissões e o acompanhamento do desempenho das equipes.
 
-A proposta utiliza **gamificação**, por meio de rankings, para tornar os resultados mais visíveis e incentivar o reconhecimento dos vendedores. A gestão de premiações poderá ser incorporada em uma versão futura. O projeto está **em desenvolvimento**: as funcionalidades a seguir representam o escopo previsto, e não necessariamente recursos já finalizados.
+A proposta utiliza **gamificação**, por meio de rankings, para tornar os resultados mais visíveis e incentivar o reconhecimento dos vendedores. A gestão de premiações poderá ser incorporada em uma versão futura. As funcionalidades a seguir representam o escopo previsto, e não necessariamente recursos já finalizados.
 
 ## Contexto da organização
 
@@ -111,11 +111,9 @@ A pasta [`Docs/`](Docs/) concentra os arquivos Markdown que registram **o contex
 
 ### Como consultar a documentação
 
-A **caracterização** apresenta a organização e o problema; os **requisitos** definem o comportamento esperado e as restrições do sistema; o **Product Backlog** registra as necessidades priorizadas e seus critérios de aceitação e prioridades; os documentos de **Sprints** acompanham o planejamento e as entregas; e as **atas** preservam as decisões coletivas.
+A **caracterização** apresenta a organização e o problema; os **requisitos** definem o comportamento esperado e as restrições do sistema; o **Product Backlog** registra as necessidades priorizadas e seus critérios de aceitação e prioridades e os documentos de **Sprints** acompanham o planejamento e as entregas.
 
 ## Execução do protótipo
-
-**O código principal ainda está em desenvolvimento e integração.** As instruções completas de compilação, configuração do SQLite e execução do sistema serão acrescentadas quando houver um fluxo único de execução validado.
 
 Para obter o repositório localmente:
 
