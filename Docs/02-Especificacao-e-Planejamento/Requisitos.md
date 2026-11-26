@@ -10,11 +10,11 @@
 
 Regras de negócio são políticas da **DMcom**: orientam o processo mesmo que ele não seja informatizado.
 
-### RN01 — Comissão fixa de 5%
+### RN01 — Comissão fixa de 5%.
 
 A DMcom adota uma **comissão fixa de 5% para todos os vendedores**, independentemente da equipe. O Rankcom calcula a comissão somente após a **aprovação do contrato pelo gestor**. Contratos pendentes ou reprovados não geram comissão válida nem pontuação nos rankings.
 
-**Pendente técnico/financeiro:** definir com a equipe qual **valor do contrato constitui a base de cálculo**; não se presume que seja o valor total do contrato.
+5% sobre o valor do crédito contratado
 
 **Relação:** RF03, RF04 e RF05; HU05, HU06 e HU07.
 
@@ -104,8 +104,8 @@ O protótipo deve utilizar **interface textual (CLI)** com menus identificados, 
 | RF01 | HU01 | — |
 | RF02 | HU02, HU03 | — |
 | RF03 | HU04, HU05 | RN01 |
-| RF04* | HU06 | RN01 |
-| RF05* | HU07* | RN01 |
+| RF04 | HU06 | RN01 |
+| RF05 | HU07 | RN01 |
 | RF06 | HU08 | — |
 | RF07 | HU01, HU05 | — |
 | RNF01 | HU01–HU08 | — |
