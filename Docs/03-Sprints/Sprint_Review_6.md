@@ -14,7 +14,7 @@ A Sprint 6 representa o ciclo final de consolidação do semestre, sem abertura 
 ## 2. Diretrizes definidas no planejamento (01/11/2026)
 
 - Integrar todos os módulos de apresentação (`main.c`, `login.c`, `admin.c`, `gestor.c`, `vendedor.c`), regras de negócio (`usuario.c`, `equipe.c`, `cliente.c`, `contrato.c`, `ranking.c`, `competicao.c`, `util.c`) e persistência (`banco.c`) em um único fluxo compilável com `sqlite3.c`.
-- Consolidar e validar as regras de negócio fechadas: comissão fixa de **5% sobre o valor do crédito contratado** (exclusivamente após aprovação do gestor), reprovação definitiva (com justificativa opcional) e desempate pelo registro mais antigo da **última venda aprovada**.
+- Consolidar e validar as regras de negócio fechadas: comissão fixa de **5% sobre o valor do crédito contratado** (exclusivamente após aprovação do gestor), reprovação definitiva (com justificativa opcional) e desempate pelo registro do vendedor que fez a primeira venda válida no ciclo.
 - Finalizar a redação, formatação ABNT e revisão cruzada de todas as seções do relatório do PIM II (Introdução, Desenvolvimento das disciplinas, Integração da solução e Considerações Finais).
 - Estruturar o roteiro e os slides de apresentação para a banca avaliadora, demonstrando os fluxos de interface textual (CLI) dos três perfis de usuário.
 - Delimitar formalmente os itens não implementados no protótipo (recuperação de senha, gerenciamento de premiações, suporte a acessos simultâneos em rede e recursos avançados de acessibilidade) como limitações do protótipo e propostas de evolução futura.
